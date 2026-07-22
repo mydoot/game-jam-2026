@@ -25,6 +25,5 @@ shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="Stats" type="Node" parent="." unique_id=590511639]
 script = ExtResource("3_6t5aa")
-max_mana = 3.0
 
 [node name="HUD" parent="." unique_id=2139640349 instance=ExtResource("4_vgqql")]

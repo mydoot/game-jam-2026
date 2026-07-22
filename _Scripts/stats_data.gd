@@ -9,9 +9,9 @@ extends Node
 @export var max_stamina: float = 3.0
 @export var stamina_regen_rate: float = 1.0
 
-@export_group("Mana")
-@export var max_mana: float = 10.0
-@export var start_mana: float = 0.0 # Use later if we want mana to regen, or for testing
+@export_group("Bullets") 
+@export var max_mana: float = 6
+@export var start_mana: float = 6 # Use later if we want mana to regen, or for testing
 
 signal health_changed(new_value: int, max_value: int)
 signal stamina_changed(new_value: float, max_value: float)

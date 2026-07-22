@@ -49,8 +49,6 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		State.MOVE:
 			state_move(delta)
-		State.DASH:
-			state_dash(delta)
 		State.ATTACK:
 			state_attack(delta)
 	
@@ -96,15 +94,6 @@ func start_dash() -> void:
 	# Cooldown reset
 	get_tree().create_timer(dash_cooldown).timeout.connect(func(): can_dash = true)
 
-func state_dash(delta: float) -> void:
-	# Move fast in current direction
-	velocity = velocity.normalized() * dash_speed
-	dash_timer -= delta
-
-	if dash_timer <= 0:
-		current_state = State.MOVE
-		velocity = Vector2.ZERO
-
 # --- STATE: ATTACK ---
 func start_attack() -> void:
 	current_state = State.ATTACK
@@ -113,8 +102,8 @@ func start_attack() -> void:
 	velocity = velocity * 0.2 
 	
 	# Tell the Weapon to do its thing
-	if current_weapon.has_method("attack"):
-		current_weapon.attack()
+	if current_weapon.has_method("shoot"):
+		current_weapon.shoot()
 
 func state_attack(delta: float) -> void:
 	# 1. Allow Aiming (Optional: Remove this line if you want the swing direction to 'lock' on start)

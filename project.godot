@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="game jam 2026"
+run/main_scene="uid://birvxciwqfi4r"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/icon.svg"
+
+[autoload]
+
+BulletFactoryGlobal="*uid://bvwfgf35bcrvi"
 
 [input]
 

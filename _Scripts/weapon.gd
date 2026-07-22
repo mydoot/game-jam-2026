@@ -10,9 +10,14 @@ extends Node2D
 @onready var hitbox = $Hitbox
 @onready var vfx = $VFX
 
+@export_group("For Bullets")
+@export var bullet_resource : Resource
+@export var marker_container : Node2D
+var bullet_data : DirectionalBulletsData2D
+
 signal attack_finished
 signal dealt_damage
-
+	
 var is_attacking: bool = false
 
 var wielder: CharacterBody2D
@@ -20,29 +25,27 @@ var wielder: CharacterBody2D
 func _ready() -> void:
 	if vfx.is_visible_in_tree():
 		vfx.visible = false
-	
-func attack() -> void:
-	if is_attacking:
-		return
-	
-	if anim_player.has_animation("attack"):
-		is_attacking = true
-		anim_player.play("attack")
-	else:
-		printerr("ERROR: Animation 'attack' not found on ", name)
-		# Force finish so the player doesn't get stuck
-		_on_animation_player_animation_finished("none")
-	
-
-func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.has_method("take_damage"):
-		body.take_damage(damage)
-		dealt_damage.emit()
 		
-		if wielder.has_node("Stats"):
-			wielder.get_node("Stats").gain_mana(mana_gain_on_hit)
+	if bullet_resource:
+		bullet_data = bullet_resource.set_up_bullet_data()
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+	
+	
+func shoot() -> void:
+	if bullet_data:
+		bullet_data.transforms = grab_marker_transforms()
+		if bullet_data.transforms:
+			BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
+		else:
+			push_warning("bullet_data has no DirectionalBulletsData2D object.")
 
-func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
-	is_attacking = false
-	attack_finished.emit()
+func grab_marker_transforms() -> Array[Transform2D]:
+	var all_markers : Array[Transform2D]
+	
+	for marker : Marker2D in marker_container.get_children():
+		all_markers.push_back(marker.global_transform)
+		
+	return all_markers	
