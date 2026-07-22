@@ -1,14 +1,12 @@
 [gd_scene format=3 uid="uid://d0g6tr28kkt24"]
 
 [ext_resource type="Script" uid="uid://dqdprrwhl20xm" path="res://_Scripts/weapon.gd" id="1_m5ws0"]
-[ext_resource type="Script" uid="uid://c1p0y0igxhe4n" path="res://_Scripts/Resources/BasicBullet.gd" id="2_27vj6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sw2lr"]
 size = Vector2(63.515625, 85.25)
 
 [node name="Weapon" type="Node2D" unique_id=1236962454 node_paths=PackedStringArray("marker_container")]
 script = ExtResource("1_m5ws0")
-bullet_resource = ExtResource("2_27vj6")
 marker_container = NodePath("MarkerContainer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1998757771]

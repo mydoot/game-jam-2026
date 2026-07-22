@@ -30,8 +30,6 @@ func _ready() -> void:
 		bullet_data = bullet_resource.set_up_bullet_data()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 	
 func shoot() -> void:

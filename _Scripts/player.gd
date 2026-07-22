@@ -76,10 +76,7 @@ func state_move(delta: float) -> void:
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	
-	# 3. Transitions
-	if Input.is_action_just_pressed("dash") and can_dash and direction != Vector2.ZERO:
-		start_dash()
-		
+	# 3. Transitions	
 	if Input.is_action_just_pressed("attack") and current_weapon != null:
 		start_attack()
 
@@ -104,6 +101,7 @@ func start_attack() -> void:
 	# Tell the Weapon to do its thing
 	if current_weapon.has_method("shoot"):
 		current_weapon.shoot()
+		current_state = State.MOVE
 
 func state_attack(delta: float) -> void:
 	# 1. Allow Aiming (Optional: Remove this line if you want the swing direction to 'lock' on start)
@@ -141,8 +139,8 @@ func equip_weapon(weapon_scene: PackedScene) -> void:
 	
 	# 3. Connect signals (Observer Pattern)
 	# This listens for the "attack_finished" signal we created in weapon.gd
-	if new_weapon.has_signal("attack_finished"):
-		new_weapon.attack_finished.connect(_on_weapon_finished)
+	#if new_weapon.has_signal("attack_finished"):
+		#new_weapon.attack_finished.connect(_on_weapon_finished)
 
 func _on_weapon_finished() -> void:
 	current_state = State.MOVE
