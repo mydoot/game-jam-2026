@@ -3,8 +3,6 @@ extends Node2D
 
 @export var damage: int = 1
 @export var cooldown: float = 0.5
-@export var knockback: float = 300.0
-@export var mana_gain_on_hit: float = 1.0;
 
 @onready var anim_player = $AnimationPlayer
 @onready var hitbox = $Hitbox

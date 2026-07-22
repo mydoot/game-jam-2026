@@ -34,16 +34,14 @@ var is_invincible: bool = false
 func _ready() -> void:
 	# Signals to update HUD
 	stats.health_changed.connect(hud.update_health)
-	stats.stamina_changed.connect(hud.update_stamina)
-	stats.mana_changed.connect(hud.update_mana)
+	stats.bullets_changed.connect(hud.update_bullets)
 	stats.died.connect(_on_player_died)
 	# Initialize HUD
 	hud.update_health(stats.health, stats.max_health)
-	hud.update_stamina(stats.stamina, stats.max_stamina)
-	hud.update_mana(stats.mana, stats.max_mana)
+	hud.update_bullets(stats.bullets, stats.max_bullets)
 	
 	# In the future, this is where we load from a Save File or Inventory.
-	equip_weapon(preload("res://Scenes/Weapons/sword.tscn"))
+	equip_weapon(preload("res://Scenes/Weapons/gun.tscn"))
 
 func _physics_process(delta: float) -> void:
 	match current_state:
@@ -80,19 +78,12 @@ func state_move(delta: float) -> void:
 	if Input.is_action_just_pressed("attack") and current_weapon != null:
 		start_attack()
 
-# --- STATE: DASH ---
-func start_dash() -> void:
-	if not stats.spend_stamina(1.0):
-		return
-	current_state = State.DASH
-	dash_timer = dash_duration
-	can_dash = false
-		
-	# Cooldown reset
-	get_tree().create_timer(dash_cooldown).timeout.connect(func(): can_dash = true)
 
 # --- STATE: ATTACK ---
 func start_attack() -> void:
+	if not stats.spend_bullets(1):
+		return
+		
 	current_state = State.ATTACK
 	
 	# Visual: Slight lunging stop

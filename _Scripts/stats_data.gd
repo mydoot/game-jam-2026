@@ -2,20 +2,15 @@ class_name Stats
 extends Node
 
 @export_group("Helath (Hearts)")
-@export var max_health: int = 3
-@export var start_health: int = 3
-
-@export_group("Stamina")
-@export var max_stamina: float = 3.0
-@export var stamina_regen_rate: float = 1.0
+@export var max_health: int = 1
+@export var start_health: int = 1
 
 @export_group("Bullets") 
-@export var max_mana: float = 6
-@export var start_mana: float = 6 # Use later if we want mana to regen, or for testing
+@export var max_bullets: float = 6
+@export var start_bullets: float = 6 
 
 signal health_changed(new_value: int, max_value: int)
-signal stamina_changed(new_value: float, max_value: float)
-signal mana_changed(new_value: float, max_value: float)
+signal bullets_changed(new_value: float, max_value: float)
 signal died
 
 #	clampi and clampf forces values to be within the min/max: clampi/f(value, min, max)
@@ -26,41 +21,29 @@ var health: int:
 		if health == 0:
 			died.emit()
 
-var stamina: float:
+var bullets: float:
 	set(value):
-		stamina = clampf(value, 0, max_stamina)
-		stamina_changed.emit(stamina, max_stamina)
-
-var mana: float:
-	set(value):
-		mana = clampf(value, 0, max_mana)
-		mana_changed.emit(mana, max_mana)
+		bullets = clampf(value, 0, max_bullets)
+		bullets_changed.emit(bullets, max_bullets)
 		
 func _ready() -> void:
 	health = start_health
-	stamina = max_stamina
-	mana = start_mana
+	bullets = start_bullets
 
 func _process(delta: float) -> void:
-	if stamina < max_stamina:
-		stamina += stamina_regen_rate * delta
+	pass
 		
 #	Public funcions that other scripts/nodes will call
 
 func take_damage(amount: int) -> void:
 	health -= amount
 
-func spend_stamina(amount: float) -> bool:
-	if stamina >= amount:
-		stamina -= amount
+
+func spend_bullets(amount: float) -> bool:
+	if bullets >= amount:
+		bullets -= amount
 		return true
 	return false
 
-func spend_mana(amount: float) -> bool:
-	if mana >= amount:
-		mana -= amount
-		return true
-	return false
-
-func gain_mana(amount: float) -> void:
-	mana += amount
+func gain_bullets(amount: float) -> void:
+	bullets += amount

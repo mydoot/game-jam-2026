@@ -12,8 +12,5 @@ offset_bottom = 40.0
 [node name="HealthLabel" type="Label" parent="VBoxContainer" unique_id=573992928]
 layout_mode = 2
 
-[node name="StaminaLabel" type="Label" parent="VBoxContainer" unique_id=47758571]
-layout_mode = 2
-
-[node name="ManaLabel" type="Label" parent="VBoxContainer" unique_id=1856010651]
+[node name="BulletLabel" type="Label" parent="VBoxContainer" unique_id=1856010651]
 layout_mode = 2
