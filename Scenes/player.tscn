@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dtqlell30el1t"]
+
+[ext_resource type="Script" uid="uid://c3hasx7qafvcw" path="res://_Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://c8mpe4b4nhbaq" path="res://Assets/Sprites/Sprite-0004.png" id="2_cvnsp"]
+[ext_resource type="Script" uid="uid://rttqcotifgxo" path="res://_Scripts/stats_data.gd" id="3_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://bpl24jrh182us" path="res://Scenes/HUD.tscn" id="4_vgqql"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
+radius = 7.0
+height = 26.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1798557799 groups=["player"]]
+physics_interpolation_mode = 1
+collision_mask = 3
+script = ExtResource("1_cvnsp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1378997867]
+position = Vector2(3, -2)
+texture = ExtResource("2_cvnsp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=161442825]
+shape = SubResource("CapsuleShape2D_cvnsp")
+
+[node name="WeaponSocket" type="Marker2D" parent="." unique_id=668079680]
+
+[node name="Stats" type="Node" parent="." unique_id=590511639]
+script = ExtResource("3_6t5aa")
+
+[node name="HUD" parent="." unique_id=2139640349 instance=ExtResource("4_vgqql")]
