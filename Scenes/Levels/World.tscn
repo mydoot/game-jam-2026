@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://birvxciwqfi4r"]
 
-[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/test_level.gd" id="1_vi80n"]
+[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_vi80n"]
 [ext_resource type="PackedScene" uid="uid://44g8jo31buf7" path="res://Scenes/Rooms/bigger_room.tscn" id="2_l0cnv"]
 [ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_f4gmh"]
 [ext_resource type="PackedScene" uid="uid://dtqlell30el1t" path="res://Scenes/player.tscn" id="4_exae8"]
@@ -10,6 +10,7 @@ script = ExtResource("1_vi80n")
 
 [node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_l0cnv")]
 position = Vector2(127, 309)
+rotation = -3.0138295e-05
 
 [node name="MainCamera" parent="." unique_id=118585489 node_paths=PackedStringArray("target") instance=ExtResource("3_f4gmh")]
 visible = false

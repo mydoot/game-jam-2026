@@ -11,21 +11,28 @@ extends Node2D
 @export_group("For Bullets")
 @export var bullet_resource : Resource
 @export var marker_container : Node2D
+
 var bullet_data : DirectionalBulletsData2D
+var player_damage_data: DamageData
 
 signal attack_finished
 signal dealt_damage
-	
+
 var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
 func _ready() -> void:
-	if vfx.is_visible_in_tree():
-		vfx.visible = false
-		
+	player_damage_data = DamageData.new()
+	player_damage_data.damage = 1
+	player_damage_data.is_from_player = true
+	player_damage_data.is_ricoshot = false
+	player_damage_data.is_piercing = false
+	
+	
 	if bullet_resource:
 		bullet_data = bullet_resource.set_up_bullet_data()
+		bullet_data.bullets_custom_data = player_damage_data
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 	
