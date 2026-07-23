@@ -67,4 +67,4 @@ autowrap_mode = 3
 
 [node name="Enemy3" parent="." unique_id=1557205180 groups=["enemy"] instance=ExtResource("4_0igsr")]
 position = Vector2(316, 2)
-rotation = 1.5707964
+rotation = 1.5863148
