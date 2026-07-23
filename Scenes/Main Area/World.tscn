@@ -11,6 +11,7 @@ script = ExtResource("1_8utni")
 [node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_3hajc")]
 position = Vector2(127, 309)
 rotation = -3.0138295e-05
+rotation = -3.0138295e-05
 
 [node name="MainCamera" parent="." unique_id=118585489 node_paths=PackedStringArray("target") instance=ExtResource("3_5o32j")]
 visible = false
