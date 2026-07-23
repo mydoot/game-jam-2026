@@ -44,4 +44,4 @@ func grab_marker_transforms() -> Array[Transform2D]:
 	for marker : Marker2D in marker_container.get_children():
 		all_markers.push_back(marker.global_transform)
 		
-	return all_markers	
+	return all_markers
