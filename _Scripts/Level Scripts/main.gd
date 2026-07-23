@@ -12,6 +12,11 @@ func _on_bullet_hit(hit_object: Object, multimesh_bullets_instance: MultiMeshBul
 	
 	if bullet_data != null:
 		var enemy: Enemy = hit_object as Enemy
+		var player: Player = hit_object as Player
 		
 		if enemy != null && bullet_data.is_from_player:
 			enemy.take_damage(bullet_data.damage)
+			
+		if player != null && !bullet_data.is_from_player:
+			player.take_damage(bullet_data.damage)
+			

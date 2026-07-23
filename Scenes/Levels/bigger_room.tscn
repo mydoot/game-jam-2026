@@ -3,12 +3,17 @@
 [ext_resource type="Script" uid="uid://cve10rbxqr47x" path="res://_Scripts/room.gd" id="1_rfld1"]
 [ext_resource type="TileSet" uid="uid://b370qooc4uvmc" path="res://Sprites/tile_set.tres" id="2_1lkfe"]
 [ext_resource type="PackedScene" uid="uid://byp3dirn2ih7" path="res://Scenes/Enemies/enemy.tscn" id="4_0igsr"]
+[ext_resource type="FontFile" uid="uid://cmq7sjxypw2lw" path="res://Assets/fonts/droid-sans/DroidSans.ttf" id="4_47ehs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xtq3a"]
 size = Vector2(704.5, 83.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_47ehs"]
 size = Vector2(265.32486, 41.053024)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xtq3a"]
+font = ExtResource("4_47ehs")
+font_size = 10
 
 [node name="Room_Template" type="StaticBody2D" unique_id=836460663]
 collision_layer = 2
@@ -40,10 +45,26 @@ collision_layer = 4
 position = Vector2(0, 214)
 shape = SubResource("RectangleShape2D_xtq3a")
 
-[node name="Area2D2" type="Area2D" parent="." unique_id=993670868]
-collision_layer = 4
+[node name="TestingWall" type="Area2D" parent="." unique_id=993670868]
+position = Vector2(39, -80)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=748404224]
-position = Vector2(78.99999, -106)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestingWall" unique_id=748404224]
 rotation = 0.9075902
 shape = SubResource("RectangleShape2D_47ehs")
+
+[node name="Label" type="Label" parent="TestingWall" unique_id=1041640468]
+offset_left = -66.33253
+offset_top = -120.18659
+offset_right = 202.43741
+offset_bottom = -75.83585
+rotation = 0.89243865
+text = "THIS IS A TESTING WALL
+BULLETS CANNOT SHOOT PAST IT AND THE ENEMY CANNOT SEE YOU PAST IT"
+label_settings = SubResource("LabelSettings_xtq3a")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Enemy3" parent="." unique_id=1557205180 groups=["enemy"] instance=ExtResource("4_0igsr")]
+position = Vector2(316, 2)
+rotation = 1.5863148
