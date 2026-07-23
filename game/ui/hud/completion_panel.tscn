@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://game/ui/hud/completion_panel.gd" id="1"]
+[node name="CompletionPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(480, 420)
+script = ExtResource("1")
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="Title" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+[node name="Reward" type="Label" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 70)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+[node name="Next" type="Button" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 48)
+layout_mode = 2
+text = "NEXT LEVEL"
+[node name="Replay" type="Button" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 48)
+layout_mode = 2
+text = "REPLAY"
+[node name="Select" type="Button" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 48)
+layout_mode = 2
+text = "LEVEL SELECT"
+[node name="Menu" type="Button" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 48)
+layout_mode = 2
+text = "MAIN MENU"

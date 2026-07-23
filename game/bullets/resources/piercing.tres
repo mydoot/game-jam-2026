@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BulletDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/bullets/bullet_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+kind = 2
+display_name = "Piercing"
+color = Color(0.87451, 0.45098, 1, 1)
+pierces_enemies = true
+

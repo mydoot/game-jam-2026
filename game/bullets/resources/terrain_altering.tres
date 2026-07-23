@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BulletDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/bullets/bullet_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+kind = 3
+display_name = "Terrain"
+color = Color(1, 0.6, 0.290196, 1)
+alters_terrain = true
+

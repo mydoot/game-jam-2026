@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://game/ui/hud/planning_panel.gd" id="1"]
+[ext_resource type="PackedScene" path="res://game/ui/hud/round_slot_button.tscn" id="2"]
+[node name="PlanningPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(780, 214)
+script = ExtResource("1")
+round_button_scene = ExtResource("2")
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 5
+[node name="Title" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+[node name="Tutorial" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+[node name="SupplyLabel" type="Label" parent="Content"]
+layout_mode = 2
+text = "SUPPLIED ROUNDS"
+horizontal_alignment = 1
+[node name="Supply" type="HBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 7
+alignment = 1
+[node name="CylinderLabel" type="Label" parent="Content"]
+layout_mode = 2
+text = "CYLINDER — FIRES LEFT TO RIGHT"
+horizontal_alignment = 1
+[node name="Slots" type="HBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 7
+alignment = 1
+[node name="Start" type="Button" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "LOAD ALL 6 ROUNDS"
+

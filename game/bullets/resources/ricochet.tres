@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BulletDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/bullets/bullet_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+kind = 1
+display_name = "Ricochet"
+color = Color(0.384314, 0.85098, 1, 1)
+max_bounces = 1
+
