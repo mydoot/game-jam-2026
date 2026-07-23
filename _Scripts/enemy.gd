@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Enemy extends CharacterBody2D
 
 @export var health = 5
 @export var stop_distance = 10
@@ -14,36 +14,33 @@ var player = null
 var is_invincible: bool = false
 var is_knocked_back: bool = false
 
-func _physics_process(delta: float) -> void:
-	if is_knocked_back:
-		velocity = velocity.move_toward(Vector2.ZERO, 400.0 * delta)
-		move_and_slide()
-		return
+var _field_of_view: Dictionary[Node2D, RayCast2D]
+var _ray: RayCast2D
+
+func _process(delta: float) -> void:
+	#if is_knocked_back:
+		#velocity = velocity.move_toward(Vector2.ZERO, 400.0 * delta)
+		#move_and_slide()
+		#return
 	
-	if chasePlayer and player:
-		var direction = (player.global_position - global_position).normalized()
-		
-		if global_position.distance_to(player.global_position) > stop_distance:
-			velocity = direction * speed
-			sprite.flip_h = direction.x < 0
-		else:
-			velocity = Vector2.ZERO
-	else:
-		velocity = Vector2.ZERO
+	for object in _field_of_view:
+		_ray = _field_of_view[object]
+		if object is CharacterBody2D:
+			print("in my sight")
+		_ray.target_position = (object.global_position - global_position).rotated(-rotation)
 	
-	move_and_slide()
+	#move_and_slide()
 
 	
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		player = body
-		chasePlayer = true
+	_ray = RayCast2D.new()
+	_field_of_view[body] = _ray
+	add_child(_ray)
 
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
-	if body == player:
-		player = null
-		chasePlayer = false
+	_field_of_view[body].queue_free()
+	_field_of_view.erase(body)
 		
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
