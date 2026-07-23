@@ -115,5 +115,7 @@ func take_damage(damage: int) -> void:
 
 func _on_timer_timeout() -> void:
 	print("firing shot!")
+	# The enemy is firing enemy_bullet.tres which is just a very fast projectile
+	# It would probably be better for the enemy to fire a raycast shot to insta kill the player, but this is an easy implementation for now
 	shooting_component.shoot()
 	

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://t00ae5ypf4bk" path="res://_Scripts/enemy.gd" id="1_jcvw6"]
 [ext_resource type="Script" uid="uid://c3v4oaaiw6leu" path="res://_Scripts/shooting_component.gd" id="2_ubio8"]
 [ext_resource type="Texture2D" uid="uid://byq27vipirxu2" path="res://Assets/Sprites/Slime_JE3_BE2.webp" id="2_x1rqp"]
-[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="3_ubio8"]
+[ext_resource type="Resource" uid="uid://bkrmiocbxufwg" path="res://_Scripts/Resources/enemy_bullet.tres" id="3_ubio8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_afpow"]
 radius = 43.826324

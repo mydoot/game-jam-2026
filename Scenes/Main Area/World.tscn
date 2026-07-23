@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://birvxciwqfi4r"]
+
+[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_8utni"]
+[ext_resource type="PackedScene" uid="uid://44g8jo31buf7" path="res://Scenes/Levels/bigger_room.tscn" id="2_3hajc"]
+[ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_5o32j"]
+[ext_resource type="PackedScene" uid="uid://dtqlell30el1t" path="res://Scenes/player.tscn" id="4_pdwq7"]
+
+[node name="World" type="Node2D" unique_id=837482538]
+script = ExtResource("1_8utni")
+
+[node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_3hajc")]
+position = Vector2(127, 309)
+rotation = -3.0138295e-05
+
+[node name="MainCamera" parent="." unique_id=118585489 node_paths=PackedStringArray("target") instance=ExtResource("3_5o32j")]
+visible = false
+position = Vector2(289, 63)
+zoom = Vector2(2, 2)
+target = NodePath("../Player")
+
+[node name="Player" parent="." unique_id=1798557799 instance=ExtResource("4_pdwq7")]
+top_level = true
+position = Vector2(142, 245)
+
+[node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
+position = Vector2(139, 247)
