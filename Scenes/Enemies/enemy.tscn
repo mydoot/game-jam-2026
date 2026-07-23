@@ -39,10 +39,6 @@ collision_mask = 5
 position = Vector2(-0.04751623, 0)
 scale = Vector2(1.1187906, 1)
 polygon = PackedVector2Array(0.04249821, -17.910418, -110.24006, 181.09456, -110.24, 957.214, 0.04249821, 1010.94525, 104.989, 955.224, 104.9888, 171.1443)
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Detection_Area" unique_id=2271720]
-position = Vector2(-0.04751623, 0)
-scale = Vector2(1.1187906, 1)
-polygon = PackedVector2Array(0.04249821, -17.910418, -110.24006, 181.09456, -110.24, 957.214, 0.04249821, 1010.94525, 104.989, 955.224, 104.9888, 171.1443)
 
 [node name="Hurtbox" type="CollisionShape2D" parent="." unique_id=480996072]
 visible = false

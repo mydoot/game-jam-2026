@@ -22,7 +22,6 @@ tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Sprite2D:visible")
-tracks/1/path = NodePath("Sprite2D:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -51,7 +50,6 @@ tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Sprite2D:visible")
-tracks/1/path = NodePath("Sprite2D:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -76,7 +74,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 region_filter_clip_enabled = true
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=913103793]
 [node name="AnimationPlayer" parent="." index="1" unique_id=913103793]
 libraries/ = SubResource("AnimationLibrary_ksptp")
 

@@ -17,7 +17,6 @@ font_size = 10
 
 [node name="Room_Template" type="StaticBody2D" unique_id=836460663]
 collision_layer = 2
-collision_layer = 2
 script = ExtResource("1_rfld1")
 
 [node name="Base" type="TileMapLayer" parent="." unique_id=604760076]
