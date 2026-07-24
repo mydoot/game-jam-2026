@@ -16,6 +16,7 @@ font = ExtResource("4_47ehs")
 font_size = 10
 
 [node name="Room_Template" type="StaticBody2D" unique_id=836460663]
+position = Vector2(0, -1)
 collision_layer = 2
 script = ExtResource("1_rfld1")
 

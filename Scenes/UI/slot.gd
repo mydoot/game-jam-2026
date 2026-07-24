@@ -1,4 +1,4 @@
-extends Panel
+class_name Slot extends Panel
 
 @onready var icon: TextureRect = $TextureRect
 @export var bullet: Resource

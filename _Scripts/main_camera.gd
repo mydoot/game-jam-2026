@@ -1,7 +1,7 @@
 extends Camera2D
 
 # Assign the Player node in the Inspector
-@export var target: Node2D
+var target: Node2D
 
 @export_category("Smoothing")
 # Lower = Smoother/Slower, Higher = Snappier

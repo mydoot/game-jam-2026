@@ -30,18 +30,24 @@ func _ready() -> void:
 	player_damage_data.is_piercing = false
 	
 	
-	if bullet_resource:
+	if GlobalVariables.bullet_loadout:
+		bullet_resource = GlobalVariables.bullet_loadout.pop_front()
 		bullet_data = bullet_resource.set_up_bullet_data()
 		bullet_data.bullets_custom_data = player_damage_data
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 	
 	
 func shoot() -> void:
 	if bullet_data:
 		bullet_data.transforms = grab_marker_transforms()
 		if bullet_data.transforms:
+			
 			BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
+			bullet_resource = GlobalVariables.bullet_loadout.pop_front()
+			
+			if bullet_resource:
+				bullet_data = bullet_resource.set_up_bullet_data()
+			else:
+				push_warning("Missing bullet_data. Ignore if the player just fired their last bullet.")
 		else:
 			push_warning("bullet_data has no DirectionalBulletsData2D object.")
 

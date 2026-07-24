@@ -5,6 +5,9 @@ func _ready() -> void:
 	BulletFactory.bullet_factory = $BulletFactory2D
 	BulletFactory.bullet_factory.body_entered.connect(_on_bullet_hit)
 	
+	#Globals.main_camera = $MainCamera
+	GlobalVariables.spawn_point = $SpawnPoint
+	
 
 func _on_bullet_hit(hit_object: Object, multimesh_bullets_instance: MultiMeshBullets2D, bullet_index: int, data: Resource, bullet_global_transform: Transform2D) -> void:
 	print("hit")
