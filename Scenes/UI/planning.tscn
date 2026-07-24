@@ -1,0 +1,379 @@
+[gd_scene format=3 uid="uid://djpkmrsukexg4"]
+
+[ext_resource type="Script" uid="uid://c1a5r1k82fvi7" path="res://Scenes/UI/planning.gd" id="1_n6qg7"]
+[ext_resource type="Script" uid="uid://f2mc5uj6jleh" path="res://Scenes/UI/loadout.gd" id="1_rsdvt"]
+[ext_resource type="Script" uid="uid://dakc0bruooki1" path="res://Scenes/UI/panel_2.gd" id="2_ow6ci"]
+[ext_resource type="Script" uid="uid://d5eguynnci7y" path="res://Scenes/UI/slot.gd" id="2_p7dmu"]
+[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="4_rsdvt"]
+[ext_resource type="FontFile" uid="uid://b4udn0uh2kqrt" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_R.otf" id="5_5h7ne"]
+[ext_resource type="Resource" uid="uid://bkrmiocbxufwg" path="res://_Scripts/Resources/enemy_bullet.tres" id="5_8jt1r"]
+[ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="6_i378m"]
+
+[sub_resource type="Theme" id="Theme_yccb6"]
+
+[node name="Planning" type="Node2D" unique_id=950038523]
+script = ExtResource("1_n6qg7")
+
+[node name="Canvas" type="CanvasLayer" parent="." unique_id=1277842487]
+
+[node name="LoadoutMenu" type="Control" parent="Canvas" unique_id=767138845]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Loadout" type="Panel" parent="Canvas/LoadoutMenu" unique_id=1880534998]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 280.0
+offset_top = 493.0
+offset_right = 827.5
+offset_bottom = 589.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = SubResource("Theme_yccb6")
+script = ExtResource("1_rsdvt")
+
+[node name="Loadout Grid" type="GridContainer" parent="Canvas/LoadoutMenu/Loadout" unique_id=603608110]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -29.5
+offset_right = 194.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+columns = 6
+
+[node name="Slot1" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=668383593]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot1" unique_id=969844678]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot2" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=1594679446]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot2" unique_id=266435711]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot3" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=1553248407]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot3" unique_id=677878723]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot4" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=1337776357]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot4" unique_id=1112662709]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot5" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=440816962]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot5" unique_id=1411325943]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot6" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=230959624]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot6" unique_id=1258834194]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Available Bullets" type="Panel" parent="Canvas/LoadoutMenu" unique_id=381884880]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 277.75
+offset_top = 384.0
+offset_right = 825.25
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = SubResource("Theme_yccb6")
+script = ExtResource("2_ow6ci")
+
+[node name="Available Shots Grid" type="GridContainer" parent="Canvas/LoadoutMenu/Available Bullets" unique_id=100740192]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -29.5
+offset_right = 194.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+columns = 6
+
+[node name="Slot1" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=1617315456]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+bullet = ExtResource("5_8jt1r")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot1" unique_id=794687449]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot2" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=1542234639]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+bullet = ExtResource("5_8jt1r")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot2" unique_id=918296366]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot3" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=30896773]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+bullet = ExtResource("5_8jt1r")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot3" unique_id=2138638262]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot4" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=716294211]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+bullet = ExtResource("4_rsdvt")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot4" unique_id=627945848]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot5" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=2127355163]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+bullet = ExtResource("4_rsdvt")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot5" unique_id=188963966]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot6" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=797017232]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+bullet = ExtResource("4_rsdvt")
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot6" unique_id=2083494115]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Start Button" type="Button" parent="Canvas/LoadoutMenu" unique_id=132034574]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 13.25
+anchor_top = 9.55
+anchor_right = 15.575
+anchor_bottom = 10.45
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/h_separation = 5
+theme_override_fonts/font = ExtResource("5_5h7ne")
+theme_override_font_sizes/font_size = 24
+text = "Begin"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Canvas" unique_id=1167355404]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -28.0
+offset_right = 187.0
+offset_bottom = -5.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 20
+text = "Press [E] to hide menu"
+
+[connection signal="pressed" from="Canvas/LoadoutMenu/Start Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Canvas/LoadoutMenu/Start Button" to="Canvas/LoadoutMenu/Loadout" method="_on_start_button_pressed"]
