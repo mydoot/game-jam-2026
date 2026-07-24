@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://djpkmrsukexg4"]
 
-[ext_resource type="Texture2D" uid="uid://dffe10rm0lj0y" path="res://Assets/Sprites/pngtree-pixel-art-golden-bullet-with-reload-text-on-black-background-png-image_18124324.webp" id="1_bk18g"]
+[ext_resource type="Script" uid="uid://f2mc5uj6jleh" path="res://Scenes/UI/loadout.gd" id="1_rsdvt"]
 [ext_resource type="Script" uid="uid://dakc0bruooki1" path="res://Scenes/UI/panel_2.gd" id="2_ow6ci"]
 [ext_resource type="Script" uid="uid://d5eguynnci7y" path="res://Scenes/UI/slot.gd" id="2_p7dmu"]
+[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="4_rsdvt"]
 
 [sub_resource type="Theme" id="Theme_yccb6"]
 
@@ -24,6 +25,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
 theme = SubResource("Theme_yccb6")
+script = ExtResource("1_rsdvt")
 
 [node name="Loadout Grid" type="GridContainer" parent="CanvasLayer/Panel" unique_id=603608110]
 layout_mode = 1
@@ -41,11 +43,12 @@ grow_vertical = 2
 theme_override_constants/h_separation = 10
 columns = 6
 
-[node name="Slot1" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=932579472]
+[node name="Slot1" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=668383593]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+script = ExtResource("2_p7dmu")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot1" unique_id=1820035028]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot1" unique_id=969844678]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -58,29 +61,113 @@ offset_right = 35.5
 offset_bottom = 35.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_bk18g")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Slot2" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=1722565025]
+[node name="Slot2" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=1594679446]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+script = ExtResource("2_p7dmu")
 
-[node name="Slot3" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=1914520257]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot2" unique_id=266435711]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Slot4" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=170390484]
+[node name="Slot3" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=1553248407]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+script = ExtResource("2_p7dmu")
 
-[node name="Slot5" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=143562793]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot3" unique_id=677878723]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Slot6" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=258301849]
+[node name="Slot4" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=1337776357]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot4" unique_id=1112662709]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot5" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=440816962]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot5" unique_id=1411325943]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot6" type="Panel" parent="CanvasLayer/Panel/Loadout Grid" unique_id=230959624]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("2_p7dmu")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/Loadout Grid/Slot6" unique_id=1258834194]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -35.5
+offset_right = 35.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Panel2" type="Panel" parent="CanvasLayer" unique_id=381884880]
 anchors_preset = 7
@@ -118,6 +205,7 @@ columns = 6
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 script = ExtResource("2_p7dmu")
+bullet = ExtResource("4_rsdvt")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel2/Available Shots Grid/Slot1" unique_id=794687449]
 layout_mode = 1
@@ -132,7 +220,6 @@ offset_right = 35.5
 offset_bottom = 35.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_bk18g")
 expand_mode = 1
 stretch_mode = 5
 

@@ -1,9 +1,22 @@
 extends Panel
 
 @onready var icon: TextureRect = $TextureRect
+@export var bullet: Resource
 
+func _ready() -> void:
+	update_ui()
+
+
+func update_ui() -> void:
+	if not bullet:
+		icon.texture = null
+		return
+		
+	icon.texture = bullet.bullet_textures[0]
+	icon.tooltip_text = "basic bullet"
+	
 func _get_drag_data(at_position: Vector2) -> Variant:
-	if icon.texture == null:
+	if not bullet:
 		return
 		
 	var preview = duplicate()
@@ -15,14 +28,16 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	
 	set_drag_preview(control)
 	icon.hide()
-	return icon
+	return self
 
 func _can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
 	return true
 	
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	var tmp = icon.texture
-	icon.texture = data.texture
-	data.texture = tmp
+	var tmp = bullet
+	bullet = data.bullet
+	data.bullet = tmp
 	icon.show()
-	data.show()
+	data.icon.show()
+	update_ui()
+	data.update_ui()
