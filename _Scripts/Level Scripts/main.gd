@@ -1,5 +1,7 @@
 extends Node2D
 
+## This needs to be the UID of a scene
+@export var next_level: StringName = &""
 
 func _ready() -> void:
 	BulletFactory.bullet_factory = $BulletFactory2D
@@ -22,4 +24,11 @@ func _on_bullet_hit(hit_object: Object, multimesh_bullets_instance: MultiMeshBul
 			
 		if player != null && !bullet_data.is_from_player:
 			player.take_damage(bullet_data.damage)
-			
+
+
+func _on_finish_point_body_entered(body: Node2D) -> void:
+	if next_level:
+		SceneLoader.load_scene(next_level)
+	else:
+		push_warning("There is no scene UID in next_level, cannot change scene.")
+		return
