@@ -27,7 +27,7 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_jo1ms")
 theme_override_font_sizes/font_size = 50
-text = "6 BULELTS LEFT"
+text = "6 BULLETS LEFT"
 
 [node name="Panel" type="Panel" parent="." unique_id=1000135010]
 anchors_preset = 3

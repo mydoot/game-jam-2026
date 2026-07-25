@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 		return
 	
 	# Zoom in once target is gotten
-	zoom = zoom.lerp(Vector2(2,2), smooth_speed * delta)
+	zoom = zoom.lerp(Vector2(2.25,2.25), smooth_speed * delta)
 	
 	# 1. Calculate the desired position
 	# Start with the player's center

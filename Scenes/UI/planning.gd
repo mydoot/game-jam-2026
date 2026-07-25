@@ -51,6 +51,8 @@ func _on_start_button_pressed() -> void:
 	
 	var tween = create_tween()
 	tween.tween_property(loadout_menu, "position", Vector2(0, 450), 0.4).set_ease(Tween.EASE_IN).as_relative()
+	
+	hint_label.hide()
 
 
 func hide_loadout_menu() -> void:
