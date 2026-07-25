@@ -1,124 +1,147 @@
 class_name Enemy extends CharacterBody2D
 
-## Enemy controller linked to its Detection_Area, Timer, and ShootingComponent.
-## It tracks Player line of sight, triggers laser attacks, and receives player
-## bullet damage from the level controller.
-@export var health = 5
-@export var stop_distance = 10
-@export var contact_damage = 1
-@export var invincibility_duration: float = 0.3
-@export var knockback_strength: float = 200.0
+## Stationary laser sentry configured by a typed SentryPlacement. Its preview
+## cone is ray-clipped by terrain, so displayed danger matches real line of sight.
+signal died(enemy: Enemy)
+
+@export var health := 1
+@export var sight_range := 300.0
+@export var cone_half_angle := 0.34
+@export var fire_delay := 1.5
+@export var requires_ricochet := false
 
 @onready var sprite: Sprite2D = $Sprite2D
-
 @onready var timer: Timer = $Timer
-
 @onready var shooting_component: ShootingComponent = $ShootingComponent
-
 @onready var firing_point: Marker2D = $MarkerContainer/FiringPoint
+@onready var sight_cone: Polygon2D = $SightCone
+@onready var shield_ring: Line2D = $ShieldRing
 
-var speed = 25
-var chase_player = false
-var player = null
-var is_invincible: bool = false
-var is_knocked_back: bool = false
+var combat_active := false
+var target: Player
+var _dying := false
+var _visible_last_frame := false
 
-var _field_of_view: Dictionary[Node2D, RayCast2D]
+## Initializes timing, shield readability, and the terrain-clipped preview.
+func _ready() -> void:
+	add_to_group("enemy")
+	timer.wait_time = fire_delay
+	timer.one_shot = true
+	shield_ring.visible = requires_ricochet
+	set_combat_active(false)
+	call_deferred("_update_sight_visual", false)
 
-## Rechecks Player visibility every physics frame so the attack Timer starts and
-## stops as cover changes.
+## Updates visibility, acquisition color, and a cancellable charge timer.
 func _physics_process(_delta: float) -> void:
-	_update_line_of_sight()
+	var visible := target != null and is_instance_valid(target) and _can_see(target)
+	if visible and combat_active and not _visible_last_frame and has_node("/root/SfxBus"):
+		SfxBus.play_world(&"alert", global_position)
+	_visible_last_frame = visible
+	if not combat_active or not visible:
+		timer.stop()
+	elif timer.is_stopped():
+		timer.start()
+	_update_sight_visual(visible)
 
+## Assigns the current room's player without relying on global group searches.
+func set_target(new_target: Player) -> void:
+	target = new_target
 
-## Aims the firing marker at a visible Player and controls the Timer used by
-## ShootingComponent; terrain on collision layer 3 blocks the sight ray.
-func _update_line_of_sight() -> void:
-	var has_visible_player := false
-	for object in _field_of_view:
-		if not is_instance_valid(object):
-			continue
-		var _ray = _field_of_view[object]
-		_ray.target_position = to_local(object.global_position)
-		_ray.force_raycast_update()
-		
-		var hit_object = _ray.get_collider()
-		
-		if hit_object == object:
-			has_visible_player = true
-			firing_point.rotation = _ray.target_position.angle()
-			break
-
-	if has_visible_player:
-		if timer.is_stopped():
-			timer.start()
-	elif not timer.is_stopped():
+## Enables or freezes the sentry at the planning/combat boundary.
+func set_combat_active(active: bool) -> void:
+	combat_active = active
+	if not active and timer:
 		timer.stop()
 
-
-## Creates a temporary sight ray only when Player enters Detection_Area.
-func _on_detection_area_body_entered(body: Node2D) -> void:
-	if body is Player and not _field_of_view.has(body):
-		var _ray = RayCast2D.new()
-		_ray.collide_with_areas = true
-		_ray.collision_mask = 5
-		
-		_ray.add_exception(self)
-		_ray.add_exception($Detection_Area)
-		
-		_field_of_view[body] = _ray
-		player = body
-		add_child(_ray)
-
-
-## Removes Player's sight ray when they leave Detection_Area.
-func _on_detection_area_body_exited(body: Node2D) -> void:
-	if _field_of_view.has(body):
-		_field_of_view[body].queue_free()
-		_field_of_view.erase(body)
-		if player == body:
-			player = null
-
-
-## Deals contact damage through Player.take_damage when a connected hitbox signal
-## reports the player.
-func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		if body.has_method("take_damage"):
-			body.take_damage(contact_damage)
-	
-
-## Applies damage routed from the level's BulletFactory callback, freeing the
-## enemy on death or briefly enabling hit invincibility.
-func take_damage(damage: int) -> void:
-	if is_invincible:
-		return
-	
-	health -= damage
+## Applies projectile rules and returns whether damage passed the shield.
+func receive_projectile(bullet_type: BasicBullet.BulletType, bounced: bool, amount: int) -> bool:
+	if _dying:
+		return false
+	if requires_ricochet and not (bullet_type == BasicBullet.BulletType.RICOCHET and bounced):
+		_flash_shield()
+		if has_node("/root/SfxBus"):
+			SfxBus.play_world(&"shield", global_position)
+		return false
+	health -= amount
 	if health <= 0:
+		_dying = true
+		_spawn_death_burst()
+		if has_node("/root/SfxBus"):
+			SfxBus.play_world(&"enemy_down", global_position)
+		died.emit(self)
 		queue_free()
-		return
-	
-	is_invincible = true
-	is_knocked_back = true
-	
-	# Knockback away from the player
-	if player:
-		var knockback_dir = (global_position - player.global_position).normalized()
-		velocity = knockback_dir * knockback_strength
-	
-	get_tree().create_timer(0.2).timeout.connect(func(): is_knocked_back = false)
-	
-	# Flash tween
-	var tween = create_tween()
-	for i in range(3):
-		tween.tween_property(sprite, "modulate:a", 0.3, 0.05)
-		tween.tween_property(sprite, "modulate:a", 1.0, 0.05)
-	
-	get_tree().create_timer(invincibility_duration).timeout.connect(func(): is_invincible = false)
+		return true
+	var tween := create_tween()
+	tween.tween_property(sprite, "modulate", Color(1, 0.2, 0.2), 0.06)
+	tween.tween_property(sprite, "modulate", Color.WHITE, 0.08)
+	return true
 
+## Compatibility damage entry used by older fixtures and non-projectile hazards.
+func take_damage(amount: int) -> void:
+	receive_projectile(BasicBullet.BulletType.NORMAL, false, amount)
 
-## Asks ShootingComponent to fire when the connected attack Timer expires.
+## Fires only if the player remains visible after the full telegraph delay.
 func _on_timer_timeout() -> void:
-	shooting_component.shoot()
-	
+	if combat_active and target and _can_see(target):
+		firing_point.global_rotation = global_position.direction_to(target.global_position).angle()
+		shooting_component.shoot()
+		if has_node("/root/SfxBus"):
+			SfxBus.play_world(&"laser", global_position)
+
+## Tests the configured cone and confirms terrain does not block the target ray.
+func _can_see(body: Player) -> bool:
+	var offset := body.global_position - global_position
+	if offset.length() > sight_range:
+		return false
+	if absf(wrapf(offset.angle() - global_rotation, -PI, PI)) > cone_half_angle:
+		return false
+	var query := PhysicsRayQueryParameters2D.create(global_position, body.global_position, 5, [get_rid()])
+	var hit := get_world_2d().direct_space_state.intersect_ray(query)
+	return not hit.is_empty() and hit["collider"] == body
+
+## Rebuilds a ray fan whose outer points stop at walls instead of crossing them.
+func _update_sight_visual(target_visible: bool) -> void:
+	if not is_inside_tree():
+		return
+	var points := PackedVector2Array([Vector2.ZERO])
+	var segments := 18
+	for index in range(segments + 1):
+		var local_angle := lerpf(-cone_half_angle, cone_half_angle, float(index) / segments)
+		var global_direction := Vector2.RIGHT.rotated(global_rotation + local_angle)
+		var end := global_position + global_direction * sight_range
+		var query := PhysicsRayQueryParameters2D.create(global_position, end, 4, [get_rid()])
+		var hit := get_world_2d().direct_space_state.intersect_ray(query)
+		points.append(to_local(hit["position"] if not hit.is_empty() else end))
+	sight_cone.polygon = points
+	if target_visible and combat_active:
+		var charge := 1.0 - clampf(timer.time_left / maxf(fire_delay, 0.01), 0.0, 1.0)
+		sight_cone.color = Color(1.0, lerpf(0.62, 0.12, charge), 0.08, lerpf(0.2, 0.38, charge))
+	else:
+		sight_cone.color = Color(0.95, 0.68, 0.15, 0.13)
+
+## Pulses the blue ring when an invalid direct shot hits a shielded sentry.
+func _flash_shield() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var tween := create_tween()
+	tween.tween_property(shield_ring, "width", 6.0, 0.06)
+	tween.tween_property(shield_ring, "width", 2.0, 0.14)
+
+## Leaves a restrained brass/red death flash after the sentry frees itself.
+func _spawn_death_burst() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var ring := Line2D.new()
+	ring.width = 4.0
+	ring.default_color = Color(1.0, 0.5, 0.18)
+	ring.closed = true
+	var points := PackedVector2Array()
+	for index in 14:
+		points.append(Vector2.RIGHT.rotated(TAU * float(index) / 14.0) * 12.0)
+	ring.points = points
+	get_tree().current_scene.add_child(ring)
+	ring.global_position = global_position
+	var tween := ring.create_tween().set_parallel(true)
+	tween.tween_property(ring, "scale", Vector2(2.5, 2.5), 0.22)
+	tween.tween_property(ring, "modulate:a", 0.0, 0.22)
+	tween.chain().tween_callback(ring.queue_free)

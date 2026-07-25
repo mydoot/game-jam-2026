@@ -1,95 +1,159 @@
-extends Node2D
+class_name PlanningUI extends CanvasLayer
 
-## Coordinates the planning-to-combat handoff. It uses Loadout to store the
-## selected order in GlobalVariables, spawns Player at the level SpawnPoint, and
-## gives MainCamera its target.
-@onready var loadout: Panel = $Canvas/LoadoutMenu/Loadout
+## Preview-phase loadout editor. Players click available rounds to append them
+## to the revolver and click chambered rounds to return them.
+signal start_requested(ordered_bullets: Array[Resource])
 
-@onready var available_bullets: Panel = $"Canvas/LoadoutMenu/Available Bullets"
+var available_bullets: Array[Resource] = []
+var selected_indices: Array[int] = []
+var panel: PanelContainer
+var available_row: HBoxContainer
+var chamber_row: HBoxContainer
+var start_button: Button
+var hint_label: Label
+var description_label: Label
+var _panel_visible := true
 
-@onready var loadout_menu: Control = $Canvas/LoadoutMenu
-
-@onready var hint_label: Label = $Canvas/Label
-
-## There should only be 6 bullet resource files in this array.
-## This array is to add the bullets the player has to use to solve the level.
-@export var avail_bullets: Array[Resource] = []
-
-const player_scene = preload("res://Scenes/player.tscn")
-
-var is_menu_hidden: bool = false
-var combat_started: bool = false
-var menu_visible_position: Vector2
-var menu_tween: Tween
-
-## Clears state left by the previous attempt and records the menu's authored
-## position so repeated hide/show tweens always return to the same location.
+## Builds the responsive planning interface after CampaignLevel supplies bullets.
 func _ready() -> void:
-	GlobalVariables.clear_bullet_loadout()
-	menu_visible_position = loadout_menu.position
-	if avail_bullets.size() < 6:
-		push_warning("avail_bullets requires 6 bullet resource files.")
-		
-## Listens for the preview-menu toggle only until combat has started.
-func _process(_delta: float) -> void:
-	if not combat_started and Input.is_action_just_pressed("hide_menu"):
-		hide_loadout_menu()
+	_build_ui()
+	_rebuild()
 
+## Toggles the loadout panel with E so the full room remains inspectable.
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("hide_menu"):
+		_panel_visible = not _panel_visible
+		panel.visible = _panel_visible
+		hint_label.text = "[E] Hide loadout" if _panel_visible else "[E] Show loadout"
+		get_viewport().set_input_as_handled()
 
-## Validates Loadout, transfers its bullets through GlobalVariables, spawns one
-## Player, connects MainCamera to it, and dismisses the planning interface.
-func _on_start_button_pressed() -> void:
-	if combat_started:
+## Constructs labels, bullet rows, and the begin button without fragile paths.
+func _build_ui() -> void:
+	hint_label = Label.new()
+	hint_label.text = "[E] Hide loadout"
+	hint_label.position = Vector2(18, 16)
+	hint_label.add_theme_font_size_override("font_size", 20)
+	add_child(hint_label)
+
+	panel = PanelContainer.new()
+	panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	panel.position = Vector2(-470, -285)
+	panel.size = Vector2(940, 260)
+	add_child(panel)
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation", 8)
+	panel.add_child(content)
+	var title := Label.new()
+	title.text = "PLAN THE CHAMBER"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 27)
+	content.add_child(title)
+	var instructions := Label.new()
+	instructions.text = "Click available rounds in the order you want to fire them. Click a chamber to undo."
+	instructions.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(instructions)
+	available_row = HBoxContainer.new()
+	available_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	content.add_child(available_row)
+	var chamber_title := Label.new()
+	chamber_title.text = "CYLINDER — FIRST SHOT ON THE LEFT"
+	chamber_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(chamber_title)
+	chamber_row = HBoxContainer.new()
+	chamber_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	content.add_child(chamber_row)
+	description_label = Label.new()
+	description_label.text = "Select a round to inspect it."
+	description_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	description_label.add_theme_color_override("font_color", Color(0.65, 0.78, 0.9))
+	content.add_child(description_label)
+	start_button = Button.new()
+	start_button.text = "BEGIN LEVEL"
+	start_button.custom_minimum_size = Vector2(220, 42)
+	start_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	start_button.pressed.connect(_on_start_pressed)
+	content.add_child(start_button)
+
+## Rebuilds both rows so duplicate bullet resources remain independently usable.
+func _rebuild() -> void:
+	if available_row == null:
 		return
-	if loadout == null:
-		push_warning("Loadout menu is missing.")
+	for child in available_row.get_children():
+		available_row.remove_child(child)
+		child.queue_free()
+	for child in chamber_row.get_children():
+		chamber_row.remove_child(child)
+		child.queue_free()
+	for index in available_bullets.size():
+		var bullet := available_bullets[index] as BasicBullet
+		var button := _bullet_button(bullet, "%d" % (index + 1))
+		button.disabled = selected_indices.has(index)
+		button.pressed.connect(_select_bullet.bind(index))
+		button.mouse_entered.connect(_describe.bind(bullet))
+		available_row.add_child(button)
+	for chamber in 6:
+		if chamber < selected_indices.size():
+			var bullet := available_bullets[selected_indices[chamber]] as BasicBullet
+			var button := _bullet_button(bullet, "%d" % (chamber + 1))
+			button.pressed.connect(_remove_chamber.bind(chamber))
+			button.mouse_entered.connect(_describe.bind(bullet))
+			chamber_row.add_child(button)
+		else:
+			var empty := Button.new()
+			empty.text = "%d\nEMPTY" % (chamber + 1)
+			empty.disabled = true
+			empty.custom_minimum_size = Vector2(118, 48)
+			chamber_row.add_child(empty)
+	start_button.disabled = selected_indices.size() != 6
+
+## Produces a readable button with icon, type name, and sequence number.
+func _bullet_button(bullet: BasicBullet, number: String) -> Button:
+	var button := Button.new()
+	button.text = "%s\n%s" % [number, bullet.display_name.to_upper()]
+	button.icon = bullet.get_icon()
+	button.expand_icon = true
+	button.add_theme_constant_override("icon_max_width", 28)
+	button.custom_minimum_size = Vector2(118, 48)
+	button.tooltip_text = "%s round" % bullet.display_name
+	var color := _bullet_color(bullet.bullet_type)
+	button.add_theme_color_override("font_color", color)
+	button.add_theme_color_override("font_hover_color", color.lightened(0.2))
+	return button
+
+## Appends one unused supplied round to the firing order.
+func _select_bullet(index: int) -> void:
+	if selected_indices.size() < 6 and not selected_indices.has(index):
+		SfxBus.play_ui(&"click")
+		selected_indices.append(index)
+		_rebuild()
+
+## Returns the selected chamber to the available row.
+func _remove_chamber(chamber: int) -> void:
+	if chamber >= 0 and chamber < selected_indices.size():
+		SfxBus.play_ui(&"click")
+		selected_indices.remove_at(chamber)
+		_rebuild()
+
+## Emits the six concrete resources in their selected order.
+func _on_start_pressed() -> void:
+	if selected_indices.size() != 6:
 		return
-	
-	if not loadout.slots_are_full(): 
-		push_warning("Load all six bullets before starting.")
-		return
-	
-	loadout.load_bullets_into_list()
-	loadout.pass_bullet_list()
-	combat_started = true
-	loadout.start_button.disabled = true
-	
-	var player = player_scene.instantiate()
-	if GlobalVariables.spawn_point:
-		player.global_position = GlobalVariables.spawn_point.global_position
-	else:
-		push_warning("No spawn point registered; spawning player at the planning node position.")
-		player.global_position = global_position
-	
-	get_parent().add_child(player)
-	
-	var cam = get_tree().get_first_node_in_group("camera")
-	if cam:
-		cam.target = player
-	else:
-		push_warning("No camera node found in the 'camera' group.")
-	
-	_move_menu(menu_visible_position + Vector2(0, 450), 0.4)
-	
-	hint_label.hide()
+	var ordered: Array[Resource] = []
+	for index in selected_indices:
+		ordered.append(available_bullets[index])
+	start_button.disabled = true
+	SfxBus.play_ui(&"click")
+	start_requested.emit(ordered)
 
+## Shows the hovered bullet's concise mechanical description.
+func _describe(bullet: BasicBullet) -> void:
+	description_label.text = "%s — %s" % [bullet.display_name.to_upper(), bullet.description]
 
-## Toggles the planning menu during preview so the authored room remains visible.
-func hide_loadout_menu() -> void:
-	if not is_menu_hidden:
-		hint_label.text = "Press [E] to show menu"
-		_move_menu(menu_visible_position + Vector2(0, 450), 0.15)
-		is_menu_hidden = true
-	else:
-		hint_label.text = "Press [E] to hide menu"
-		_move_menu(menu_visible_position, 0.15)
-		is_menu_hidden = false
-
-
-## Replaces any in-flight menu tween and moves toward an absolute target,
-## preventing repeated E presses from accumulating relative offsets.
-func _move_menu(target_position: Vector2, duration: float) -> void:
-	if menu_tween and menu_tween.is_valid():
-		menu_tween.kill()
-	menu_tween = create_tween()
-	menu_tween.tween_property(loadout_menu, "position", target_position, duration).set_ease(Tween.EASE_IN_OUT)
+## Returns the shared gameplay color for one ammunition family.
+func _bullet_color(bullet_type: BasicBullet.BulletType) -> Color:
+	match bullet_type:
+		BasicBullet.BulletType.PIERCING:
+			return Color(1.0, 0.45, 0.68)
+		BasicBullet.BulletType.RICOCHET:
+			return Color(0.35, 0.9, 1.0)
+	return Color(1.0, 0.78, 0.3)

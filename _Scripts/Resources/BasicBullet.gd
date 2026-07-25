@@ -1,44 +1,20 @@
 class_name BasicBullet extends Resource
 
-## Resource schema for a selectable bullet type. Planning/Slot store instances,
-## while Weapon converts the chambered instance into BlastBullets2D spawn data.
-var bullet_data : DirectionalBulletsData2D
+## Minimal immutable ammunition definition shared by PlanningUI, Weapon, HUD,
+## PlayerProjectile, and shielded sentry damage rules.
+enum BulletType { NORMAL, PIERCING, RICOCHET }
 
-@export_group("Basic Bullet Properties")
-@export var bullet_textures : Array[Texture2D]
-@export var bullet_max_lifetime : float
-@export var bullet_texture_size : Vector2
-@export var bullet_collision_shape_size : Vector2
-@export var bullet_collision_shape_offset : Vector2
-@export var bullet_change_texture_time : float
+@export var display_name := "Normal"
+@export_multiline var description := "Stops at the first enemy or wall."
+@export var bullet_type: BulletType = BulletType.NORMAL
+@export var icon: Texture2D
+@export var projectile_tint := Color.WHITE
+@export_range(100.0, 1000.0) var speed := 600.0
+@export_range(0.1, 10.0) var lifetime := 4.0
+@export_range(2.0, 16.0) var collision_radius := 5.0
+@export_range(8.0, 48.0) var visual_size := 20.0
+@export_range(0, 4) var bounce_count := 0
 
-@export_group("Bullet Speed Properties")
-## This value should be the equal to the amount of bullets to be spawned.
-@export var amount_of_bullets : int
-@export var min_speed : float
-@export var max_speed : float
-@export var minimum_max_speed : float
-@export var maximum_max_speed : float
-@export var max_accel : float
-@export var min_accel : float
-
-
-## Builds plugin spawn data; Weapon adds marker transforms and DamageData at fire
-## time because those values depend on the active Player and level.
-func set_up_bullet_data() -> DirectionalBulletsData2D:
-	var data : DirectionalBulletsData2D = DirectionalBulletsData2D.new()
-	data.textures = bullet_textures
-	
-	data.all_bullet_speed_data = BulletSpeedData2D.generate_random_data(amount_of_bullets, min_speed, max_speed, maximum_max_speed, minimum_max_speed, min_accel, max_accel)
-	
-	data.set_collision_layer_from_array([2])
-	data.set_collision_mask_from_array([1, 3])
-
-	data.texture_size = bullet_texture_size
-	data.collision_shape_size = bullet_collision_shape_size
-	data.collision_shape_offset = bullet_collision_shape_offset
-	data.default_change_texture_time = bullet_change_texture_time
-	data.max_life_time = bullet_max_lifetime
-	
-	
-	return data
+## Returns the UI/world texture while keeping legacy callers readable.
+func get_icon() -> Texture2D:
+	return icon

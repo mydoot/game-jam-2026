@@ -26,8 +26,32 @@ offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_jo1ms")
-theme_override_font_sizes/font_size = 50
-text = "6 BULLETS LEFT"
+theme_override_font_sizes/font_size = 30
+text = "6 ROUNDS"
+
+[node name="Chambers" type="HBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -132.0
+offset_top = 40.0
+offset_right = 132.0
+offset_bottom = 84.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Objective" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -210.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 22
+text = "SENTRIES  0"
+horizontal_alignment = 2
 
 [node name="Panel" type="Panel" parent="." unique_id=1000135010]
 anchors_preset = 3

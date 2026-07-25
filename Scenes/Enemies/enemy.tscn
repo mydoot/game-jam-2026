@@ -1,55 +1,51 @@
-[gd_scene format=3 uid="uid://byp3dirn2ih7"]
+[gd_scene load_steps=6 format=3 uid="uid://byp3dirn2ih7"]
 
-[ext_resource type="Script" uid="uid://t00ae5ypf4bk" path="res://_Scripts/enemy.gd" id="1_jcvw6"]
-[ext_resource type="Script" uid="uid://c3v4oaaiw6leu" path="res://_Scripts/shooting_component.gd" id="2_ubio8"]
-[ext_resource type="Texture2D" uid="uid://byq27vipirxu2" path="res://Assets/Sprites/Slime_JE3_BE2.webp" id="2_x1rqp"]
+[ext_resource type="Script" path="res://_Scripts/enemy.gd" id="1"]
+[ext_resource type="Script" path="res://_Scripts/shooting_component.gd" id="2"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/sentry.png" id="3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_afpow"]
-radius = 43.826324
+[sub_resource type="CircleShape2D" id="1"]
+radius = 18.0
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1557205180]
-collision_mask = 3
-platform_floor_layers = 4294967040
-script = ExtResource("1_jcvw6")
-health = 1
-contact_damage = 0
+[sub_resource type="Curve" id="2"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[node name="ShootingComponent" type="Node" parent="." unique_id=182419989 node_paths=PackedStringArray("marker_container")]
-script = ExtResource("2_ubio8")
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 4
+script = ExtResource("1")
+
+[node name="SightCone" type="Polygon2D" parent="."]
+z_index = -2
+color = Color(0.95, 0.68, 0.15, 0.13)
+
+[node name="ShieldRing" type="Line2D" parent="."]
+z_index = -1
+points = PackedVector2Array(24, 0, 22.173, 9.184, 16.971, 16.971, 9.184, 22.173, 0, 24, -9.184, 22.173, -16.971, 16.971, -22.173, 9.184, -24, 0, -22.173, -9.184, -16.971, -16.971, -9.184, -22.173, 0, -24, 9.184, -22.173, 16.971, -16.971, 22.173, -9.184, 24, 0)
+width = 2.0
+default_color = Color(0.2, 0.85, 1, 0.9)
+closed = true
+width_curve = SubResource("2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3")
+scale = Vector2(0.043, 0.043)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="MarkerContainer" type="Node2D" parent="."]
+
+[node name="FiringPoint" type="Marker2D" parent="MarkerContainer"]
+position = Vector2(20, 0)
+
+[node name="ShootingComponent" type="Node" parent="." node_paths=PackedStringArray("marker_container")]
+script = ExtResource("2")
 marker_container = NodePath("../MarkerContainer")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545957550]
-position = Vector2(0, -15)
-scale = Vector2(0.06500002, 0.06500002)
-texture = ExtResource("2_x1rqp")
-
-[node name="Timer" type="Timer" parent="." unique_id=1807829017]
-process_callback = 0
-wait_time = 1.5
-
-[node name="Detection_Area" type="Area2D" parent="." unique_id=80163929]
-position = Vector2(-1.5258789e-05, -2.0000153)
-scale = Vector2(0.5025, 0.5025)
-collision_layer = 8
-collision_mask = 5
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Detection_Area" unique_id=2271720]
-position = Vector2(-0.04751623, 0)
-scale = Vector2(1.1187906, 1)
-polygon = PackedVector2Array(0.04249821, -17.910418, -110.24006, 181.09456, -110.24, 957.214, 0.04249821, 1010.94525, 104.989, 955.224, 104.9888, 171.1443)
-
-[node name="Hurtbox" type="CollisionShape2D" parent="." unique_id=480996072]
-visible = false
-position = Vector2(-2.1175824e-22, -15)
-scale = Vector2(0.5025, 0.5025)
-shape = SubResource("CircleShape2D_afpow")
-
-[node name="MarkerContainer" type="Node2D" parent="." unique_id=717180552]
-
-[node name="FiringPoint" type="Marker2D" parent="MarkerContainer" unique_id=1050019920]
-position = Vector2(0, 14)
-rotation = 1.5693861
-
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="body_entered" from="Detection_Area" to="." method="_on_detection_area_body_entered"]
-[connection signal="body_exited" from="Detection_Area" to="." method="_on_detection_area_body_exited"]

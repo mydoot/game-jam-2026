@@ -8,24 +8,25 @@ extends Node
 @export var start_health: int = 1
 
 @export_group("Bullets") 
-@export var max_bullets: float = 6
-@export var start_bullets: float = 6 
+@export var max_bullets: int = 6
+@export var start_bullets: int = 6
 
 signal health_changed(new_value: int, max_value: int)
-signal bullets_changed(new_value: float, max_value: float)
+signal bullets_changed(new_value: int, max_value: int)
 signal died
 
 #	clampi and clampf forces values to be within the min/max: clampi/f(value, min, max)
 var health: int:
 	set(value):
+		var previous := health
 		health = clampi(value, 0, max_health)
 		health_changed.emit(health, max_health)
-		if health == 0:
+		if previous > 0 and health == 0:
 			died.emit()
 
-var bullets: float:
+var bullets: int:
 	set(value):
-		bullets = clampf(value, 0, max_bullets)
+		bullets = clampi(value, 0, max_bullets)
 		bullets_changed.emit(bullets, max_bullets)
 		
 
@@ -42,7 +43,7 @@ func take_damage(amount: int) -> void:
 
 
 ## Lets Player atomically check and spend ammo before asking Weapon to fire.
-func spend_bullets(amount: float) -> bool:
+func spend_bullets(amount: int) -> bool:
 	if bullets >= amount:
 		bullets -= amount
 		return true
@@ -50,5 +51,5 @@ func spend_bullets(amount: float) -> bool:
 
 
 ## Adds ammo while respecting max_bullets through the setter clamp.
-func gain_bullets(amount: float) -> void:
+func gain_bullets(amount: int) -> void:
 	bullets += amount

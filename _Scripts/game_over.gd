@@ -1,20 +1,33 @@
 extends CanvasLayer
 
-## Pause overlay instantiated by Player when Stats emits died. It owns the
-## restart and quit buttons while allowing itself to process during pause.
+## Terminal failure overlay created only by CampaignLevel. It pauses combat and
+## routes every action through GameState/SceneLoader to clear pause safely.
+@onready var reason_label: Label = $Shade/Panel/Content/Reason
 
-## Pauses the active level and keeps this UI responsive.
+## Pauses the tree while allowing this menu and transitions to keep processing.
 func _ready() -> void:
-	get_tree().paused = true
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().paused = true
 
+## Sets the human-readable reason after CampaignLevel instantiates the overlay.
+func setup(reason: String) -> void:
+	if not is_node_ready():
+		await ready
+	reason_label.text = reason
 
-## Restores normal time and reloads the current level back into Planning.
-func _on_restart_button_pressed() -> void:
+## Restarts the same level from planning.
+func _on_restart_pressed() -> void:
+	SfxBus.play_ui(&"click")
+	GameState.restart_current_level()
+
+## Returns to the unlocked-level grid.
+func _on_level_select_pressed() -> void:
+	SfxBus.play_ui(&"click")
 	get_tree().paused = false
-	get_tree().reload_current_scene()
-	
+	SceneLoader.load_scene(GameState.LEVEL_SELECT)
 
-## Exits the application from the connected Quit button.
-func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+## Returns to the campaign main menu.
+func _on_main_menu_pressed() -> void:
+	SfxBus.play_ui(&"click")
+	get_tree().paused = false
+	SceneLoader.load_scene(GameState.MAIN_MENU)

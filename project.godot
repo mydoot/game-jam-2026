@@ -10,20 +10,33 @@ config_version=5
 
 [application]
 
-config/name="game jam 2026"
+config/name="Six Chambers"
 run/main_scene="uid://m2g6nqjs6hv5"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
 [autoload]
 
-BulletFactoryGlobal="*uid://bvwfgf35bcrvi"
 GlobalVariables="*uid://dtpx1ho5hrvro"
 SceneLoader="*uid://bw3yjevui0mqo"
+GameState="*res://_Scripts/Globals/game_state.gd"
+SfxBus="*res://_Scripts/Globals/sfx_bus.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
-project/assembly_name="game jam 2026"
+project/assembly_name="Six Chambers"
+
+[gui]
+
+theme/custom="res://Assets/Themes/dungeon_theme.tres"
 
 [input]
 
@@ -64,4 +77,7 @@ hide_menu={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

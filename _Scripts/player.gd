@@ -1,152 +1,101 @@
 class_name Player extends CharacterBody2D
 
-## Combat avatar spawned by Planning. It connects Stats to HUD, equips Weapon,
-## consumes the loadout held by GlobalVariables, and creates GameOver on death.
+## Combat avatar spawned by CampaignLevel. It moves, aims, fires the ordered
+## cylinder, animates the generated directional sheet, and delegates death.
+@export var speed := 150.0
+@export var acceleration := 1000.0
+@export var friction := 1000.0
 
-@export_category("Movement Stats")
-@export var speed: float = 150.0
-@export var acceleration: float = 1000.0
-@export var friction: float = 1000.0
-
-@export_category("Dash Stats")
-@export var dash_speed: float = 500
-@export var dash_duration: float = 0.15
-@export var dash_cooldown: float = 0.8
-
-@export var invincible_duration: float = 1.0
-
-@onready var weapon_socket: Marker2D = $WeaponSocket 
-@onready var sprite: Sprite2D = $Sprite2D 
+@onready var weapon_socket: Marker2D = $WeaponSocket
+@onready var sprite: Sprite2D = $Sprite2D
 @onready var stats: Stats = $Stats
 @onready var hud: CanvasLayer = $HUD
 
-enum State { MOVE, DASH, ATTACK }
-var current_state: State = State.MOVE
-var game_over_scene: PackedScene = preload("res://Scenes/UI/game_over.tscn")
+var current_weapon: Weapon
+var _walk_clock := 0.0
+var _facing_column := 0
+var _dead := false
 
-var current_weapon: Node2D = null
-var dash_timer: float = 0.0
-var can_dash: bool = true
-var walk_bob_timer: float = 0.0
-var is_invincible: bool = false
-
-## Connects Stats/HUD, equips the default gun, and initializes HUD values that
-## Stats emitted before Player's own ready callback.
+## Connects state, equips the revolver, and initializes HUD after Stats readiness.
 func _ready() -> void:
 	stats.health_changed.connect(hud.update_health)
 	stats.bullets_changed.connect(hud.update_bullets)
-	stats.died.connect(_on_player_died)
-	
+	stats.died.connect(_on_player_died, CONNECT_ONE_SHOT)
 	equip_weapon(preload("res://Scenes/Weapons/gun.tscn"))
 	hud.update_health(stats.health, stats.max_health)
 	hud.update_bullets(stats.bullets, stats.max_bullets)
 	hud.update_current_bullet()
 
-
-## Runs the active movement/attack state and performs CharacterBody2D movement.
+## Applies movement, animation, aiming, firing, and body collision in combat.
 func _physics_process(delta: float) -> void:
-	match current_state:
-		State.MOVE:
-			state_move(delta)
-		State.ATTACK:
-			state_attack(delta)
-	
+	if _dead:
+		velocity = Vector2.ZERO
+		return
+	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	_apply_movement(direction, delta)
+	_update_animation(direction, delta)
+	_update_aim()
+	if Input.is_action_just_pressed("attack") and current_weapon:
+		start_attack()
 	move_and_slide()
 
-
-## Default state: aim toward the mouse, move from input, and start attacks.
-func state_move(delta: float) -> void:
-	_update_aim()
-	_apply_movement(Input.get_vector("move_left", "move_right", "move_up", "move_down"), speed, delta)
-
-	if Input.is_action_just_pressed("attack") and current_weapon != null:
-		start_attack()
-
-
-## Verifies GlobalVariables and Stats both have ammo, spends one round, then asks
-## Weapon to spawn the matching bullet.
+## Fires only when CampaignLevel is actively accepting projectiles.
 func start_attack() -> void:
-	if not GlobalVariables.has_loaded_bullets():
+	if not GlobalVariables.has_loaded_bullets() or stats.bullets <= 0:
 		return
-	if not stats.spend_bullets(1):
+	var level := get_tree().get_first_node_in_group("level") as CampaignLevel
+	if level == null or level.phase != CampaignLevel.LevelPhase.COMBAT:
 		return
-		
-	current_state = State.ATTACK
-	
-	# Visual: Slight lunging stop
-	velocity = velocity * 0.2 
-	
-	# Tell the Weapon to do its thing
-	if current_weapon.has_method("shoot"):
-		current_weapon.shoot()
-		current_state = State.MOVE
+	velocity *= 0.35
+	if current_weapon.shoot():
+		stats.spend_bullets(1)
 
-
-## Attack state keeps movement available at a reduced speed while aiming.
-func state_attack(delta: float) -> void:
-	_update_aim()
-	_apply_movement(Input.get_vector("move_left", "move_right", "move_up", "move_down"), speed * 0.75, delta)
-
-
-## Replaces the current Weapon scene and connects its attack_finished signal so
-## HUD advances with the revolver.
+## Replaces the current revolver and reconnects the HUD chamber update.
 func equip_weapon(weapon_scene: PackedScene) -> void:
 	if current_weapon:
 		current_weapon.queue_free()
-	
-	var new_weapon = weapon_scene.instantiate()
-	weapon_socket.add_child(new_weapon)
-	current_weapon = new_weapon
+	current_weapon = weapon_scene.instantiate() as Weapon
+	weapon_socket.add_child(current_weapon)
 	current_weapon.wielder = self
-	
-	if new_weapon.has_signal("attack_finished"):
-		new_weapon.attack_finished.connect(_on_weapon_finished)
+	current_weapon.attack_finished.connect(_on_weapon_finished)
 
-
-## Refreshes HUD after Weapon consumes the chambered GlobalVariables entry.
+## Refreshes the chamber icon after Weapon consumes one round.
 func _on_weapon_finished() -> void:
 	hud.update_current_bullet()
 
-
-## Applies damage unless the player is inside the post-hit invincibility window.
+## Applies one-hit damage until death disables all player input.
 func take_damage(amount: int) -> void:
-	if is_invincible:
+	if _dead:
 		return
-	
 	stats.take_damage(amount)
 
-	is_invincible = true
-
-	var tween = create_tween()
-	for i in range(5):
-		tween.tween_property(sprite, "modulate:a", 0.3, 0.1)
-		tween.tween_property(sprite, "modulate:a", 1.0, 0.1)
-
-	get_tree().create_timer(invincible_duration).timeout.connect(func(): is_invincible = false)
-	
-
-## Responds to Stats.died by adding the pause-capable GameOver overlay.
+## Reports death exactly once through CampaignLevel's terminal guard.
 func _on_player_died() -> void:
-	var game_over = game_over_scene.instantiate()
-	get_tree().current_scene.add_child(game_over)
+	_dead = true
+	var level := get_tree().get_first_node_in_group("level") as CampaignLevel
+	if level:
+		level.finish_attempt(false, "Caught in a sentry's line of fire")
 
-
-## Rotates the weapon socket toward the mouse and flips sprites for readability.
+## Rotates the hidden weapon marker toward the mouse firing direction.
 func _update_aim() -> void:
-	var mouse_position := get_global_mouse_position()
-	weapon_socket.look_at(mouse_position)
+	weapon_socket.look_at(get_global_mouse_position())
 
-	if mouse_position.x < global_position.x:
-		weapon_socket.scale.y = -1
-		sprite.scale.x = -1
-	else:
-		weapon_socket.scale.y = 1
-		sprite.scale.x = 1
-
-
-## Moves toward input direction or applies friction when no input is held.
-func _apply_movement(direction: Vector2, target_speed: float, delta: float) -> void:
+## Moves toward input or decelerates with frame-rate-independent friction.
+func _apply_movement(direction: Vector2, delta: float) -> void:
 	if direction != Vector2.ZERO:
-		velocity = velocity.move_toward(direction * target_speed, acceleration * delta)
+		velocity = velocity.move_toward(direction * speed, acceleration * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+
+## Selects one of four direction cells and idle/walk rows in the sprite sheet.
+func _update_animation(direction: Vector2, delta: float) -> void:
+	if direction != Vector2.ZERO:
+		if absf(direction.x) > absf(direction.y):
+			_facing_column = 3 if direction.x > 0.0 else 1
+		else:
+			_facing_column = 0 if direction.y > 0.0 else 2
+		_walk_clock += delta
+	else:
+		_walk_clock = 0.0
+	var walking_row := 1 if direction != Vector2.ZERO and fmod(_walk_clock, 0.36) >= 0.18 else 0
+	sprite.region_rect = Rect2(_facing_column * 384, walking_row * 512, 384, 512)

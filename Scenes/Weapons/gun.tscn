@@ -69,6 +69,7 @@ _data = {
 bullet_resource = ExtResource("2_x3ol0")
 
 [node name="Sprite2D" parent="." index="0" unique_id=1998757771]
+visible = false
 texture = ExtResource("2_d6wag")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
