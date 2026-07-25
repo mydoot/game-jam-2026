@@ -1,8 +1,9 @@
 class_name RoomGeneration
 extends Node
 
-## Prototype procedural room generator. It builds a boolean grid of connected
-## rooms, instantiates room scenes, opens matching entrances, and places a player.
+## Prototype procedural room generator. It loads Room scenes, builds a connected
+## occupancy grid, opens their RoomEntrance links, and positions an assigned
+## Player. Current authored level scenes do not instantiate this prototype.
 @export var map_size : int = 7
 @export var rooms_to_generate : int = 12
 
@@ -19,12 +20,13 @@ var room_dictionary : Dictionary = {}
 # Drag your Player node here in the Inspector!
 @export var player : CharacterBody2D 
 
+## Loads room templates and builds the first procedural layout.
 func _ready() -> void:
 	_load_room_scenes()
 	_generate()
 	
 
-## Loads every room scene in rooms_folder into a name-to-scene dictionary.
+## Loads every Room scene in rooms_folder into a name-to-PackedScene dictionary.
 func _load_room_scenes() -> void:
 	var dir = DirAccess.open(rooms_folder)
 	
@@ -42,7 +44,7 @@ func _load_room_scenes() -> void:
 		push_error("Could not open rooms directory: " + rooms_folder)
 
 
-## Regenerates the room map, instantiates rooms, opens doors, and moves player.
+## Regenerates the map, instantiates Room nodes, opens doors, and moves Player.
 func _generate() -> void:
 	for r in rooms:
 		r.queue_free()
@@ -60,7 +62,7 @@ func _generate() -> void:
 	_spawn_player_in_center(start_x, start_y)
 
 
-## Recursively marks rooms on the map until rooms_to_generate is reached.
+## Recursively marks connected cells until rooms_to_generate is reached.
 func _check_room(x : int, y : int, incoming_direction : Vector2) -> void:
 	if room_count >= rooms_to_generate: return
 	if x < 0 or x >= map_size or y < 0 or y >= map_size: return
@@ -82,7 +84,7 @@ func _check_room(x : int, y : int, incoming_direction : Vector2) -> void:
 			_check_room(new_x, new_y, move)
 
 
-## Instantiates the room scenes selected for each occupied map cell.
+## Instantiates a Room PackedScene for each occupied map cell.
 func _instantiate_rooms() -> void:
 	for x in range(map_size):
 		for y in range(map_size):
@@ -108,7 +110,7 @@ func _instantiate_rooms() -> void:
 			room.name = "Room_%d_%d" % [x, y]
 
 
-## Opens each room's entrance when the map contains a neighbor in that direction.
+## Calls Room.open_entrance wherever the map contains an adjacent room.
 func _open_connecting_doors() -> void:
 	await get_tree().process_frame
 	
@@ -133,7 +135,7 @@ func _open_connecting_doors() -> void:
 				current_room.open_entrance(Vector2.RIGHT)
 
 
-## Places the assigned player in the map's starting room.
+## Places the assigned Player in the map's starting Room.
 func _spawn_player_in_center(start_x: int, start_y: int) -> void:
 	var center_pos = Vector2(start_x, start_y) * room_pos_offset
 	

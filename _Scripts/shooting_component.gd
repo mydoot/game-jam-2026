@@ -1,7 +1,7 @@
 class_name ShootingComponent extends Node
 
-## Enemy ranged attack component. It raycasts from firing markers, applies damage
-## to players, and draws a short-lived laser line for feedback.
+## Ranged attack component owned by Enemy. Enemy's Timer calls shoot; this script
+## raycasts from its marker, calls Player.take_damage, and draws laser feedback.
 @export_group("For Laser")
 @export var marker_container : Node2D
 @export var laser_damage: int = 1
@@ -15,17 +15,19 @@ var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
+## Caches the parent Enemy body so attack rays can exclude their owner.
 func _ready() -> void:
 	wielder = get_parent() as CharacterBody2D
 
 
-## Fires one laser from each configured marker.
+## Fires one laser from every Marker2D configured by the owning Enemy.
 func shoot() -> void:
 	for marker: Marker2D in marker_container.get_children():
 		_fire_laser(marker)
 
 
-## Raycasts through the world and damages the player if the ray hits them.
+## Raycasts against Player and terrain, damaging Player only when it is the first
+## collision.
 func _fire_laser(marker: Marker2D) -> void:
 	var start_position := marker.global_position
 	var end_position := start_position + marker.global_transform.x.normalized() * laser_range

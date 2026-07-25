@@ -1,8 +1,9 @@
 class_name Weapon
 extends Node2D
 
-## Player weapon controller. It converts the selected revolver loadout into
-## BlastBullets2D data and spawns bullets from the configured marker container.
+## Player weapon controller. It turns BasicBullet entries from GlobalVariables
+## into BlastBullets2D data, spawns them through BulletFactoryGlobal, and signals
+## Player so HUD can advance.
 @export var damage: int = 1
 @export var cooldown: float = 0.5
 
@@ -20,12 +21,14 @@ var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
+## Creates shared player damage metadata and prepares the first chambered bullet.
 func _ready() -> void:
 	player_damage_data = _create_player_damage_data()
 	_prepare_current_bullet()
 
 
-## Fires the currently chambered bullet and advances to the next bullet resource.
+## Fires the chambered BasicBullet through BulletFactory, advances
+## GlobalVariables, prepares the next round, and notifies Player.
 func shoot() -> void:
 	if bullet_data == null:
 		push_warning("Cannot shoot without prepared bullet data.")
@@ -47,7 +50,7 @@ func shoot() -> void:
 	attack_finished.emit()
 
 
-## Captures every firing marker transform so BlastBullets2D can spawn shots.
+## Captures every Marker2D transform required by BlastBullets2D spawn data.
 func grab_marker_transforms() -> Array[Transform2D]:
 	var all_markers : Array[Transform2D]
 	
@@ -57,7 +60,7 @@ func grab_marker_transforms() -> Array[Transform2D]:
 	return all_markers	
 
 
-## Creates damage metadata that gets attached to every player-fired bullet.
+## Creates DamageData consumed by the level's BulletFactory collision callback.
 func _create_player_damage_data() -> DamageData:
 	var damage_data := DamageData.new()
 	damage_data.damage = damage
@@ -67,7 +70,8 @@ func _create_player_damage_data() -> DamageData:
 	return damage_data
 
 
-## Builds plugin-specific bullet data for the bullet currently in the chamber.
+## Converts GlobalVariables' chambered BasicBullet into plugin-specific data and
+## attaches the shared DamageData.
 func _prepare_current_bullet() -> void:
 	bullet_resource = GlobalVariables.get_current_bullet()
 	if bullet_resource == null:

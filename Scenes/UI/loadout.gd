@@ -1,7 +1,8 @@
 extends Panel
 
-## Manages the planning-screen bullet slots and transfers the chosen order into
-## global runtime state when the level starts.
+## Manages the planning screen's selected and available Slot nodes. Planning
+## calls this script to validate the revolver and copy its order to
+## GlobalVariables before spawning Player.
 @onready var planning: Node2D = $"../../.."
 
 @onready var loadout_grid: GridContainer = $"Loadout Grid"
@@ -12,11 +13,12 @@ extends Panel
 
 var list_of_bullets: Array[Resource] = []
 
+## Populates the available-shot slots from Planning's level-specific bullet list.
 func _ready() -> void:
 	add_bullets_as_available_bullets()
 
 
-## Reads the six selected loadout slots from left to right.
+## Reads the six selected Slot resources from left to right into a temporary list.
 func load_bullets_into_list() -> void:
 	list_of_bullets.clear()
 	for slot in loadout_grid.get_children():
@@ -24,12 +26,12 @@ func load_bullets_into_list() -> void:
 		list_of_bullets.append(item.bullet)
 
 
-## Stores the selected loadout for the weapon to consume during combat.
+## Gives the ordered list to GlobalVariables, which Weapon consumes during combat.
 func pass_bullet_list() -> void:
 	GlobalVariables.set_bullet_loadout(list_of_bullets)
 	
 
-## Fills the available-bullets panel without mutating the exported level data.
+## Fills available Slot nodes without mutating Planning's exported level data.
 func add_bullets_as_available_bullets() -> void:
 	var bullet_index := 0
 	for slot in available_shots_grid.get_children():
@@ -39,7 +41,7 @@ func add_bullets_as_available_bullets() -> void:
 		bullet_index += 1
 
 
-## Verifies that every revolver slot has a bullet before combat starts.
+## Lets Planning verify that every revolver Slot contains a bullet before combat.
 func slots_are_full() -> bool:
 	for slot in loadout_grid.get_children():
 		var item: Slot = slot

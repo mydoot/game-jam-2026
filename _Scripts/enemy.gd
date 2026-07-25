@@ -1,7 +1,8 @@
 class_name Enemy extends CharacterBody2D
 
-## Basic enemy behavior: tracks bodies in its detection area, fires when line of
-## sight is clear, and handles damage/invincibility.
+## Enemy controller linked to its Detection_Area, Timer, and ShootingComponent.
+## It tracks Player line of sight, triggers laser attacks, and receives player
+## bullet damage from the level controller.
 @export var health = 5
 @export var stop_distance = 10
 @export var contact_damage = 1
@@ -24,11 +25,14 @@ var is_knocked_back: bool = false
 
 var _field_of_view: Dictionary[Node2D, RayCast2D]
 
+## Rechecks Player visibility every physics frame so the attack Timer starts and
+## stops as cover changes.
 func _physics_process(_delta: float) -> void:
 	_update_line_of_sight()
 
 
-## Updates each tracked raycast and starts firing while a target is visible.
+## Aims the firing marker at a visible Player and controls the Timer used by
+## ShootingComponent; terrain on collision layer 3 blocks the sight ray.
 func _update_line_of_sight() -> void:
 	var has_visible_player := false
 	for object in _field_of_view:
@@ -52,7 +56,7 @@ func _update_line_of_sight() -> void:
 		timer.stop()
 
 
-## Adds a temporary raycast for each body that enters the detection area.
+## Creates a temporary sight ray only when Player enters Detection_Area.
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body is Player and not _field_of_view.has(body):
 		var _ray = RayCast2D.new()
@@ -67,7 +71,7 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 		add_child(_ray)
 
 
-## Removes line-of-sight tracking when a body leaves detection range.
+## Removes Player's sight ray when they leave Detection_Area.
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if _field_of_view.has(body):
 		_field_of_view[body].queue_free()
@@ -76,14 +80,16 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 			player = null
 
 
-## Deals touch damage to the player when their hitbox enters this enemy.
+## Deals contact damage through Player.take_damage when a connected hitbox signal
+## reports the player.
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			body.take_damage(contact_damage)
 	
 
-## Applies bullet damage, death, a brief flash, and invincibility frames.
+## Applies damage routed from the level's BulletFactory callback, freeing the
+## enemy on death or briefly enabling hit invincibility.
 func take_damage(damage: int) -> void:
 	if is_invincible:
 		return
@@ -112,7 +118,7 @@ func take_damage(damage: int) -> void:
 	get_tree().create_timer(invincibility_duration).timeout.connect(func(): is_invincible = false)
 
 
-## Timer callback used by the detection raycasts to fire enemy shots.
+## Asks ShootingComponent to fire when the connected attack Timer expires.
 func _on_timer_timeout() -> void:
 	shooting_component.shoot()
 	

@@ -1,11 +1,13 @@
 class_name RoomEntrance
 extends Node2D
 
-## Doorway controlled by Room. The exported direction is assigned per instance.
+## Directional doorway discovered and controlled by its parent Room. Generation
+## asks Room to open entrances that have neighboring rooms.
 @export var direction : Vector2 
 
 @onready var barrier = $Barrier
 
+## Starts every generated doorway closed until RoomGeneration opens valid links.
 func _ready() -> void:
 	close()
 

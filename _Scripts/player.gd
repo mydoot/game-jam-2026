@@ -1,6 +1,7 @@
 class_name Player extends CharacterBody2D
 
-## Handles player movement, aiming, shooting, damage, and weapon ownership.
+## Combat avatar spawned by Planning. It connects Stats to HUD, equips Weapon,
+## consumes the loadout held by GlobalVariables, and creates GameOver on death.
 
 @export_category("Movement Stats")
 @export var speed: float = 150.0
@@ -29,6 +30,8 @@ var can_dash: bool = true
 var walk_bob_timer: float = 0.0
 var is_invincible: bool = false
 
+## Connects Stats/HUD, equips the default gun, and initializes HUD values that
+## Stats emitted before Player's own ready callback.
 func _ready() -> void:
 	stats.health_changed.connect(hud.update_health)
 	stats.bullets_changed.connect(hud.update_bullets)
@@ -40,6 +43,7 @@ func _ready() -> void:
 	hud.update_current_bullet()
 
 
+## Runs the active movement/attack state and performs CharacterBody2D movement.
 func _physics_process(delta: float) -> void:
 	match current_state:
 		State.MOVE:
@@ -59,7 +63,8 @@ func state_move(delta: float) -> void:
 		start_attack()
 
 
-## Spends one bullet, briefly slows the player, and asks the weapon to fire.
+## Verifies GlobalVariables and Stats both have ammo, spends one round, then asks
+## Weapon to spawn the matching bullet.
 func start_attack() -> void:
 	if not GlobalVariables.has_loaded_bullets():
 		return
@@ -83,7 +88,8 @@ func state_attack(delta: float) -> void:
 	_apply_movement(Input.get_vector("move_left", "move_right", "move_up", "move_down"), speed * 0.75, delta)
 
 
-## Replaces the current weapon scene and connects completion callbacks.
+## Replaces the current Weapon scene and connects its attack_finished signal so
+## HUD advances with the revolver.
 func equip_weapon(weapon_scene: PackedScene) -> void:
 	if current_weapon:
 		current_weapon.queue_free()
@@ -97,6 +103,7 @@ func equip_weapon(weapon_scene: PackedScene) -> void:
 		new_weapon.attack_finished.connect(_on_weapon_finished)
 
 
+## Refreshes HUD after Weapon consumes the chambered GlobalVariables entry.
 func _on_weapon_finished() -> void:
 	hud.update_current_bullet()
 
@@ -118,6 +125,7 @@ func take_damage(amount: int) -> void:
 	get_tree().create_timer(invincible_duration).timeout.connect(func(): is_invincible = false)
 	
 
+## Responds to Stats.died by adding the pause-capable GameOver overlay.
 func _on_player_died() -> void:
 	var game_over = game_over_scene.instantiate()
 	get_tree().current_scene.add_child(game_over)

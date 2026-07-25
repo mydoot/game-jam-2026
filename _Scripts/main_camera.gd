@@ -1,13 +1,14 @@
 extends Camera2D
 
-## Smooth follow camera that tracks the active player and leads slightly toward
-## the mouse position.
+## Smooth follow camera used by level scenes. Planning assigns the newly spawned
+## Player to target when combat begins.
 var target: Node2D
 
 @export_category("Smoothing")
 @export var smooth_speed: float = 10.0
 @export var mouse_lead: float = 0.2
 
+## Follows target with frame-rate-safe smoothing and a small mouse-direction lead.
 func _process(delta: float) -> void:
 	if not target:
 		return

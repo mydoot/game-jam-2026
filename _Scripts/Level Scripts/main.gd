@@ -1,10 +1,13 @@
 extends Node2D
 
-## Level root controller. Registers shared level references, routes bullet-hit
-## damage, and handles finish-point scene transitions.
+## Authored level root. It registers BulletFactory2D and SpawnPoint with the
+## autoload bridges, routes BlastBullets2D hits to Enemy/Player, and delegates a
+## cleared exit transition to SceneLoader.
 ## This needs to be the UID of a scene
 @export var next_level: StringName = &""
 
+## Registers this level's BulletFactory2D for Weapon and its SpawnPoint for
+## Planning, then connects bullet collision routing.
 func _ready() -> void:
 	BulletFactory.bullet_factory = $BulletFactory2D
 	BulletFactory.bullet_factory.body_entered.connect(_on_bullet_hit)
@@ -12,7 +15,8 @@ func _ready() -> void:
 	GlobalVariables.spawn_point = $SpawnPoint
 	
 
-## Receives BlastBullets2D hit callbacks and applies damage to the right target.
+## Reads DamageData attached by Weapon and routes a BlastBullets2D hit to the
+## correct Enemy or Player damage method.
 func _on_bullet_hit(hit_object: Object, _multimesh_bullets_instance: MultiMeshBullets2D, _bullet_index: int, data: Resource, _bullet_global_transform: Transform2D) -> void:
 	var bullet_data: DamageData = data as DamageData
 	
@@ -27,7 +31,8 @@ func _on_bullet_hit(hit_object: Object, _multimesh_bullets_instance: MultiMeshBu
 			player.take_damage(bullet_data.damage)
 
 
-## Moves to the configured next level when the player reaches the exit.
+## Loads next_level through SceneLoader when Player reaches the connected finish
+## Area2D after every node in the enemy group has been removed.
 func _on_finish_point_body_entered(body: Node2D) -> void:
 	if not (body is Player):
 		return

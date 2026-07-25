@@ -1,7 +1,7 @@
 class_name BasicBullet extends Resource
 
-## Data resource for configuring one bullet type. It translates exported values
-## into BlastBullets2D DirectionalBulletsData2D when a weapon fires.
+## Resource schema for a selectable bullet type. Planning/Slot store instances,
+## while Weapon converts the chambered instance into BlastBullets2D spawn data.
 var bullet_data : DirectionalBulletsData2D
 
 @export_group("Basic Bullet Properties")
@@ -23,7 +23,8 @@ var bullet_data : DirectionalBulletsData2D
 @export var min_accel : float
 
 
-## Returns bullet spawn data. The weapon sets transforms and custom damage data.
+## Builds plugin spawn data; Weapon adds marker transforms and DamageData at fire
+## time because those values depend on the active Player and level.
 func set_up_bullet_data() -> DirectionalBulletsData2D:
 	var data : DirectionalBulletsData2D = DirectionalBulletsData2D.new()
 	data.textures = bullet_textures

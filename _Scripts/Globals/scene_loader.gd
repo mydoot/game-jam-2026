@@ -1,6 +1,8 @@
 extends Node
 
-## Autoload that shows the loading screen and performs threaded scene changes.
+## Scene-transition autoload used by MainMenu and level exits. It owns the
+## LoadingScreen overlay, polls ResourceLoader, installs the new scene while
+## covered, and then asks the overlay to reveal it.
 
 signal progress_changed(progress)
 signal load_finished
@@ -13,11 +15,12 @@ var use_sub_threads: bool = false
 var active_loading_screen: CanvasLayer
 var is_loading: bool = false
 
+## Keeps polling disabled until load_scene successfully starts a threaded request.
 func _ready() -> void:
 	set_process(false)
 	
 
-## Creates the loading screen, waits for its entrance animation, then starts load.
+## Creates LoadingScreen, waits until it covers the old scene, then starts loading.
 func load_scene(_scene_path: String) -> void:
 	if _scene_path.is_empty():
 		push_warning("Cannot load an empty scene path.")
@@ -38,7 +41,7 @@ func load_scene(_scene_path: String) -> void:
 	start_load()
 
 
-## Requests threaded loading for the pending scene path.
+## Requests ResourceLoader's threaded load for the path supplied by a menu/level.
 func start_load() -> void:
 	var state = ResourceLoader.load_threaded_request(scene_path, "", use_sub_threads)
 	if state == OK:
@@ -47,7 +50,8 @@ func start_load() -> void:
 		_cancel_load("Failed to request threaded load for scene: " + scene_path)
 
 
-## Polls load progress and changes scene once the loading screen can exit.
+## Publishes progress, installs a completed PackedScene while covered, and only
+## then tells LoadingScreen to fade out.
 func _process(_delta: float) -> void:
 	var load_status = ResourceLoader.load_threaded_get_status(scene_path, progress)
 	var load_progress: float = float(progress[0]) if not progress.is_empty() else 0.0
@@ -75,7 +79,8 @@ func _process(_delta: float) -> void:
 			is_loading = false
 
 
-## Restores the current scene if a threaded load cannot be completed.
+## Stops polling and asks LoadingScreen to reveal the unchanged scene after a
+## loading failure.
 func _cancel_load(message: String) -> void:
 	set_process(false)
 	push_warning(message)

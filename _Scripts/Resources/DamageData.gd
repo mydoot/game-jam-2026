@@ -1,7 +1,7 @@
 class_name DamageData extends Resource
 
-## Metadata carried by spawned bullets so hit routing can determine damage,
-## ownership, and bullet-type behaviors.
+## Per-shot metadata created by Weapon and carried by BlastBullets2D. The level
+## controller reads it to route damage and later bullet-type behavior.
 var damage: int
 
 var is_from_player: bool

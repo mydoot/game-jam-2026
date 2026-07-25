@@ -1,7 +1,8 @@
 extends Node2D
 
-## Controls the planning phase: lets the player choose bullet order, starts
-## combat, and hides/shows the loadout menu.
+## Coordinates the planning-to-combat handoff. It uses Loadout to store the
+## selected order in GlobalVariables, spawns Player at the level SpawnPoint, and
+## gives MainCamera its target.
 @onready var loadout: Panel = $Canvas/LoadoutMenu/Loadout
 
 @onready var available_bullets: Panel = $"Canvas/LoadoutMenu/Available Bullets"
@@ -21,18 +22,22 @@ var combat_started: bool = false
 var menu_visible_position: Vector2
 var menu_tween: Tween
 
+## Clears state left by the previous attempt and records the menu's authored
+## position so repeated hide/show tweens always return to the same location.
 func _ready() -> void:
 	GlobalVariables.clear_bullet_loadout()
 	menu_visible_position = loadout_menu.position
 	if avail_bullets.size() < 6:
 		push_warning("avail_bullets requires 6 bullet resource files.")
 		
+## Listens for the preview-menu toggle only until combat has started.
 func _process(_delta: float) -> void:
 	if not combat_started and Input.is_action_just_pressed("hide_menu"):
 		hide_loadout_menu()
 
 
-## Starts combat after a full six-bullet loadout has been selected.
+## Validates Loadout, transfers its bullets through GlobalVariables, spawns one
+## Player, connects MainCamera to it, and dismisses the planning interface.
 func _on_start_button_pressed() -> void:
 	if combat_started:
 		return
@@ -69,7 +74,7 @@ func _on_start_button_pressed() -> void:
 	hint_label.hide()
 
 
-## Toggles the planning menu during preview so the room stays visible.
+## Toggles the planning menu during preview so the authored room remains visible.
 func hide_loadout_menu() -> void:
 	if not is_menu_hidden:
 		hint_label.text = "Press [E] to show menu"
@@ -81,6 +86,8 @@ func hide_loadout_menu() -> void:
 		is_menu_hidden = false
 
 
+## Replaces any in-flight menu tween and moves toward an absolute target,
+## preventing repeated E presses from accumulating relative offsets.
 func _move_menu(target_position: Vector2, duration: float) -> void:
 	if menu_tween and menu_tween.is_valid():
 		menu_tween.kill()

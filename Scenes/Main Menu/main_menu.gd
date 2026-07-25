@@ -1,7 +1,7 @@
 extends Node2D
 
-## Main menu controller that starts the first configured scene through the
-## shared loading-screen flow.
+## Main-menu controller. Its Play button delegates the first scene change to the
+## SceneLoader autoload so startup uses the same transition as level exits.
 ## This needs to be the UID of a scene
 @export var initial_scene: StringName = &""
 @export var start_button: Button
