@@ -47,3 +47,7 @@ collision_layer = 4
 position = Vector2(78.99999, -106)
 rotation = 0.9075902
 shape = SubResource("RectangleShape2D_47ehs")
+
+[node name="Enemy3" parent="." unique_id=1557205180 groups=["enemy"] instance=ExtResource("4_0igsr")]
+position = Vector2(226.99997, -155.99997)
+rotation = 0.933354

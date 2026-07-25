@@ -40,6 +40,7 @@ func set_up_bullet_data() -> DirectionalBulletsData2D:
 	data.collision_shape_offset = bullet_collision_shape_offset
 	data.default_change_texture_time = bullet_change_texture_time
 	data.max_life_time = bullet_max_lifetime
+	data.bullet_max_collision_count = bullet_collision_count
 	#data.all_bullet_rotation_data = bullet_rotation_data
 	#data.bullets_custom_data = damage_data
 	
