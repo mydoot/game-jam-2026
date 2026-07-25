@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://d5eguynnci7y" path="res://Scenes/UI/slot.gd" id="2_p7dmu"]
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="4_rsdvt"]
 [ext_resource type="FontFile" uid="uid://b4udn0uh2kqrt" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_R.otf" id="5_5h7ne"]
-[ext_resource type="Resource" uid="uid://bkrmiocbxufwg" path="res://_Scripts/Resources/enemy_bullet.tres" id="5_8jt1r"]
 [ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="6_i378m"]
 
 [sub_resource type="Theme" id="Theme_yccb6"]
@@ -218,7 +217,7 @@ columns = 6
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 script = ExtResource("2_p7dmu")
-bullet = ExtResource("5_8jt1r")
+bullet = ExtResource("4_rsdvt")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot1" unique_id=794687449]
 layout_mode = 1
@@ -240,7 +239,7 @@ stretch_mode = 5
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 script = ExtResource("2_p7dmu")
-bullet = ExtResource("5_8jt1r")
+bullet = ExtResource("4_rsdvt")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot2" unique_id=918296366]
 layout_mode = 1
@@ -262,7 +261,7 @@ stretch_mode = 5
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 script = ExtResource("2_p7dmu")
-bullet = ExtResource("5_8jt1r")
+bullet = ExtResource("4_rsdvt")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot3" unique_id=2138638262]
 layout_mode = 1
