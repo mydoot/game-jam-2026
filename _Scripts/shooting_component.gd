@@ -7,7 +7,7 @@ class_name ShootingComponent extends Node
 @export var laser_width: float = 5.0
 @export var laser_duration: float = 0.12
 @export_flags_2d_physics var laser_collision_mask: int = 5
-@export var laser_color: Color = Color(1.0, 0.15, 0.05, 0.9)
+@export var laser_color: Color = Color(1.0, 1.0, 1.0, 0.9)
 
 #signal attack_finished
 #signal dealt_damage

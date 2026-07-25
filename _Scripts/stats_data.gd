@@ -2,8 +2,8 @@ class_name Stats
 extends Node
 
 @export_group("Helath (Hearts)")
-@export var max_health: int = 3
-@export var start_health: int = 3
+@export var max_health: int = 1
+@export var start_health: int = 1
 
 @export_group("Bullets") 
 @export var max_bullets: float = 6
