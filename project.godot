@@ -19,6 +19,7 @@ config/icon="res://Assets/icon.svg"
 
 BulletFactoryGlobal="*uid://bvwfgf35bcrvi"
 GlobalVariables="*uid://dtpx1ho5hrvro"
+SceneLoader="*uid://bw3yjevui0mqo"
 
 [input]
 

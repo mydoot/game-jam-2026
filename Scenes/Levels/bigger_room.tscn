@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cmq7sjxypw2lw" path="res://Assets/fonts/droid-sans/DroidSans.ttf" id="4_47ehs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xtq3a"]
-size = Vector2(704.5, 83.5)
+size = Vector2(704.5, 47.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_47ehs"]
 size = Vector2(265.32486, 41.053024)
@@ -16,7 +16,6 @@ font = ExtResource("4_47ehs")
 font_size = 10
 
 [node name="Room_Template" type="StaticBody2D" unique_id=836460663]
-position = Vector2(0, -1)
 collision_layer = 2
 script = ExtResource("1_rfld1")
 
@@ -37,13 +36,14 @@ position = Vector2(-0.25, -309.75)
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1842103869]
+position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_xtq3a")
 
 [node name="Area2D3" type="Area2D" parent="." unique_id=1678153858]
 collision_layer = 4
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D3" unique_id=2069670178]
-position = Vector2(0, 214)
+position = Vector2(0, 230)
 shape = SubResource("RectangleShape2D_xtq3a")
 
 [node name="TestingWall" type="Area2D" parent="." unique_id=993670868]
