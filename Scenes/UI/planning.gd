@@ -6,15 +6,25 @@ extends Node2D
 
 @onready var loadout_menu: Control = $Canvas/LoadoutMenu
 
+@onready var hint_label: Label = $Canvas/Label
+
 ## There should only be 6 bullet resource files in this array.
 ## This array is to add the bullets the player has to use to solve the level.
 @export var avail_bullets: Array[Resource] = []
 
 const player_scene = preload("res://Scenes/player.tscn")
 
+var is_menu_hidden: bool = false
+
 func _ready() -> void:
 	if avail_bullets.size() < 6:
 		push_warning("avail_bullets requires 6 bullet resource files.")
+		
+func _process(_delta: float) -> void:
+	var hide_menu_pressed = Input.is_action_just_pressed("hide_menu")
+	
+	if hide_menu_pressed: 
+		hide_loadout_menu()
 
 func _on_start_button_pressed() -> void:
 	if loadout == null:
@@ -41,7 +51,20 @@ func _on_start_button_pressed() -> void:
 	
 	var tween = create_tween()
 	tween.tween_property(loadout_menu, "position", Vector2(0, 450), 0.4).set_ease(Tween.EASE_IN).as_relative()
+	
+	hint_label.hide()
 
 
-#func ready_available_bullets() -> void:
-	#pass
+func hide_loadout_menu() -> void:
+	var tween = create_tween()
+	
+	if not is_menu_hidden:
+		hint_label.text = "Press [E] to show menu"
+		print("hiding menu")
+		tween.tween_property(loadout_menu, "position", Vector2(0, 450), 0.15).set_ease(Tween.EASE_IN_OUT).as_relative()
+		is_menu_hidden = true
+	elif is_menu_hidden:
+		hint_label.text = "Press [E] to hide menu"
+		print("showing menu")
+		tween.tween_property(loadout_menu, "position", Vector2(0, -450), 0.15).set_ease(Tween.EASE_IN_OUT).as_relative()
+		is_menu_hidden = false

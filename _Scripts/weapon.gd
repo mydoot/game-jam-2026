@@ -32,10 +32,11 @@ func _ready() -> void:
 	
 	if GlobalVariables.bullet_loadout:
 		bullet_resource = GlobalVariables.bullet_loadout.pop_front()
+		GlobalVariables.current_bullet = bullet_resource
 		bullet_data = bullet_resource.set_up_bullet_data()
 		bullet_data.bullets_custom_data = player_damage_data
-	
-	
+
+
 func shoot() -> void:
 	if bullet_data:
 		bullet_data.transforms = grab_marker_transforms()
@@ -43,11 +44,14 @@ func shoot() -> void:
 			
 			BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
 			bullet_resource = GlobalVariables.bullet_loadout.pop_front()
+			GlobalVariables.current_bullet = bullet_resource
 			
 			if bullet_resource:
+				attack_finished.emit()
 				bullet_data = bullet_resource.set_up_bullet_data()
 			else:
 				push_warning("Missing bullet_data. Ignore if the player just fired their last bullet.")
+				
 		else:
 			push_warning("bullet_data has no DirectionalBulletsData2D object.")
 
