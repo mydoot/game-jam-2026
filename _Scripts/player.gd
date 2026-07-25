@@ -40,7 +40,7 @@ func _ready() -> void:
 	#hud.update_health(stats.health, stats.max_health)
 	
 	# In the future, this is where we load from a Save File or Inventory.
-	equip_weapon(preload("res://Scenes/Weapons/gun.tscn"))
+	equip_weapon(preload("res://Scenes/Weapons/PiercingGun.tscn"))
 
 func _physics_process(delta: float) -> void:
 	match current_state:
