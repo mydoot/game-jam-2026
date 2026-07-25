@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bpl24jrh182us" path="res://Scenes/HUD.tscn" id="4_vgqql"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
-radius = 7.0
-height = 26.0
+radius = 13.0
+height = 38.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1798557799 groups=["player"]]
 physics_interpolation_mode = 1

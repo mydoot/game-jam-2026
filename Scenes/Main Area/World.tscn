@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://birvxciwqfi4r"]
+
+[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_8utni"]
+[ext_resource type="PackedScene" uid="uid://44g8jo31buf7" path="res://Scenes/Levels/bigger_room.tscn" id="2_3hajc"]
+[ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_5o32j"]
+[ext_resource type="PackedScene" uid="uid://djpkmrsukexg4" path="res://Scenes/UI/planning.tscn" id="4_3hajc"]
+[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_5o32j"]
+
+[node name="World" type="Node2D" unique_id=837482538]
+script = ExtResource("1_8utni")
+
+[node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_3hajc")]
+position = Vector2(127, 309)
+rotation = -3.0138295e-05
+
+[node name="MainCamera" parent="." unique_id=118585489 instance=ExtResource("3_5o32j")]
+visible = false
+position = Vector2(289, 63)
+zoom = Vector2(2, 2)
+
+[node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
+position = Vector2(139, 247)
+
+[node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_3hajc")]
+avail_bullets = Array[Resource]([ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=865719459]
+position = Vector2(128, 465)

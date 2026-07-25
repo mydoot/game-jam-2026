@@ -29,7 +29,7 @@ func set_up_bullet_data() -> DirectionalBulletsData2D:
 	data.all_bullet_speed_data = BulletSpeedData2D.generate_random_data(amount_of_bullets, min_speed, max_speed, maximum_max_speed, minimum_max_speed, min_accel, max_accel)
 	
 	data.set_collision_layer_from_array([2])
-	data.set_collision_mask_from_array([3])
+	data.set_collision_mask_from_array([1, 3])
 
 	data.texture_size = bullet_texture_size
 	data.collision_shape_size = bullet_collision_shape_size

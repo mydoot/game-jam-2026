@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://vvkq3rowbpeo"]
+
+[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_b3pmb"]
+[ext_resource type="PackedScene" uid="uid://44g8jo31buf7" path="res://Scenes/Levels/bigger_room.tscn" id="2_1rbsc"]
+[ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_2kkx6"]
+[ext_resource type="PackedScene" uid="uid://djpkmrsukexg4" path="res://Scenes/UI/planning.tscn" id="5_1rbsc"]
+[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_2kkx6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1rbsc"]
+radius = 17.029387
+
+[node name="World" type="Node2D" unique_id=837482538]
+script = ExtResource("1_b3pmb")
+next_level = &"uid://birvxciwqfi4r"
+
+[node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_1rbsc")]
+position = Vector2(127, 309)
+rotation = -3.0138295e-05
+
+[node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_2kkx6")]
+visible = false
+position = Vector2(289, 63)
+zoom = Vector2(2, 2)
+
+[node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
+position = Vector2(139, 247)
+
+[node name="Planning" parent="." unique_id=950038523 instance=ExtResource("5_1rbsc")]
+avail_bullets = Array[Resource]([ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6")])
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1629841680]
+position = Vector2(-193, 309)
+
+[node name="FinishPoint" type="Area2D" parent="." unique_id=742919471]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1467175358]
+position = Vector2(128, 25)
+shape = SubResource("CircleShape2D_1rbsc")
+
+[connection signal="body_entered" from="FinishPoint" to="." method="_on_finish_point_body_entered"]

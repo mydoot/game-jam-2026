@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 # --- CONFIGURATION ---
 @export_category("Movement Stats")
@@ -138,14 +138,14 @@ func _on_weapon_finished() -> void:
 
 
 # --- DAMAGE SYSTEM ---
-func take_damage(amount: int, source_position: Vector2) -> void:
+func take_damage(amount: int) -> void:
 	if is_invincible:
 		return
 	
 	stats.take_damage(amount)
 	
-	var knockback_direction = (global_position - source_position).normalized()
-	velocity = knockback_direction * 300.0
+	#var knockback_direction = (global_position - source_position).normalized()
+	#velocity = knockback_direction * 300.0
 
 	is_invincible = true
 
