@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+## Transition overlay used by SceneLoader while the next scene loads.
 
 signal loading_screen_ready
 
@@ -9,10 +10,13 @@ func _ready() -> void:
 	await animation_player.animation_finished
 	loading_screen_ready.emit()
 
-# The below function can be used to have visuals that change depending on the progress of the scene being loaded (like a progress bar), using the the progress array's 0-1 value
-func _on_progress_changed(prog_val: float) -> void:
+
+## Receives load progress in the 0-1 range for future progress visuals.
+func _on_progress_changed(_prog_val: float) -> void:
 	pass
 
+
+## Plays the transition out before freeing the loading overlay.
 func _on_load_finished() -> void:
 	animation_player.play_backwards("transition")
 	await animation_player.animation_finished

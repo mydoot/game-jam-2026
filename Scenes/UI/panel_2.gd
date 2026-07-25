@@ -1,10 +1,14 @@
 extends Panel
 
-func _process(delta: float) -> void:
+## Keeps the cursor usable during drag/drop and restores hidden slot icons if a
+## drag is cancelled outside a valid target.
+var data
+
+func _process(_delta: float) -> void:
 	if Input.get_current_cursor_shape() == CURSOR_FORBIDDEN:
 		DisplayServer.cursor_set_shape(DisplayServer.CURSOR_ARROW)
 
-var data
+
 func _notification(what: int) -> void:
 	if what == Node.NOTIFICATION_DRAG_BEGIN:
 		data = get_viewport().gui_get_drag_data()

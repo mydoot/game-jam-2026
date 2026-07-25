@@ -1,5 +1,7 @@
 class_name BasicBullet extends Resource
 
+## Data resource for configuring one bullet type. It translates exported values
+## into BlastBullets2D DirectionalBulletsData2D when a weapon fires.
 var bullet_data : DirectionalBulletsData2D
 
 @export_group("Basic Bullet Properties")
@@ -21,7 +23,7 @@ var bullet_data : DirectionalBulletsData2D
 @export var min_accel : float
 
 
-# Returns a partially set up DirectionalBulletsData2D, only thing left to do is set a new value to the .transforms property when the fire cooldown timer times out and you are ready to spawn a new batch of bullets..
+## Returns bullet spawn data. The weapon sets transforms and custom damage data.
 func set_up_bullet_data() -> DirectionalBulletsData2D:
 	var data : DirectionalBulletsData2D = DirectionalBulletsData2D.new()
 	data.textures = bullet_textures
@@ -36,8 +38,6 @@ func set_up_bullet_data() -> DirectionalBulletsData2D:
 	data.collision_shape_offset = bullet_collision_shape_offset
 	data.default_change_texture_time = bullet_change_texture_time
 	data.max_life_time = bullet_max_lifetime
-	#data.all_bullet_rotation_data = bullet_rotation_data
-	#data.bullets_custom_data = damage_data
 	
 	
 	return data

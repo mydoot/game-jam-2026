@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="game jam 2026"
-run/main_scene="uid://birvxciwqfi4r"
+run/main_scene="uid://m2g6nqjs6hv5"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
@@ -20,6 +20,10 @@ config/icon="res://Assets/icon.svg"
 BulletFactoryGlobal="*uid://bvwfgf35bcrvi"
 GlobalVariables="*uid://dtpx1ho5hrvro"
 SceneLoader="*uid://bw3yjevui0mqo"
+
+[dotnet]
+
+project/assembly_name="game jam 2026"
 
 [input]
 

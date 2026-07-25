@@ -1,7 +1,9 @@
 class_name Stats
 extends Node
 
-@export_group("Helath (Hearts)")
+## Shared health and ammo tracker. Emits signals any time values change so UI and
+## game-over logic do not need to poll state.
+@export_group("Health (Hearts)")
 @export var max_health: int = 1
 @export var start_health: int = 1
 
@@ -26,24 +28,25 @@ var bullets: float:
 		bullets = clampf(value, 0, max_bullets)
 		bullets_changed.emit(bullets, max_bullets)
 		
+
 func _ready() -> void:
 	health = start_health
 	bullets = start_bullets
 
-func _process(delta: float) -> void:
-	pass
-		
-#	Public funcions that other scripts/nodes will call
 
+## Reduces health and emits died when it reaches zero.
 func take_damage(amount: int) -> void:
 	health -= amount
 
 
+## Attempts to spend ammo and returns whether the spend succeeded.
 func spend_bullets(amount: float) -> bool:
 	if bullets >= amount:
 		bullets -= amount
 		return true
 	return false
 
+
+## Adds ammo while respecting max_bullets through the setter clamp.
 func gain_bullets(amount: float) -> void:
 	bullets += amount

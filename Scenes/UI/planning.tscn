@@ -376,4 +376,3 @@ theme_override_font_sizes/font_size = 20
 text = "Press [E] to hide menu"
 
 [connection signal="pressed" from="Canvas/LoadoutMenu/Start Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Canvas/LoadoutMenu/Start Button" to="Canvas/LoadoutMenu/Loadout" method="_on_start_button_pressed"]

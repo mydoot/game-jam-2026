@@ -1,20 +1,22 @@
 class_name RoomEntrance
 extends Node2D
 
-# Assign this in the Inspector for each instance! 
-# e.g., for Entrance_North, set x=0, y=-1
+## Doorway controlled by Room. The exported direction is assigned per instance.
 @export var direction : Vector2 
 
 @onready var barrier = $Barrier
 
-func _ready():
-	# By default, all doors are closed (barrier is active)
+func _ready() -> void:
 	close()
 
-func open():
+
+## Disables collision and visuals so the player can pass through.
+func open() -> void:
 	barrier.process_mode = Node.PROCESS_MODE_DISABLED # Disables collision
 	barrier.hide() # Hides the visual
 
-func close():
+
+## Restores collision and visuals so this doorway is blocked.
+func close() -> void:
 	barrier.process_mode = Node.PROCESS_MODE_INHERIT # Enables collision
 	barrier.show()
