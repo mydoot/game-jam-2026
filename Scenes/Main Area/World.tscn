@@ -13,7 +13,7 @@ script = ExtResource("1_8utni")
 position = Vector2(127, 309)
 rotation = -3.0138295e-05
 
-[node name="MainCamera" parent="." unique_id=118585489 instance=ExtResource("3_5o32j")]
+[node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_5o32j")]
 visible = false
 position = Vector2(289, 63)
 zoom = Vector2(2, 2)
@@ -22,7 +22,7 @@ zoom = Vector2(2, 2)
 position = Vector2(139, 247)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_3hajc")]
-avail_bullets = Array[Resource]([ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
+avail_bullets = Array[Resource]([ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=865719459]
 position = Vector2(128, 465)

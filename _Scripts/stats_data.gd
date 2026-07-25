@@ -1,7 +1,9 @@
 class_name Stats
 extends Node
 
-@export_group("Helath (Hearts)")
+## Player-owned health and ammo component. Player connects its change signals to
+## HUD and its died signal to the GameOver flow.
+@export_group("Health (Hearts)")
 @export var max_health: int = 1
 @export var start_health: int = 1
 
@@ -26,24 +28,27 @@ var bullets: float:
 		bullets = clampf(value, 0, max_bullets)
 		bullets_changed.emit(bullets, max_bullets)
 		
+
+## Applies exported starting values through the setters so listeners receive a
+## consistent initial state.
 func _ready() -> void:
 	health = start_health
 	bullets = start_bullets
 
-func _process(delta: float) -> void:
-	pass
-		
-#	Public funcions that other scripts/nodes will call
 
+## Reduces health through the clamped setter, which emits health_changed/died.
 func take_damage(amount: int) -> void:
 	health -= amount
 
 
+## Lets Player atomically check and spend ammo before asking Weapon to fire.
 func spend_bullets(amount: float) -> bool:
 	if bullets >= amount:
 		bullets -= amount
 		return true
 	return false
 
+
+## Adds ammo while respecting max_bullets through the setter clamp.
 func gain_bullets(amount: float) -> void:
 	bullets += amount

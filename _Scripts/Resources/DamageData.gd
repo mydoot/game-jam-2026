@@ -1,13 +1,12 @@
 class_name DamageData extends Resource
 
+## Per-shot metadata created by Weapon and carried by BlastBullets2D. The level
+## controller reads it to route damage and later bullet-type behavior.
 var damage: int
 
-# Enemies should have this variable be false.
 var is_from_player: bool
 
 @export_group("Bullet Type Booleans")
 var is_ricoshot: bool
 
 var is_piercing: bool
-
-# Feel free to add more booleans to determine variables, or not even use this idk lol

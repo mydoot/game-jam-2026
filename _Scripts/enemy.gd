@@ -1,5 +1,8 @@
 class_name Enemy extends CharacterBody2D
 
+## Enemy controller linked to its Detection_Area, Timer, and ShootingComponent.
+## It tracks Player line of sight, triggers laser attacks, and receives player
+## bullet damage from the level controller.
 @export var health = 5
 @export var stop_distance = 10
 @export var contact_damage = 1
@@ -15,21 +18,26 @@ class_name Enemy extends CharacterBody2D
 @onready var firing_point: Marker2D = $MarkerContainer/FiringPoint
 
 var speed = 25
-var chasePlayer = false
+var chase_player = false
 var player = null
 var is_invincible: bool = false
 var is_knocked_back: bool = false
 
 var _field_of_view: Dictionary[Node2D, RayCast2D]
-#var _ray: RayCast2D
 
-func _physics_process(delta: float) -> void:
-	#if is_knocked_back:
-		#velocity = velocity.move_toward(Vector2.ZERO, 400.0 * delta)
-		#move_and_slide()
-		#return
-	
+## Rechecks Player visibility every physics frame so the attack Timer starts and
+## stops as cover changes.
+func _physics_process(_delta: float) -> void:
+	_update_line_of_sight()
+
+
+## Aims the firing marker at a visible Player and controls the Timer used by
+## ShootingComponent; terrain on collision layer 3 blocks the sight ray.
+func _update_line_of_sight() -> void:
+	var has_visible_player := false
 	for object in _field_of_view:
+		if not is_instance_valid(object):
+			continue
 		var _ray = _field_of_view[object]
 		_ray.target_position = to_local(object.global_position)
 		_ray.force_raycast_update()
@@ -37,54 +45,51 @@ func _physics_process(delta: float) -> void:
 		var hit_object = _ray.get_collider()
 		
 		if hit_object == object:
-			#print("Character is in my sight")
+			has_visible_player = true
 			firing_point.rotation = _ray.target_position.angle()
-			if timer.is_stopped():
-				timer.start()
-		elif hit_object is Area2D:
-			#print("wall")
-			pass
-			
-	
-	#move_and_slide()
+			break
+
+	if has_visible_player:
+		if timer.is_stopped():
+			timer.start()
+	elif not timer.is_stopped():
+		timer.stop()
 
 
+## Creates a temporary sight ray only when Player enters Detection_Area.
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	if body is CharacterBody2D:
+	if body is Player and not _field_of_view.has(body):
 		var _ray = RayCast2D.new()
 		_ray.collide_with_areas = true
-		_ray.collision_mask = 3 # Layer 3 contains the walls
+		_ray.collision_mask = 5
 		
 		_ray.add_exception(self)
 		_ray.add_exception($Detection_Area)
 		
 		_field_of_view[body] = _ray
+		player = body
 		add_child(_ray)
 
 
+## Removes Player's sight ray when they leave Detection_Area.
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if _field_of_view.has(body):
 		_field_of_view[body].queue_free()
 		_field_of_view.erase(body)
-		if !timer.is_stopped():
-				timer.stop()
+		if player == body:
+			player = null
 
-#func _on_detection_area_area_entered(area: Area2D) -> void:
-	#_ray = RayCast2D.new()
-	#_ray.collide_with_areas = true
-	#_field_of_view[area] = _ray
-	#add_child(_ray)
-#
-#
-#func _on_detection_area_area_exited(area: Area2D) -> void:
-	#_field_of_view[area].queue_free()
-	#_field_of_view.erase(area)
 
+## Deals contact damage through Player.take_damage when a connected hitbox signal
+## reports the player.
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
-			body.take_damage(contact_damage, global_position)
+			body.take_damage(contact_damage)
 	
+
+## Applies damage routed from the level's BulletFactory callback, freeing the
+## enemy on death or briefly enabling hit invincibility.
 func take_damage(damage: int) -> void:
 	if is_invincible:
 		return
@@ -113,7 +118,7 @@ func take_damage(damage: int) -> void:
 	get_tree().create_timer(invincibility_duration).timeout.connect(func(): is_invincible = false)
 
 
+## Asks ShootingComponent to fire when the connected attack Timer expires.
 func _on_timer_timeout() -> void:
-	print("firing shot!")
 	shooting_component.shoot()
 	

@@ -1,17 +1,15 @@
 class_name Weapon
 extends Node2D
 
+## Player weapon controller. It turns BasicBullet entries from GlobalVariables
+## into BlastBullets2D data, spawns them through BulletFactoryGlobal, and signals
+## Player so HUD can advance.
 @export var damage: int = 1
 @export var cooldown: float = 0.5
-
-@onready var anim_player = $AnimationPlayer
-@onready var hitbox = $Hitbox
-@onready var vfx = $VFX
 
 @export_group("For Bullets")
 @export var bullet_resource : Resource
 @export var marker_container : Node2D
-@export var is_piercing : bool = false
 
 var bullet_data : DirectionalBulletsData2D
 var player_damage_data: DamageData
@@ -23,43 +21,65 @@ var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
+## Prepares the first chambered bullet and its matching damage metadata.
 func _ready() -> void:
-	player_damage_data = DamageData.new()
-	player_damage_data.damage = 1
-	player_damage_data.is_from_player = true
-	player_damage_data.is_ricoshot = false
-	player_damage_data.is_piercing = is_piercing
-	
-	
-	if GlobalVariables.bullet_loadout:
-		bullet_resource = GlobalVariables.bullet_loadout.pop_front()
-		GlobalVariables.current_bullet = bullet_resource
-		bullet_data = bullet_resource.set_up_bullet_data()
-		bullet_data.bullets_custom_data = player_damage_data
+	_prepare_current_bullet()
 
 
+## Fires the chambered BasicBullet through BulletFactory, advances
+## GlobalVariables, prepares the next round, and notifies Player.
 func shoot() -> void:
-	if bullet_data:
-		bullet_data.transforms = grab_marker_transforms()
-		if bullet_data.transforms:
-			
-			BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
-			bullet_resource = GlobalVariables.bullet_loadout.pop_front()
-			GlobalVariables.current_bullet = bullet_resource
-			
-			if bullet_resource:
-				attack_finished.emit()
-				bullet_data = bullet_resource.set_up_bullet_data()
-			else:
-				push_warning("Missing bullet_data. Ignore if the player just fired their last bullet.")
-				
-		else:
-			push_warning("bullet_data has no DirectionalBulletsData2D object.")
+	if bullet_data == null:
+		push_warning("Cannot shoot without prepared bullet data.")
+		return
 
+	var marker_transforms := grab_marker_transforms()
+	if marker_transforms.is_empty():
+		push_warning("Weapon has no firing markers configured.")
+		return
+
+	bullet_data.transforms = marker_transforms
+	if BulletFactory.bullet_factory == null:
+		push_warning("BulletFactory2D is not registered.")
+		return
+
+	BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
+	GlobalVariables.advance_to_next_bullet()
+	_prepare_current_bullet()
+	attack_finished.emit()
+
+
+## Captures every Marker2D transform required by BlastBullets2D spawn data.
 func grab_marker_transforms() -> Array[Transform2D]:
 	var all_markers : Array[Transform2D]
 	
 	for marker : Marker2D in marker_container.get_children():
 		all_markers.push_back(marker.global_transform)
 		
-	return all_markers
+	return all_markers	
+
+
+## Creates per-shot DamageData consumed by the level's BulletFactory callback.
+## A new resource is required for each round so preparing the next bullet cannot
+## change the behavior of a projectile that is still traveling.
+func _create_player_damage_data(pierces_enemies: bool) -> DamageData:
+	var damage_data := DamageData.new()
+	damage_data.damage = damage
+	damage_data.is_from_player = true
+	damage_data.is_ricoshot = false
+	damage_data.is_piercing = pierces_enemies
+	return damage_data
+
+
+## Converts GlobalVariables' chambered BasicBullet into plugin-specific data and
+## attaches the shared DamageData.
+func _prepare_current_bullet() -> void:
+	bullet_resource = GlobalVariables.get_current_bullet()
+	if bullet_resource == null:
+		bullet_data = null
+		player_damage_data = null
+		return
+
+	player_damage_data = _create_player_damage_data(bullet_resource is PiercingBullet)
+	bullet_data = bullet_resource.set_up_bullet_data()
+	bullet_data.bullets_custom_data = player_damage_data
