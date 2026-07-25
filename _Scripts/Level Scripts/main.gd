@@ -11,41 +11,29 @@ extends Node2D
 func _ready() -> void:
 	BulletFactory.bullet_factory = $BulletFactory2D
 	BulletFactory.bullet_factory.body_entered.connect(_on_bullet_hit)
+	BulletFactory.bullet_factory.area_entered.connect(_on_bullet_hit)
 	
 	GlobalVariables.spawn_point = $SpawnPoint
 	
 
 ## Reads DamageData attached by Weapon and routes a BlastBullets2D hit to the
-## correct Enemy or Player damage method.
-func _on_bullet_hit(hit_object: Object, _multimesh_bullets_instance: MultiMeshBullets2D, _bullet_index: int, data: Resource, _bullet_global_transform: Transform2D) -> void:
+## correct Enemy or Player damage method. Piercing rounds continue through
+## enemies but are manually stopped by terrain bodies and areas.
+func _on_bullet_hit(hit_object: Object, multimesh_bullets_instance: MultiMeshBullets2D, bullet_index: int, data: Resource, _bullet_global_transform: Transform2D) -> void:
 	var bullet_data: DamageData = data as DamageData
 	
 	if bullet_data == null:
 		return
-	if not bullet_data.is_from_player:
-		return
 	
 	var enemy: Enemy = hit_object as Enemy
-	if enemy == null:
-		return
-	
-	if bullet_data.is_piercing:
-		if not _bullet_hit_tracker.has(bullet_index):
-			_bullet_hit_tracker[bullet_index] = []
-		if enemy in _bullet_hit_tracker[bullet_index]:
-			return
-		_bullet_hit_tracker[bullet_index].append(enemy)
-	
-	# enemy.take_damage(bullet_data.damage)
-	# if bullet_data != null:
-	# 	var enemy: Enemy = hit_object as Enemy
-	# 	var player: Player = hit_object as Player
-		
-	# 	if enemy != null && bullet_data.is_from_player:
-	# 		enemy.take_damage(bullet_data.damage)
-			
-	# 	if player != null && !bullet_data.is_from_player:
-	# 		player.take_damage(bullet_data.damage)
+	var player: Player = hit_object as Player
+
+	if enemy != null and bullet_data.is_from_player:
+		enemy.take_damage(bullet_data.damage)
+	elif player != null and not bullet_data.is_from_player:
+		player.take_damage(bullet_data.damage)
+	elif bullet_data.is_piercing and is_instance_valid(multimesh_bullets_instance):
+		multimesh_bullets_instance.call_deferred("disable_bullet", bullet_index)
 
 
 ## Loads next_level through SceneLoader when Player reaches the connected finish

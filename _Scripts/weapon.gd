@@ -10,7 +10,6 @@ extends Node2D
 @export_group("For Bullets")
 @export var bullet_resource : Resource
 @export var marker_container : Node2D
-@export var is_piercing : bool = false
 
 var bullet_data : DirectionalBulletsData2D
 var player_damage_data: DamageData
@@ -22,9 +21,8 @@ var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
-## Creates shared player damage metadata and prepares the first chambered bullet.
+## Prepares the first chambered bullet and its matching damage metadata.
 func _ready() -> void:
-	player_damage_data = _create_player_damage_data()
 	_prepare_current_bullet()
 
 
@@ -61,13 +59,15 @@ func grab_marker_transforms() -> Array[Transform2D]:
 	return all_markers	
 
 
-## Creates DamageData consumed by the level's BulletFactory collision callback.
-func _create_player_damage_data() -> DamageData:
+## Creates per-shot DamageData consumed by the level's BulletFactory callback.
+## A new resource is required for each round so preparing the next bullet cannot
+## change the behavior of a projectile that is still traveling.
+func _create_player_damage_data(pierces_enemies: bool) -> DamageData:
 	var damage_data := DamageData.new()
 	damage_data.damage = damage
 	damage_data.is_from_player = true
 	damage_data.is_ricoshot = false
-	damage_data.is_piercing = false
+	damage_data.is_piercing = pierces_enemies
 	return damage_data
 
 
@@ -77,7 +77,9 @@ func _prepare_current_bullet() -> void:
 	bullet_resource = GlobalVariables.get_current_bullet()
 	if bullet_resource == null:
 		bullet_data = null
+		player_damage_data = null
 		return
 
+	player_damage_data = _create_player_damage_data(bullet_resource is PiercingBullet)
 	bullet_data = bullet_resource.set_up_bullet_data()
 	bullet_data.bullets_custom_data = player_damage_data
