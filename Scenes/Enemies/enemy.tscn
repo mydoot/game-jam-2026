@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://t00ae5ypf4bk" path="res://_Scripts/enemy.gd" id="1_jcvw6"]
 [ext_resource type="Script" uid="uid://c3v4oaaiw6leu" path="res://_Scripts/shooting_component.gd" id="2_ubio8"]
 [ext_resource type="Texture2D" uid="uid://byq27vipirxu2" path="res://Assets/Sprites/Slime_JE3_BE2.webp" id="2_x1rqp"]
-[ext_resource type="Resource" uid="uid://bkrmiocbxufwg" path="res://_Scripts/Resources/enemy_bullet.tres" id="3_ubio8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_afpow"]
 radius = 43.826324
@@ -17,7 +16,6 @@ contact_damage = 0
 
 [node name="ShootingComponent" type="Node" parent="." unique_id=182419989 node_paths=PackedStringArray("marker_container")]
 script = ExtResource("2_ubio8")
-bullet_resource = ExtResource("3_ubio8")
 marker_container = NodePath("../MarkerContainer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545957550]
