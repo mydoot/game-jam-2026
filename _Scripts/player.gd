@@ -37,8 +37,7 @@ func _ready() -> void:
 	stats.bullets_changed.connect(hud.update_bullets)
 	stats.died.connect(_on_player_died)
 	# Initialize HUD
-	hud.update_health(stats.health, stats.max_health)
-	hud.update_bullets(stats.bullets, stats.max_bullets)
+	#hud.update_health(stats.health, stats.max_health)
 	
 	# In the future, this is where we load from a Save File or Inventory.
 	equip_weapon(preload("res://Scenes/Weapons/gun.tscn"))
@@ -130,11 +129,11 @@ func equip_weapon(weapon_scene: PackedScene) -> void:
 	
 	# 3. Connect signals (Observer Pattern)
 	# This listens for the "attack_finished" signal we created in weapon.gd
-	#if new_weapon.has_signal("attack_finished"):
-		#new_weapon.attack_finished.connect(_on_weapon_finished)
+	if new_weapon.has_signal("attack_finished"):
+		new_weapon.attack_finished.connect(_on_weapon_finished)
 
 func _on_weapon_finished() -> void:
-	current_state = State.MOVE
+	hud.update_current_bullet()
 
 
 # --- DAMAGE SYSTEM ---

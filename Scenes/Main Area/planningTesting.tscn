@@ -14,13 +14,11 @@ script = ExtResource("1_b3pmb")
 next_level = &"uid://birvxciwqfi4r"
 
 [node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_1rbsc")]
-position = Vector2(127, 309)
+position = Vector2(-2, 60)
 rotation = -3.0138295e-05
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_2kkx6")]
 visible = false
-position = Vector2(289, 63)
-zoom = Vector2(2, 2)
 
 [node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
 position = Vector2(139, 247)
@@ -29,9 +27,10 @@ position = Vector2(139, 247)
 avail_bullets = Array[Resource]([ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6")])
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1629841680]
-position = Vector2(-193, 309)
+position = Vector2(-323, 59)
 
 [node name="FinishPoint" type="Area2D" parent="." unique_id=742919471]
+position = Vector2(-126, -248)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1467175358]
 position = Vector2(128, 25)

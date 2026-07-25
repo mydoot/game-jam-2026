@@ -13,7 +13,7 @@ func update_ui() -> void:
 		return
 		
 	icon.texture = bullet.bullet_textures[0]
-	icon.tooltip_text = "basic bullet"
+	#icon.tooltip_text = bullet.name
 	
 func _get_drag_data(at_position: Vector2) -> Variant:
 	if not bullet:
