@@ -10,6 +10,7 @@ extends Node2D
 @export_group("For Bullets")
 @export var bullet_resource : Resource
 @export var marker_container : Node2D
+@export var is_piercing : bool = false
 
 var bullet_data : DirectionalBulletsData2D
 var player_damage_data: DamageData
