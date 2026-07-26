@@ -20,6 +20,7 @@ rotation = -3.0138295e-05
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_2kkx6")]
 visible = false
+zoom = Vector2(0.5, 0.5)
 
 [node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
 position = Vector2(139, 247)
