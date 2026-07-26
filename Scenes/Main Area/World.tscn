@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_5o32j"]
 [ext_resource type="PackedScene" uid="uid://djpkmrsukexg4" path="res://Scenes/UI/planning.tscn" id="4_3hajc"]
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_5o32j"]
+[ext_resource type="Resource" path="res://_Scripts/Resources/ricochet_bullet.tres" id="5_pdwq7"]
 
 [node name="World" type="Node2D" unique_id=837482538]
 script = ExtResource("1_8utni")
@@ -18,11 +19,8 @@ visible = false
 position = Vector2(289, 63)
 zoom = Vector2(2, 2)
 
-[node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
-position = Vector2(139, 247)
-
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_3hajc")]
-avail_bullets = Array[Resource]([ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
+avail_bullets = Array[Resource]([ExtResource("5_pdwq7"), ExtResource("5_pdwq7"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=865719459]
 position = Vector2(128, 465)
