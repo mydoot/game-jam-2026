@@ -1,0 +1,60 @@
+[gd_resource type="Theme" load_steps=6 format=3]
+
+[ext_resource type="FontFile" path="res://Assets/fonts/xolonium/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" id="1"]
+[ext_resource type="FontFile" path="res://Assets/fonts/xolonium/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.055, 0.065, 0.1, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.36, 0.18, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 18.0
+content_margin_top = 16.0
+content_margin_right = 18.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="button"]
+bg_color = Color(0.11, 0.12, 0.17, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.42, 0.21, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="button_hover"]
+bg_color = Color(0.2, 0.17, 0.19, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.66, 0.24, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+default_font = ExtResource("1")
+default_font_size = 18
+Button/colors/font_color = Color(0.9, 0.86, 0.72, 1)
+Button/colors/font_hover_color = Color(1, 0.79, 0.34, 1)
+Button/fonts/font = ExtResource("2")
+Button/styles/normal = SubResource("button")
+Button/styles/hover = SubResource("button_hover")
+Button/styles/pressed = SubResource("button_hover")
+Panel/styles/panel = SubResource("panel")
+PanelContainer/styles/panel = SubResource("panel")
