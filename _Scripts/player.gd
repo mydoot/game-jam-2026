@@ -30,6 +30,8 @@ var can_dash: bool = true
 var walk_bob_timer: float = 0.0
 var is_invincible: bool = false
 
+var shooting: bool = false
+
 ## Connects Stats/HUD, equips the default gun, and initializes HUD values that
 ## Stats emitted before Player's own ready callback.
 func _ready() -> void:
@@ -78,6 +80,7 @@ func start_attack() -> void:
 	
 	# Tell the Weapon to do its thing
 	if current_weapon.has_method("shoot"):
+		shooting = true
 		current_weapon.shoot()
 		current_state = State.MOVE
 
@@ -105,6 +108,7 @@ func equip_weapon(weapon_scene: PackedScene) -> void:
 
 ## Refreshes HUD after Weapon consumes the chambered GlobalVariables entry.
 func _on_weapon_finished() -> void:
+	shooting = false
 	hud.update_current_bullet()
 
 
