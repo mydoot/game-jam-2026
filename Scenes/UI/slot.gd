@@ -25,9 +25,20 @@ func update_ui() -> void:
 		return
 	if not bullet:
 		icon.texture = null
+		icon.modulate = Color.WHITE
+		icon.material = null
 		return
-	
-	icon.texture = bullet.bullet_textures[0]
+
+	var bullet_resource := bullet as BasicBullet
+	if bullet_resource == null:
+		icon.texture = null
+		icon.modulate = Color.WHITE
+		icon.material = null
+		return
+
+	icon.texture = bullet_resource.bullet_textures[0]
+	icon.material = bullet_resource.create_visual_material()
+	icon.modulate = Color.WHITE if icon.material != null else bullet_resource.bullet_color
 	
 	#select_sfx.pitch_scale = 2.25
 	

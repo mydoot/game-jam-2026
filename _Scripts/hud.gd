@@ -28,8 +28,14 @@ func update_bullets(current: float, max_val: float) -> void:
 ## Reads the chambered BasicBullet from GlobalVariables and shows its first
 ## texture, or clears the icon after Weapon fires the final round.
 func update_current_bullet() -> void:
-	var current_bullet = GlobalVariables.get_current_bullet()
+	var current_bullet := GlobalVariables.get_current_bullet() as BasicBullet
 	bullet_icon.texture = current_bullet.bullet_textures[0] if current_bullet else null
+	bullet_icon.material = current_bullet.create_visual_material() if current_bullet else null
+	bullet_icon.modulate = (
+		Color.WHITE
+		if bullet_icon.material != null or current_bullet == null
+		else current_bullet.bullet_color
+	)
 
 func reset_tween() -> void:
 	if tween:
@@ -41,3 +47,4 @@ func _update_bullet_animation(count_percent: float) -> void:
 	tween.set_parallel(true)
 	tween.tween_property(bullet_count, "scale", Vector2(2, 2).lerp(Vector2(1, 1), count_percent), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(bullet_count, "modulate", Color.RED.lerp(Color.WHITE, count_percent), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+

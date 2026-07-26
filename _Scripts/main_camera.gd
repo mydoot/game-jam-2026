@@ -6,7 +6,7 @@ var target: Node2D
 
 @export_category("Smoothing")
 @export var smooth_speed: float = 10.0
-@export var mouse_lead: float = 0.2
+@export var mouse_lead: float = 0.3
 
 ## Follows target with frame-rate-safe smoothing and a small mouse-direction lead.
 func _process(delta: float) -> void:
@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 		return
 	
 	var blend := clampf(smooth_speed * delta, 0.0, 1.0)
-	zoom = zoom.lerp(Vector2(2.25,2.25), blend)
+	zoom = zoom.lerp(Vector2(2.5,2.5), blend)
 	
 	var desired_position = target.global_position
 	

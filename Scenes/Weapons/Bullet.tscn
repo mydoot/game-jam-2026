@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://_Scripts/bullet.gd" id="1_bullet"]
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_bullet")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+enabled = true
+collide_with_areas = true
+collide_with_bodies = true
+margin = 0.01
