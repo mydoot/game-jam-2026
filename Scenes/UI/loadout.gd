@@ -9,7 +9,8 @@ extends Panel
 
 @onready var available_shots_grid: TextureRect = $"../Available Bullets/Available Shots Grid"
 
-@onready var start_button: Button = $"../Start Button"
+@onready var start_button: Button = $"Start Button"
+
 
 var list_of_bullets: Array[Resource] = []
 

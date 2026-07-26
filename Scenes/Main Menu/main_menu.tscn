@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://m2g6nqjs6hv5"]
 
 [ext_resource type="Script" uid="uid://bkmcgqkgp66uu" path="res://Scenes/Main Menu/main_menu.gd" id="1_7xkbd"]
-[ext_resource type="FontFile" uid="uid://curw52lpyfte4" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_RB.otf" id="1_dtmfd"]
 [ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="2_armea"]
 [ext_resource type="Script" uid="uid://dby306ujcyyv" path="res://Scenes/Main Menu/soultext.gd" id="3_y0aff"]
 [ext_resource type="Script" uid="uid://bca16qfv6lxu5" path="res://Scenes/Main Menu/button.gd" id="5_fr3p2"]
@@ -24,7 +23,7 @@ offset_right = 1234.0
 offset_bottom = 702.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y0aff")
 
-[node name="SOUL2" type="Label" parent="CanvasLayer" unique_id=1648984833]
+[node name="SOUL2" type="RichTextLabel" parent="CanvasLayer" unique_id=1894596260]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -36,33 +35,15 @@ offset_right = 93.0
 offset_bottom = -96.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("1_dtmfd")
-theme_override_font_sizes/font_size = 150
+theme_override_colors/default_color = Color(0, 0.627451, 0.78431374, 1)
+theme_override_fonts/normal_font = ExtResource("2_armea")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
 text = "SOUL "
 horizontal_alignment = 1
 script = ExtResource("3_y0aff")
 
-[node name="SHOTS" type="Label" parent="CanvasLayer/SOUL2" unique_id=973726271]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -68.5
-offset_top = 28.0
-offset_right = 411.5
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("1_dtmfd")
-theme_override_font_sizes/font_size = 150
-text = "SHOTS"
-horizontal_alignment = 1
-
-[node name="SOUL" type="Label" parent="CanvasLayer" unique_id=1826000233]
+[node name="SOUL" type="RichTextLabel" parent="CanvasLayer" unique_id=1125225257]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -74,31 +55,12 @@ offset_right = 99.0
 offset_bottom = -90.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.28235295, 0.6431373, 1, 1)
-theme_override_fonts/font = ExtResource("1_dtmfd")
-theme_override_font_sizes/font_size = 150
+theme_override_fonts/normal_font = ExtResource("2_armea")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
 text = "SOUL "
 horizontal_alignment = 1
 script = ExtResource("3_y0aff")
-
-[node name="SHOTS" type="Label" parent="CanvasLayer/SOUL" unique_id=492824681]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -68.5
-offset_top = 28.0
-offset_right = 411.5
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.28235295, 0.6431373, 1, 1)
-theme_override_fonts/font = ExtResource("1_dtmfd")
-theme_override_font_sizes/font_size = 150
-text = "SHOTS"
-horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="CanvasLayer" unique_id=468973097]
 anchors_preset = 8
@@ -117,6 +79,43 @@ theme_override_fonts/font = ExtResource("2_armea")
 theme_override_font_sizes/font_size = 50
 text = "PLAY"
 script = ExtResource("5_fr3p2")
+
+[node name="SHOTS" type="RichTextLabel" parent="CanvasLayer" unique_id=281398365]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -185.0
+offset_top = -154.0
+offset_right = 295.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_armea")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "SHOTS"
+horizontal_alignment = 1
+
+[node name="SHOTS2" type="RichTextLabel" parent="CanvasLayer" unique_id=1313259985]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.0
+offset_top = -148.0
+offset_right = 301.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0.627451, 0.78431374, 1)
+theme_override_fonts/normal_font = ExtResource("2_armea")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "SHOTS"
+horizontal_alignment = 1
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=547051486]
 stream = ExtResource("6_r7gth")

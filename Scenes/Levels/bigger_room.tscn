@@ -30,6 +30,7 @@ tile_set = ExtResource("2_1lkfe")
 [node name="Enemy2" parent="." unique_id=1004533800 groups=["enemy"] instance=ExtResource("4_0igsr")]
 position = Vector2(204, -216)
 rotation = 0.933354
+flip_sprite_horizontally = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=386402481]
 position = Vector2(-0.25, -309.75)
@@ -80,3 +81,4 @@ shape = SubResource("RectangleShape2D_47ehs")
 [node name="Enemy3" parent="." unique_id=1557205180 groups=["enemy"] instance=ExtResource("4_0igsr")]
 position = Vector2(316, 2)
 rotation = 1.5863148
+flip_sprite_horizontally = true

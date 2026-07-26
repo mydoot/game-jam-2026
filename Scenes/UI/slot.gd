@@ -51,8 +51,19 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 		
 	var preview = duplicate()
 	var control = Control.new()
+	
 	control.add_child(preview)
 	preview.position -= Vector2(40, 40)
+	preview.self_modulate = Color.TRANSPARENT
+	
+	for child in preview.get_children():
+		if child is Label:
+			child.hide()
+		
+	
+	select_sfx.play()
+	reset_tween()
+	tween.tween_property(preview, "scale", Vector2(1.5, 1.5), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	
 	select_sfx.play()
 	reset_tween()

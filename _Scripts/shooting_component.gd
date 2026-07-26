@@ -11,6 +11,8 @@ class_name ShootingComponent extends Node
 @export_flags_2d_physics var laser_collision_mask: int = 5
 @export var laser_color: Color = Color(1.0, 1.0, 1.0, 0.9)
 
+@onready var enemy_gun_shot_sfx: AudioStreamPlayer2D = $"../EnemyGunShotSFX"
+
 var is_attacking: bool = false
 
 var wielder: CharacterBody2D
@@ -22,6 +24,7 @@ func _ready() -> void:
 
 ## Fires one laser from every Marker2D configured by the owning Enemy.
 func shoot() -> void:
+	enemy_gun_shot_sfx.play()
 	for marker: Marker2D in marker_container.get_children():
 		_fire_laser(marker)
 

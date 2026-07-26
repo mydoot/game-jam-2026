@@ -1,6 +1,7 @@
 extends Button
 
-@onready var hover_sfx: AudioStreamPlayer2D = $"../../../HoverSFX"
+@onready var hover_sfx: AudioStreamPlayer2D = $"../../../../HoverSFX"
+
 
 var tween := create_tween()
 

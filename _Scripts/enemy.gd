@@ -17,6 +17,14 @@ class_name Enemy extends CharacterBody2D
 
 @onready var firing_point: Marker2D = $MarkerContainer/FiringPoint
 
+@onready var warning: Sprite2D = $Warning
+
+@onready var warning_sfx: AudioStreamPlayer2D = $WarningSFX
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@export var flip_sprite_horizontally: bool
+
 var speed = 25
 var chase_player = false
 var player = null
@@ -24,9 +32,13 @@ var is_invincible: bool = false
 var is_knocked_back: bool = false
 
 var _field_of_view: Dictionary[Node2D, RayCast2D]
-
+	
 ## Rechecks Player visibility every physics frame so the attack Timer starts and
 ## stops as cover changes.
+
+func _ready() -> void:
+	animation_player.play("idle")
+
 func _physics_process(_delta: float) -> void:
 	_update_line_of_sight()
 
@@ -51,8 +63,11 @@ func _update_line_of_sight() -> void:
 
 	if has_visible_player:
 		if timer.is_stopped():
+			_play_warning()
 			timer.start()
 	elif not timer.is_stopped():
+		animation_player.play("idle")
+		warning.hide()
 		timer.stop()
 
 
@@ -121,4 +136,10 @@ func take_damage(damage: int) -> void:
 ## Asks ShootingComponent to fire when the connected attack Timer expires.
 func _on_timer_timeout() -> void:
 	shooting_component.shoot()
+	
+
+func _play_warning() -> void:
+	warning.show()
+	warning_sfx.play()
+	animation_player.play("attack")
 	

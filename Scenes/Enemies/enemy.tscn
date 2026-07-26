@@ -1,11 +1,70 @@
 [gd_scene format=3 uid="uid://byp3dirn2ih7"]
 
 [ext_resource type="Script" uid="uid://t00ae5ypf4bk" path="res://_Scripts/enemy.gd" id="1_jcvw6"]
+[ext_resource type="Texture2D" uid="uid://bho02goewbja7" path="res://Assets/Sprites/Soldier.png" id="2_haj6g"]
 [ext_resource type="Script" uid="uid://c3v4oaaiw6leu" path="res://_Scripts/shooting_component.gd" id="2_ubio8"]
-[ext_resource type="Texture2D" uid="uid://byq27vipirxu2" path="res://Assets/Sprites/Slime_JE3_BE2.webp" id="2_x1rqp"]
+[ext_resource type="Script" uid="uid://qup1062563vr" path="res://Scenes/Enemies/sprite_2d.gd" id="3_u0emo"]
+[ext_resource type="Texture2D" uid="uid://bo1jtkx6kh45t" path="res://Assets/Sprites/warning.png" id="4_ubio8"]
+[ext_resource type="Script" uid="uid://bcfobogupexyi" path="res://Scenes/Enemies/warning.gd" id="5_l8da7"]
+[ext_resource type="AudioStream" uid="uid://bn5jufljmuwdn" path="res://Assets/SFX/sci_fi_error.wav" id="5_miwey"]
+[ext_resource type="PackedScene" uid="uid://djmv5sll7a5wd" path="res://Assets/SFX/enemy_gun_shot_sfx.tscn" id="7_haj6g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_afpow"]
 radius = 43.826324
+
+[sub_resource type="Animation" id="Animation_u0emo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_haj6g"]
+resource_name = "attack"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [41]
+}
+
+[sub_resource type="Animation" id="Animation_tq087"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4bcle"]
+_data = {
+&"RESET": SubResource("Animation_u0emo"),
+&"attack": SubResource("Animation_haj6g"),
+&"idle": SubResource("Animation_tq087")
+}
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1557205180]
 collision_mask = 3
@@ -14,18 +73,22 @@ script = ExtResource("1_jcvw6")
 health = 1
 contact_damage = 0
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545957550]
+position = Vector2(0, -15)
+scale = Vector2(2.5923467, 2.5923467)
+texture = ExtResource("2_haj6g")
+hframes = 9
+vframes = 7
+frame = 1
+script = ExtResource("3_u0emo")
+
 [node name="ShootingComponent" type="Node" parent="." unique_id=182419989 node_paths=PackedStringArray("marker_container")]
 script = ExtResource("2_ubio8")
 marker_container = NodePath("../MarkerContainer")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545957550]
-position = Vector2(0, -15)
-scale = Vector2(0.06500002, 0.06500002)
-texture = ExtResource("2_x1rqp")
-
 [node name="Timer" type="Timer" parent="." unique_id=1807829017]
 process_callback = 0
-wait_time = 1.5
+wait_time = 0.75
 
 [node name="Detection_Area" type="Area2D" parent="." unique_id=80163929]
 position = Vector2(-1.5258789e-05, -2.0000153)
@@ -49,6 +112,23 @@ shape = SubResource("CircleShape2D_afpow")
 [node name="FiringPoint" type="Marker2D" parent="MarkerContainer" unique_id=1050019920]
 position = Vector2(0, 14)
 rotation = 1.5693861
+
+[node name="Warning" type="Sprite2D" parent="." unique_id=989318282]
+visible = false
+position = Vector2(0, -70)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_ubio8")
+script = ExtResource("5_l8da7")
+
+[node name="WarningSFX" type="AudioStreamPlayer2D" parent="." unique_id=1281613264]
+stream = ExtResource("5_miwey")
+volume_db = -10.0
+pitch_scale = 1.25
+
+[node name="EnemyGunShotSFX" parent="." unique_id=1605415974 instance=ExtResource("7_haj6g")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1522741120]
+libraries/ = SubResource("AnimationLibrary_4bcle")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Detection_Area" to="." method="_on_detection_area_body_entered"]
