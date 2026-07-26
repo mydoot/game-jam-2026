@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cbxht37km6td0"]
+
+[ext_resource type="Script" uid="uid://dw3oo8spw43sx" path="res://Assets/VFX/bullet_collision_vfx.gd" id="1_hcpuq"]
+
+[sub_resource type="Curve" id="Curve_475w4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="BulletCollisionVFX" type="CPUParticles2D" unique_id=617944663]
+emitting = false
+amount = 50
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_475w4")
+color = Color(0.99215686, 0.98039216, 0.105882354, 1)
+script = ExtResource("1_hcpuq")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

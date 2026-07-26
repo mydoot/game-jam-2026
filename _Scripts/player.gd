@@ -32,6 +32,10 @@ var is_invincible: bool = false
 
 var shooting: bool = false
 
+@onready var gunshot_sfx: AudioStreamPlayer2D = $GunshotSFX
+
+@onready var walk_sfx: AudioStreamPlayer2D = $WalkSFX
+
 ## Connects Stats/HUD, equips the default gun, and initializes HUD values that
 ## Stats emitted before Player's own ready callback.
 func _ready() -> void:
@@ -60,7 +64,9 @@ func _physics_process(delta: float) -> void:
 func state_move(delta: float) -> void:
 	_update_aim()
 	_apply_movement(Input.get_vector("move_left", "move_right", "move_up", "move_down"), speed, delta)
-
+	
+	#walk_sfx.play()
+	
 	if Input.is_action_just_pressed("attack") and current_weapon != null:
 		start_attack()
 
@@ -81,6 +87,8 @@ func start_attack() -> void:
 	# Tell the Weapon to do its thing
 	if current_weapon.has_method("shoot"):
 		shooting = true
+		gunshot_sfx.pitch_scale
+		gunshot_sfx.play()
 		current_weapon.shoot()
 		current_state = State.MOVE
 

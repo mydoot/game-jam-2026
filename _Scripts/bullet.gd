@@ -7,6 +7,8 @@ class_name PlayerBullet extends Node2D
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var shape_cast: ShapeCast2D = $ShapeCast2D
 
+const bullet_collision_vfx = preload("res://Assets/VFX/bullet_collision_vfx.tscn")
+
 signal bounced(collision_position: Vector2, collision_normal: Vector2)
 
 var bullet_resource: BasicBullet
@@ -106,7 +108,11 @@ func _move_projectile(distance: float) -> void:
 			and collider.is_in_group("enemy")
 			and collider.has_method("take_damage")
 		):
+			_add_vfx() 
+			
 			collider.call("take_damage", damage)
+			
+			
 			if is_piercing:
 				shape_cast.add_exception_rid(collider_rid)
 				var pass_through_distance := minf(1.0, remaining_distance)
@@ -114,10 +120,12 @@ func _move_projectile(distance: float) -> void:
 				remaining_distance -= pass_through_distance
 				continue
 
+			#await bullet_collision_vfx.emitting
 			queue_free()
 			return
 
 		if remaining_bounces > 0 and collision_normal != Vector2.ZERO:
+			_add_vfx() 
 			remaining_bounces -= 1
 			direction = direction.bounce(collision_normal).normalized()
 			global_rotation = direction.angle()
@@ -129,6 +137,7 @@ func _move_projectile(distance: float) -> void:
 			# that has just consumed its only bounce.
 			return
 
+		_add_vfx() 
 		queue_free()
 		return
 
@@ -170,3 +179,11 @@ func _update_texture(delta: float) -> void:
 	texture_elapsed = fmod(texture_elapsed, bullet_resource.bullet_change_texture_time)
 	texture_index = (texture_index + 1) % bullet_resource.bullet_textures.size()
 	sprite.texture = bullet_resource.bullet_textures[texture_index]
+	
+
+func _add_vfx() -> void:
+	var effect = bullet_collision_vfx.instantiate()
+	
+	get_tree().current_scene.add_child(effect)
+	effect.global_position = global_position
+	

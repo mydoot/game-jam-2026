@@ -47,4 +47,3 @@ func _update_bullet_animation(count_percent: float) -> void:
 	tween.set_parallel(true)
 	tween.tween_property(bullet_count, "scale", Vector2(2, 2).lerp(Vector2(1, 1), count_percent), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(bullet_count, "modulate", Color.RED.lerp(Color.WHITE, count_percent), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-

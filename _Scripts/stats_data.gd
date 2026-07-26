@@ -15,6 +15,8 @@ signal health_changed(new_value: int, max_value: int)
 signal bullets_changed(new_value: float, max_value: float)
 signal died
 
+@onready var player: Player = $".."
+
 #	clampi and clampf forces values to be within the min/max: clampi/f(value, min, max)
 var health: int:
 	set(value):
@@ -46,6 +48,8 @@ func spend_bullets(amount: float) -> bool:
 	if bullets >= amount:
 		bullets -= amount
 		return true
+	
+	#player.take_damage(10)
 	return false
 
 
