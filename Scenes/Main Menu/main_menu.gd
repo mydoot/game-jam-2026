@@ -6,6 +6,9 @@ extends Node2D
 @export var initial_scene: StringName = &""
 @export var start_button: Button
 
+@onready var music: AudioStreamPlayer2D = $Music
+
+var tween := create_tween()
 
 ## Starts loading the configured first playable scene.
 func _on_button_pressed() -> void:
@@ -13,4 +16,8 @@ func _on_button_pressed() -> void:
 		push_warning("No initial_scene configured on the main menu.")
 		return
 
+	tween.tween_property(music, "volume_db", -80, 0.15)
+	
+	tween.tween_callback(music.stop)
+	
 	SceneLoader.load_scene(String(initial_scene))

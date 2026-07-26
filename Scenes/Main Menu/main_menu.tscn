@@ -118,9 +118,9 @@ theme_override_font_sizes/font_size = 50
 text = "PLAY"
 script = ExtResource("5_fr3p2")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=547051486]
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=547051486]
 stream = ExtResource("6_r7gth")
-volume_db = -15.0
+volume_db = -30.0
 autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

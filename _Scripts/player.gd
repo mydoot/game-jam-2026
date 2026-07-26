@@ -82,7 +82,7 @@ func start_attack() -> void:
 	current_state = State.ATTACK
 	
 	# Visual: Slight lunging stop
-	velocity = velocity * 0.2 
+	velocity = velocity * 0.5
 	
 	# Tell the Weapon to do its thing
 	if current_weapon.has_method("shoot"):

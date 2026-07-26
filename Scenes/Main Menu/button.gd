@@ -21,7 +21,6 @@ func _on_mouse_entered() -> void:
 	reset_tween()
 
 	tween.tween_property(self, "scale", Vector2(1.3, 1.3), 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
-	
 
 
 func _on_mouse_exited() -> void:
