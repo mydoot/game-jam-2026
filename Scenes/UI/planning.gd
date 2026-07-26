@@ -11,6 +11,9 @@ extends Node2D
 
 @onready var hint_label: Label = $Canvas/Label
 
+
+@onready var revolver_spin_sfx: AudioStreamPlayer2D = $RevolverSpinSFX
+
 ## There should only be 6 bullet resource files in this array.
 ## This array is to add the bullets the player has to use to solve the level.
 @export var avail_bullets: Array[Resource] = []
@@ -49,6 +52,7 @@ func _on_start_button_pressed() -> void:
 		push_warning("Load all six bullets before starting.")
 		return
 	
+	revolver_spin_sfx.play() 
 	loadout.load_bullets_into_list()
 	loadout.pass_bullet_list()
 	combat_started = true
@@ -78,11 +82,11 @@ func _on_start_button_pressed() -> void:
 func hide_loadout_menu() -> void:
 	if not is_menu_hidden:
 		hint_label.text = "Press [E] to show menu"
-		_move_menu(menu_visible_position + Vector2(0, 450), 0.15)
+		_move_menu(menu_visible_position + Vector2(0, 450), 0.4)
 		is_menu_hidden = true
 	else:
 		hint_label.text = "Press [E] to hide menu"
-		_move_menu(menu_visible_position, 0.15)
+		_move_menu(menu_visible_position, 0.4)
 		is_menu_hidden = false
 
 
@@ -92,4 +96,4 @@ func _move_menu(target_position: Vector2, duration: float) -> void:
 	if menu_tween and menu_tween.is_valid():
 		menu_tween.kill()
 	menu_tween = create_tween()
-	menu_tween.tween_property(loadout_menu, "position", target_position, duration).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	menu_tween.tween_property(loadout_menu, "position", target_position, duration).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)

@@ -5,6 +5,12 @@ class_name Slot extends Panel
 @onready var icon: TextureRect = $TextureRect
 @export var bullet: Resource
 
+@onready var select_sfx: AudioStreamPlayer2D = $"../../../../../SelectSFX"
+
+@onready var bullet_load_sfx: AudioStreamPlayer2D = $"../../../../../BulletLoadSFX"
+
+var tween := create_tween()
+
 ## Initializes the icon from the bullet resource assigned by the scene or Loadout.
 func _ready() -> void:
 	update_ui()
@@ -20,8 +26,10 @@ func update_ui() -> void:
 	if not bullet:
 		icon.texture = null
 		return
-		
+	
 	icon.texture = bullet.bullet_textures[0]
+	
+	#select_sfx.pitch_scale = 2.25
 	
 
 ## Starts a drag operation using a duplicate Slot as the cursor preview and
@@ -34,6 +42,10 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	var control = Control.new()
 	control.add_child(preview)
 	preview.position -= Vector2(40, 40)
+	
+	select_sfx.play()
+	reset_tween()
+	tween.tween_property(preview, "scale", Vector2(1.5, 1.5), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	
 	set_drag_preview(control)
 	icon.hide()
@@ -50,10 +62,19 @@ func _can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if not (data is Slot):
 		return
+	bullet_load_sfx.play()
 	var tmp = bullet
 	bullet = data.bullet
 	data.bullet = tmp
 	icon.show()
 	data.icon.show()
+	reset_tween()
+	tween.tween_property(data, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	update_ui()
 	data.update_ui()
+	
+	
+func reset_tween() -> void:
+	if tween:
+		tween.kill()
+	tween = create_tween()

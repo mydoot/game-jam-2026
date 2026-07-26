@@ -5,9 +5,9 @@ extends Panel
 ## GlobalVariables before spawning Player.
 @onready var planning: Node2D = $"../../.."
 
-@onready var loadout_grid: GridContainer = $"Loadout Grid"
+@onready var loadout_grid: TextureRect = $"Loadout Grid"
 
-@onready var available_shots_grid: GridContainer = $"../Available Bullets/Available Shots Grid"
+@onready var available_shots_grid: TextureRect = $"../Available Bullets/Available Shots Grid"
 
 @onready var start_button: Button = $"../Start Button"
 
