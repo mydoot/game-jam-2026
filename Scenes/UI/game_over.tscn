@@ -33,6 +33,7 @@ layout_mode = 0
 offset_top = 89.0
 offset_right = 1152.0
 offset_bottom = 224.0
+scale = Vector2(1, 0.99408966)
 theme_override_colors/default_color = Color(0.86194634, 0.091310345, 0.2414658, 1)
 theme_override_fonts/normal_font = ExtResource("2_w88jv")
 theme_override_font_sizes/normal_font_size = 100
@@ -40,25 +41,6 @@ bbcode_enabled = true
 text = "GAME OVER"
 horizontal_alignment = 1
 script = ExtResource("3_ckxb7")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1455952268]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -46.5
-offset_bottom = 46.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Restart" type="Button" parent="Control/VBoxContainer" unique_id=99475385]
-layout_mode = 2
-text = "Restart"
-
-[node name="Quit" type="Button" parent="Control/VBoxContainer" unique_id=867994254]
-layout_mode = 2
-text = "Quit"
 
 [node name="Label2" type="RichTextLabel" parent="Control" unique_id=981133744]
 layout_mode = 0
@@ -72,8 +54,40 @@ bbcode_enabled = true
 text = "take care of your soul"
 horizontal_alignment = 1
 
+[node name="Restart" type="Button" parent="Control" unique_id=99475385]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -46.0
+offset_right = 57.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Restart"
+
+[node name="Quit" type="Button" parent="Control" unique_id=867994254]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = 12.0
+offset_right = 61.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Quit"
+
 [node name="EnemyGunShotSFX" parent="." unique_id=1605415974 instance=ExtResource("2_wpaxx")]
 autoplay = true
 
-[connection signal="pressed" from="Control/VBoxContainer/Restart" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Control/Restart" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Control/Quit" to="." method="_on_quit_button_pressed"]

@@ -75,6 +75,7 @@ func state_move(delta: float) -> void:
 ## Weapon to spawn the matching bullet.
 func start_attack() -> void:
 	if not GlobalVariables.has_loaded_bullets():
+		take_damage(10)
 		return
 	if not stats.spend_bullets(1):
 		return

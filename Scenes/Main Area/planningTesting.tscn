@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_2kkx6"]
 [ext_resource type="Resource" uid="uid://bgojx76eouqoa" path="res://_Scripts/Resources/piercing_bullet.tres" id="5_vyeik"]
 [ext_resource type="Resource" uid="uid://b16rd5wk1n3j3" path="res://_Scripts/Resources/ricochet_bullet.tres" id="6_vyeik"]
+[ext_resource type="AudioStream" uid="uid://dls8kuxdy0ieh" path="res://Assets/Music/bach one.ogg" id="8_s12qc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1rbsc"]
 radius = 17.029387
@@ -36,5 +37,10 @@ position = Vector2(-126, -248)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1467175358]
 position = Vector2(128, 25)
 shape = SubResource("CircleShape2D_1rbsc")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=735382308]
+stream = ExtResource("8_s12qc")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="body_entered" from="FinishPoint" to="." method="_on_finish_point_body_entered"]

@@ -47,9 +47,10 @@ func take_damage(amount: int) -> void:
 func spend_bullets(amount: float) -> bool:
 	if bullets >= amount:
 		bullets -= amount
+		print(bullets)
 		return true
 	
-	#player.take_damage(10)
+		
 	return false
 
 

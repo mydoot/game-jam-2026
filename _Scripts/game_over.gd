@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@onready var restart: Button = $Control/VBoxContainer/Restart
-@onready var quit: Button = $Control/VBoxContainer/Quit
+@onready var restart: Button = $Control/Restart
+@onready var quit: Button = $Control/Quit
 
 ## Pause overlay instantiated by Player when Stats emits died. It owns the
 ## restart and quit buttons while allowing itself to process during pause.
