@@ -8,8 +8,18 @@
 [ext_resource type="FontFile" uid="uid://b4udn0uh2kqrt" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_R.otf" id="5_5h7ne"]
 [ext_resource type="Resource" uid="uid://bkrmiocbxufwg" path="res://_Scripts/Resources/enemy_bullet.tres" id="5_8jt1r"]
 [ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="6_i378m"]
+[ext_resource type="AudioStream" uid="uid://vw2sfhmbbo1k" path="res://Assets/SFX/JDSherbert - Ultimate UI SFX Pack - Cursor - 3.wav" id="9_cbdk7"]
+[ext_resource type="Script" uid="uid://wjgn5xolvttt" path="res://Scenes/UI/start_button.gd" id="9_mrkg2"]
+[ext_resource type="AudioStream" uid="uid://b8tsyj3j1sq2s" path="res://Assets/SFX/JDSherbert - Ultimate UI SFX Pack - Cursor - 1.wav" id="11_ioees"]
+[ext_resource type="AudioStream" uid="uid://daldts3fwpu5t" path="res://Assets/SFX/freesound_community-revolver-spin-96947.mp3" id="12_gdjdq"]
+[ext_resource type="AudioStream" uid="uid://ci0e4q0tbcy0" path="res://Assets/SFX/keys_jingling.wav" id="13_2s40v"]
 
 [sub_resource type="Theme" id="Theme_yccb6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8jt1r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jt1r"]
+bg_color = Color(0.07524388, 0.08171462, 0.08171462, 1)
 
 [node name="Planning" type="Node2D" unique_id=950038523]
 script = ExtResource("1_n6qg7")
@@ -19,8 +29,16 @@ script = ExtResource("1_n6qg7")
 [node name="LoadoutMenu" type="Control" parent="Canvas" unique_id=767138845]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -79.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = -39.0
+
+[node name="BG" type="Panel" parent="Canvas/LoadoutMenu" unique_id=1341884671]
+self_modulate = Color(1, 1, 1, 0.3372549)
+layout_mode = 0
+offset_top = 269.0
+offset_right = 1152.0
+offset_bottom = 732.0
 
 [node name="Loadout" type="Panel" parent="Canvas/LoadoutMenu" unique_id=1880534998]
 layout_mode = 1
@@ -29,35 +47,38 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 280.0
-offset_top = 493.0
-offset_right = 827.5
-offset_bottom = 589.0
+offset_left = 275.0
+offset_top = 491.0
+offset_right = 822.5
+offset_bottom = 587.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
 theme = SubResource("Theme_yccb6")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8jt1r")
 script = ExtResource("1_rsdvt")
 
-[node name="Loadout Grid" type="GridContainer" parent="Canvas/LoadoutMenu/Loadout" unique_id=603608110]
+[node name="Loadout Grid" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout" unique_id=171542859]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -190.0
-offset_top = -29.5
-offset_right = 194.0
-offset_bottom = 33.0
+anchor_bottom = 1.0
+offset_left = -265.0
+offset_top = -80.0
+offset_right = 265.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 10
-columns = 6
+grow_vertical = 0
 
 [node name="Slot1" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=668383593]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 0
+offset_left = 244.25
+offset_top = -262.0
+offset_right = 324.25
+offset_bottom = -182.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jt1r")
 script = ExtResource("2_p7dmu")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot1" unique_id=969844678]
@@ -76,9 +97,25 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot1" unique_id=914303446]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 25
+text = "1"
+horizontal_alignment = 1
+
 [node name="Slot2" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=1594679446]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 0
+offset_left = 377.25
+offset_top = -181.0
+offset_right = 457.25
+offset_bottom = -101.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jt1r")
 script = ExtResource("2_p7dmu")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot2" unique_id=266435711]
@@ -97,9 +134,25 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot2" unique_id=1661364001]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 25
+text = "2"
+horizontal_alignment = 1
+
 [node name="Slot3" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=1553248407]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 0
+offset_left = 377.25
+offset_top = -49.0
+offset_right = 457.25
+offset_bottom = 31.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jt1r")
 script = ExtResource("2_p7dmu")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot3" unique_id=677878723]
@@ -118,9 +171,25 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot3" unique_id=1028327610]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 25
+text = "3"
+horizontal_alignment = 1
+
 [node name="Slot4" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=1337776357]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 0
+offset_left = 244.25
+offset_top = 40.0
+offset_right = 324.25
+offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jt1r")
 script = ExtResource("2_p7dmu")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot4" unique_id=1112662709]
@@ -139,9 +208,25 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot4" unique_id=791373047]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 110.0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 25
+text = "4"
+horizontal_alignment = 1
+
 [node name="Slot5" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=440816962]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 0
+offset_left = 111.25
+offset_top = -49.0
+offset_right = 191.25
+offset_bottom = 31.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jt1r")
 script = ExtResource("2_p7dmu")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot5" unique_id=1411325943]
@@ -160,9 +245,25 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot5" unique_id=739963682]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 25
+text = "5"
+horizontal_alignment = 1
+
 [node name="Slot6" type="Panel" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid" unique_id=230959624]
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 0
+offset_left = 111.25
+offset_top = -181.0
+offset_right = 191.25
+offset_bottom = -101.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jt1r")
 script = ExtResource("2_p7dmu")
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot6" unique_id=1258834194]
@@ -181,44 +282,61 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="Canvas/LoadoutMenu/Loadout/Loadout Grid/Slot6" unique_id=452143107]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("6_i378m")
+theme_override_font_sizes/font_size = 25
+text = "6"
+horizontal_alignment = 1
+
 [node name="Available Bullets" type="Panel" parent="Canvas/LoadoutMenu" unique_id=381884880]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 277.75
-offset_top = 384.0
-offset_right = 825.25
-offset_bottom = 480.0
+offset_left = 354.0
+offset_top = 627.0
+offset_right = 901.5
+offset_bottom = 723.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
 theme = SubResource("Theme_yccb6")
 script = ExtResource("2_ow6ci")
 
-[node name="Available Shots Grid" type="GridContainer" parent="Canvas/LoadoutMenu/Available Bullets" unique_id=100740192]
+[node name="Available Shots Grid" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets" unique_id=36253468]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -190.0
-offset_top = -29.5
-offset_right = 194.0
-offset_bottom = 33.0
+offset_left = -318.75
+offset_top = -526.0
+offset_right = 211.25
+offset_bottom = -446.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 10
-columns = 6
 
 [node name="Slot1" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=1617315456]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.26792452
+anchor_top = 1.2
+anchor_right = -0.116981134
+anchor_bottom = 2.2
 script = ExtResource("2_p7dmu")
 bullet = ExtResource("5_8jt1r")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot1" unique_id=794687449]
 layout_mode = 1
@@ -237,10 +355,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Slot2" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=1542234639]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.26792452
+anchor_top = 2.6625
+anchor_right = -0.116981134
+anchor_bottom = 3.6625
 script = ExtResource("2_p7dmu")
 bullet = ExtResource("5_8jt1r")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot2" unique_id=918296366]
 layout_mode = 1
@@ -259,10 +384,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Slot3" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=30896773]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.26792452
+anchor_top = 4.1
+anchor_right = -0.116981134
+anchor_bottom = 5.1
 script = ExtResource("2_p7dmu")
 bullet = ExtResource("5_8jt1r")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot3" unique_id=2138638262]
 layout_mode = 1
@@ -281,10 +413,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Slot4" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=716294211]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0773585
+anchor_top = 1.2
+anchor_right = 1.2283019
+anchor_bottom = 2.2
 script = ExtResource("2_p7dmu")
 bullet = ExtResource("4_rsdvt")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot4" unique_id=627945848]
 layout_mode = 1
@@ -303,10 +442,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Slot5" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=2127355163]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0773585
+anchor_top = 2.6625
+anchor_right = 1.2283019
+anchor_bottom = 3.6625
 script = ExtResource("2_p7dmu")
 bullet = ExtResource("4_rsdvt")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot5" unique_id=188963966]
 layout_mode = 1
@@ -325,10 +471,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Slot6" type="Panel" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid" unique_id=797017232]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0773585
+anchor_top = 4.1
+anchor_right = 1.2283019
+anchor_bottom = 5.1
 script = ExtResource("2_p7dmu")
 bullet = ExtResource("4_rsdvt")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Canvas/LoadoutMenu/Available Bullets/Available Shots Grid/Slot6" unique_id=2083494115]
 layout_mode = 1
@@ -349,17 +502,19 @@ stretch_mode = 5
 [node name="Start Button" type="Button" parent="Canvas/LoadoutMenu" unique_id=132034574]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 13.25
-anchor_top = 9.55
-anchor_right = 15.575
-anchor_bottom = 10.45
+anchor_left = 13.575
+anchor_top = 11.75
+anchor_right = 15.9
+anchor_bottom = 12.65
 grow_horizontal = 0
 grow_vertical = 0
+pivot_offset = Vector2(46.5, 18)
 theme_override_constants/h_separation = 5
 theme_override_fonts/font = ExtResource("5_5h7ne")
 theme_override_font_sizes/font_size = 24
 text = "Begin"
 icon_alignment = 1
+script = ExtResource("9_mrkg2")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Canvas" unique_id=1167355404]
@@ -374,5 +529,20 @@ grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_i378m")
 theme_override_font_sizes/font_size = 20
 text = "Press [E] to hide menu"
+
+[node name="HoverSFX" type="AudioStreamPlayer2D" parent="." unique_id=862265047]
+stream = ExtResource("9_cbdk7")
+
+[node name="SelectSFX" type="AudioStreamPlayer2D" parent="." unique_id=84804415]
+stream = ExtResource("11_ioees")
+pitch_scale = 2.25
+
+[node name="RevolverSpinSFX" type="AudioStreamPlayer2D" parent="." unique_id=1713553953]
+stream = ExtResource("12_gdjdq")
+volume_db = 3.0
+
+[node name="BulletLoadSFX" type="AudioStreamPlayer2D" parent="." unique_id=772155507]
+stream = ExtResource("13_2s40v")
+pitch_scale = 3.0
 
 [connection signal="pressed" from="Canvas/LoadoutMenu/Start Button" to="." method="_on_start_button_pressed"]

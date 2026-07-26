@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://bkmcgqkgp66uu" path="res://Scenes/Main Menu/main_menu.gd" id="1_7xkbd"]
 [ext_resource type="FontFile" uid="uid://curw52lpyfte4" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_RB.otf" id="1_dtmfd"]
 [ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="2_armea"]
+[ext_resource type="Script" uid="uid://dby306ujcyyv" path="res://Scenes/Main Menu/soultext.gd" id="3_y0aff"]
+[ext_resource type="Script" uid="uid://bca16qfv6lxu5" path="res://Scenes/Main Menu/button.gd" id="5_fr3p2"]
+[ext_resource type="AudioStream" uid="uid://rjof766iiadn" path="res://Assets/Music/gamejam2-level1.ogg" id="6_r7gth"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0aff"]
+bg_color = Color(0.121876836, 0.121876836, 0.121876836, 1)
 
 [node name="MainMenu" type="Node2D" unique_id=115760627 node_paths=PackedStringArray("start_button")]
 script = ExtResource("1_7xkbd")
@@ -11,21 +17,88 @@ start_button = NodePath("CanvasLayer/Button")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2126473668]
 
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=1826000233]
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1985337465]
+offset_left = -100.0
+offset_top = -48.0
+offset_right = 1234.0
+offset_bottom = 702.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y0aff")
+
+[node name="SOUL2" type="Label" parent="CanvasLayer" unique_id=1648984833]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -326.0
+offset_top = -268.0
+offset_right = 93.0
+offset_bottom = -96.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_dtmfd")
-theme_override_font_sizes/font_size = 50
-text = "main menu test"
+theme_override_font_sizes/font_size = 150
+text = "SOUL "
+horizontal_alignment = 1
+script = ExtResource("3_y0aff")
+
+[node name="SHOTS" type="Label" parent="CanvasLayer/SOUL2" unique_id=973726271]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = 28.0
+offset_right = 411.5
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_dtmfd")
+theme_override_font_sizes/font_size = 150
+text = "SHOTS"
+horizontal_alignment = 1
+
+[node name="SOUL" type="Label" parent="CanvasLayer" unique_id=1826000233]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -262.0
+offset_right = 99.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.28235295, 0.6431373, 1, 1)
+theme_override_fonts/font = ExtResource("1_dtmfd")
+theme_override_font_sizes/font_size = 150
+text = "SOUL "
+horizontal_alignment = 1
+script = ExtResource("3_y0aff")
+
+[node name="SHOTS" type="Label" parent="CanvasLayer/SOUL" unique_id=492824681]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = 28.0
+offset_right = 411.5
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.28235295, 0.6431373, 1, 1)
+theme_override_fonts/font = ExtResource("1_dtmfd")
+theme_override_font_sizes/font_size = 150
+text = "SHOTS"
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="CanvasLayer" unique_id=468973097]
 anchors_preset = 8
@@ -33,15 +106,21 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -68.25
-offset_top = 43.0
-offset_right = 68.25
-offset_bottom = 86.0
+offset_left = -104.125
+offset_top = 37.0
+offset_right = 104.125
+offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 10
 theme_override_fonts/font = ExtResource("2_armea")
-theme_override_font_sizes/font_size = 30
-text = "play"
+theme_override_font_sizes/font_size = 50
+text = "PLAY"
+script = ExtResource("5_fr3p2")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=547051486]
+stream = ExtResource("6_r7gth")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
