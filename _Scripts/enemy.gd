@@ -21,6 +21,10 @@ class_name Enemy extends CharacterBody2D
 
 @onready var warning_sfx: AudioStreamPlayer2D = $WarningSFX
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@export var flip_sprite_horizontally: bool
+
 var speed = 25
 var chase_player = false
 var player = null
@@ -31,6 +35,10 @@ var _field_of_view: Dictionary[Node2D, RayCast2D]
 	
 ## Rechecks Player visibility every physics frame so the attack Timer starts and
 ## stops as cover changes.
+
+func _ready() -> void:
+	animation_player.play("idle")
+
 func _physics_process(_delta: float) -> void:
 	_update_line_of_sight()
 
@@ -58,6 +66,7 @@ func _update_line_of_sight() -> void:
 			_play_warning()
 			timer.start()
 	elif not timer.is_stopped():
+		animation_player.play("idle")
 		warning.hide()
 		timer.stop()
 
@@ -132,4 +141,5 @@ func _on_timer_timeout() -> void:
 func _play_warning() -> void:
 	warning.show()
 	warning_sfx.play()
+	animation_player.play("attack")
 	
