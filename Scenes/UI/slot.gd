@@ -65,6 +65,10 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	reset_tween()
 	tween.tween_property(preview, "scale", Vector2(1.5, 1.5), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	
+	select_sfx.play()
+	reset_tween()
+	tween.tween_property(preview, "scale", Vector2(1.5, 1.5), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	
 	set_drag_preview(control)
 	icon.hide()
 	return self
