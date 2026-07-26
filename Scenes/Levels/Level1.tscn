@@ -44,7 +44,7 @@ position = Vector2(-501.00006, -70.999985)
 rotation = -3.1415927
 
 [node name="Enemy5" parent="." unique_id=434806850 instance=ExtResource("3_4d3fe")]
-position = Vector2(-498.99997, -3.0000305)
+position = Vector2(-499, 13)
 rotation = 1.5782317
 flip_sprite_horizontally = true
 
@@ -129,7 +129,7 @@ position = Vector2(-182.25, 42.75)
 shape = SubResource("RectangleShape2D_riv1q")
 
 [node name="Area2D5" type="Area2D" parent="." unique_id=295802332]
-position = Vector2(15, 71)
+position = Vector2(15, 70)
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D5" unique_id=494312476]
@@ -219,40 +219,9 @@ rotation = 1.5707964
 scale = Vector2(0.9999994, 0.9999994)
 shape = SubResource("RectangleShape2D_xvio3")
 
-[node name="TestingWall7" type="Area2D" parent="." unique_id=961135409]
-position = Vector2(-382, -11.000042)
-rotation = -0.8535968
-scale = Vector2(0.8777014, 0.8237877)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestingWall7" unique_id=713222834]
-position = Vector2(-63.04535, -78.999985)
-rotation = 1.570345
-scale = Vector2(0.9999997, 0.9999997)
-shape = SubResource("RectangleShape2D_xvio3")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="TestingWall7" unique_id=1068336988]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestingWall7/StaticBody2D" unique_id=758478797]
-position = Vector2(-63.04535, -78.999985)
-rotation = 1.5707964
-scale = Vector2(0.9999994, 0.9999994)
-shape = SubResource("RectangleShape2D_xvio3")
-
 [node name="TestingWall8" type="Area2D" parent="." unique_id=441895735]
 position = Vector2(-645.99994, 53.000004)
 rotation = 1.5707964
 scale = Vector2(1.1727715, 1.5022881)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestingWall8" unique_id=1235735620]
-position = Vector2(-63.04535, -78.999985)
-rotation = 1.570345
-scale = Vector2(0.9999997, 0.9999997)
-shape = SubResource("RectangleShape2D_xvio3")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="TestingWall8" unique_id=576052020]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestingWall8/StaticBody2D" unique_id=2082995913]
-position = Vector2(-63.04535, -78.999985)
-rotation = 1.5707964
-scale = Vector2(0.9999994, 0.9999994)
-shape = SubResource("RectangleShape2D_xvio3")

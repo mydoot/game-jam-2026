@@ -29,8 +29,9 @@ script = ExtResource("1_n6qg7")
 
 [node name="BG" type="Panel" parent="Canvas" unique_id=1341884671]
 self_modulate = Color(1, 1, 1, 0.3372549)
-offset_top = 190.0
-offset_right = 1152.0
+offset_left = -15.0
+offset_top = -11.0
+offset_right = 1167.0
 offset_bottom = 653.0
 
 [node name="LoadoutMenu" type="Control" parent="Canvas" unique_id=767138845]
@@ -49,10 +50,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 275.0
-offset_top = 491.0
-offset_right = 822.5
-offset_bottom = 587.0
+offset_left = 262.9365
+offset_top = 422.0596
+offset_right = 810.4365
+offset_bottom = 518.05963
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(290, 300)
@@ -349,10 +350,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -318.75
-offset_top = -526.0
-offset_right = 211.25
-offset_bottom = -446.0
+offset_left = -335.87576
+offset_top = -583.94586
+offset_right = 194.12424
+offset_bottom = -503.94586
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -530,6 +531,22 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Label2" type="RichTextLabel" parent="Canvas/LoadoutMenu" unique_id=712631011]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 254.982
+offset_top = 664.06494
+offset_right = 926.982
+offset_bottom = 687.06494
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("6_i378m")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[color=yellow]YELLOW[/color] = good ol' bullet                [color=blue]BLUE[/color] = Ricochet shot                 [color=green]GREEN[/color] = Piercing shot
+"
+
 [node name="Label" type="Label" parent="Canvas" unique_id=1167355404]
 anchors_preset = 2
 anchor_top = 1.0
@@ -547,10 +564,10 @@ text = "Press [E] to hide menu"
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_top = 19.0
-offset_right = 20.0
-offset_bottom = 42.0
+offset_left = -105.0
+offset_top = 4.0
+offset_right = 105.0
+offset_bottom = 123.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("6_i378m")
 theme_override_font_sizes/font_size = 50

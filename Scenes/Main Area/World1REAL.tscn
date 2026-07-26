@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://b4yhr276qtn8r"]
+
+[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_0gnlr"]
+[ext_resource type="PackedScene" uid="uid://c8kv8t1yuk13j" path="res://Scenes/Levels/Level1.tscn" id="2_0gnlr"]
+[ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_f0sgv"]
+[ext_resource type="PackedScene" uid="uid://bdqk8xu5cwxh2" path="res://Scenes/UI/planning.tscn" id="4_hjo4v"]
+[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_btfrr"]
+[ext_resource type="AudioStream" uid="uid://dls8kuxdy0ieh" path="res://Assets/Music/bach one.ogg" id="6_bu7vv"]
+[ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="6_f0sgv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3hajc"]
+radius = 17.029387
+
+[node name="World" type="Node2D" unique_id=837482538]
+script = ExtResource("1_0gnlr")
+next_level = &"uid://cqip6g2wr1pw7"
+
+[node name="Room_Template" parent="." unique_id=836460663 instance=ExtResource("2_0gnlr")]
+position = Vector2(270, 35)
+
+[node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_f0sgv")]
+visible = false
+
+[node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_hjo4v")]
+position = Vector2(-471.78357, -436.25247)
+avail_bullets = Array[Resource]([ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr")])
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=28835670]
+position = Vector2(303, 67)
+
+[node name="FinishPoint" type="Area2D" parent="." unique_id=417706929]
+position = Vector2(-55, -22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1420691859]
+position = Vector2(-142, 227)
+shape = SubResource("CircleShape2D_3hajc")
+
+[node name="Line2D" type="Line2D" parent="FinishPoint" unique_id=1888153173]
+position = Vector2(-8, 8)
+points = PackedVector2Array(-181, 211, -153, 220, -181, 227)
+width = 2.0
+default_color = Color(0.12941177, 0.7058824, 1, 1)
+
+[node name="Label" type="Label" parent="FinishPoint" unique_id=2012899746]
+offset_left = -211.0
+offset_top = 216.0
+offset_right = -171.0
+offset_bottom = 239.0
+theme_override_fonts/font = ExtResource("6_f0sgv")
+theme_override_font_sizes/font_size = 10
+text = "finish"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=926915871]
+stream = ExtResource("6_bu7vv")
+volume_db = -15.0
+autoplay = true
+
+[connection signal="body_entered" from="FinishPoint" to="." method="_on_finish_point_body_entered"]

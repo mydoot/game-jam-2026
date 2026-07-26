@@ -66,11 +66,19 @@ _data = {
 &"idle": SubResource("Animation_tq087")
 }
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1557205180]
+[node name="Enemy" type="CharacterBody2D" unique_id=1557205180 groups=["enemy"]]
 collision_mask = 3
 platform_floor_layers = 4294967040
 script = ExtResource("1_jcvw6")
 contact_damage = 0
+
+[node name="AimingArrow" type="Line2D" parent="." unique_id=1676705320]
+position = Vector2(23, 27)
+rotation = 1.5707964
+scale = Vector2(1.8665475, 1)
+points = PackedVector2Array(5.000001, 19, 5, 27, 11.000001, 23)
+closed = true
+width = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545957550]
 position = Vector2(0, -15)
@@ -90,7 +98,7 @@ process_callback = 0
 wait_time = 0.75
 
 [node name="Detection_Area" type="Area2D" parent="." unique_id=80163929]
-position = Vector2(-1.5258789e-05, -2.0000153)
+position = Vector2(-9.094947e-13, -3)
 scale = Vector2(0.5025, 0.5025)
 collision_layer = 8
 collision_mask = 5
@@ -98,7 +106,7 @@ collision_mask = 5
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Detection_Area" unique_id=2271720]
 position = Vector2(-0.04751623, 0)
 scale = Vector2(1.1187906, 1)
-polygon = PackedVector2Array(0.04249821, -17.910418, -110.24006, 181.09456, -110.24, 957.214, 0.04249821, 1010.94525, 104.989, 955.224, 104.9888, 171.1443)
+polygon = PackedVector2Array(0.04249821, -17.910418, -53.320053, 179.10448, -53.320053, 967.1642, 3.599973, 1014.92535, 60.520004, 969.15424, 60.520004, 179.10448)
 
 [node name="Hurtbox" type="CollisionShape2D" parent="." unique_id=480996072]
 position = Vector2(-2.1175824e-22, -15)
