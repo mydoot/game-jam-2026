@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp8lsa6gkgndc"
-path="res://.godot/imported/lwalk3.png-6d34023d9772491a5f6602cf60b83e9a.ctex"
+uid="uid://crvcph6sm28x3"
+path="res://.godot/imported/lshoot.png-274733d38eae36d64a38ceec24786569.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Player Sprites/lwalk3.png"
-dest_files=["res://.godot/imported/lwalk3.png-6d34023d9772491a5f6602cf60b83e9a.ctex"]
+source_file="res://Assets/Sprites/Player Sprites/Shooting/lshoot.png"
+dest_files=["res://.godot/imported/lshoot.png-274733d38eae36d64a38ceec24786569.ctex"]
 
 [params]
 

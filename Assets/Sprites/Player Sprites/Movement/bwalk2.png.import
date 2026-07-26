@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://txx1lum4dpy1"
-path="res://.godot/imported/bwalk2.png-672be87c037d0a1437822ee1a317337f.ctex"
+path="res://.godot/imported/bwalk2.png-502e4e43f8c5dfc0ad7de970c0c25d1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Player Sprites/bwalk2.png"
-dest_files=["res://.godot/imported/bwalk2.png-672be87c037d0a1437822ee1a317337f.ctex"]
+source_file="res://Assets/Sprites/Player Sprites/Movement/bwalk2.png"
+dest_files=["res://.godot/imported/bwalk2.png-502e4e43f8c5dfc0ad7de970c0c25d1b.ctex"]
 
 [params]
 

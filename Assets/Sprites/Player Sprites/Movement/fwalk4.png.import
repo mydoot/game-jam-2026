@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnn2k30fqg8vs"
-path="res://.godot/imported/fwalk4.png-f06ad9acae2c119e70ceecfc7eec09ea.ctex"
+path="res://.godot/imported/fwalk4.png-f49006b54ce87570e5e933dd4ba50460.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Player Sprites/fwalk4.png"
-dest_files=["res://.godot/imported/fwalk4.png-f06ad9acae2c119e70ceecfc7eec09ea.ctex"]
+source_file="res://Assets/Sprites/Player Sprites/Movement/fwalk4.png"
+dest_files=["res://.godot/imported/fwalk4.png-f49006b54ce87570e5e933dd4ba50460.ctex"]
 
 [params]
 

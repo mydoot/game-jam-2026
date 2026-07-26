@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbmxfmv7nd2jw"
-path="res://.godot/imported/rwalk1.png-09b52f4befdbc3c562d76acdcd662b44.ctex"
+uid="uid://ua6ldamnjobw"
+path="res://.godot/imported/fwalk2.png-af51ed8960186fe2b11e6a4dcfff6538.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Player Sprites/rwalk1.png"
-dest_files=["res://.godot/imported/rwalk1.png-09b52f4befdbc3c562d76acdcd662b44.ctex"]
+source_file="res://Assets/Sprites/Player Sprites/Movement/fwalk2.png"
+dest_files=["res://.godot/imported/fwalk2.png-af51ed8960186fe2b11e6a4dcfff6538.ctex"]
 
 [params]
 
