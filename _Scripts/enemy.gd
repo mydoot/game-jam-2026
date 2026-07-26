@@ -88,8 +88,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 			body.take_damage(contact_damage)
 	
 
-## Applies damage routed from the level's BulletFactory callback, freeing the
-## enemy on death or briefly enabling hit invincibility.
+## Applies projectile damage, freeing the enemy on death or briefly enabling
+## hit invincibility.
 func take_damage(damage: int) -> void:
 	if is_invincible:
 		return
