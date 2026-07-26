@@ -66,6 +66,7 @@ _data = {
 }
 
 [node name="Sword" unique_id=1236962454 instance=ExtResource("1_6wdhb")]
+visible = false
 bullet_resource = ExtResource("2_x3ol0")
 
 [node name="Sprite2D" parent="." index="0" unique_id=1998757771]
