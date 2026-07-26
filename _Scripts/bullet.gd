@@ -12,7 +12,7 @@ const bullet_collision_vfx = preload("res://Assets/VFX/bullet_collision_vfx.tscn
 signal bounced(collision_position: Vector2, collision_normal: Vector2)
 
 var bullet_resource: BasicBullet
-var damage: int = 1
+var damage: int = 100000
 var direction: Vector2 = Vector2.RIGHT
 var speed: float = 0.0
 var maximum_speed: float = 0.0

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://djpkmrsukexg4"]
+[gd_scene format=3 uid="uid://bdqk8xu5cwxh2"]
 
 [ext_resource type="Script" uid="uid://c1a5r1k82fvi7" path="res://Scenes/UI/planning.gd" id="1_n6qg7"]
 [ext_resource type="Script" uid="uid://f2mc5uj6jleh" path="res://Scenes/UI/loadout.gd" id="1_rsdvt"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d5eguynnci7y" path="res://Scenes/UI/slot.gd" id="2_p7dmu"]
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="4_rsdvt"]
 [ext_resource type="FontFile" uid="uid://b4udn0uh2kqrt" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_R.otf" id="5_5h7ne"]
+[ext_resource type="Resource" uid="uid://bkrmiocbxufwg" path="res://_Scripts/Resources/enemy_bullet.tres" id="5_8jt1r"]
 [ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="6_i378m"]
 [ext_resource type="AudioStream" uid="uid://vw2sfhmbbo1k" path="res://Assets/SFX/JDSherbert - Ultimate UI SFX Pack - Cursor - 3.wav" id="9_cbdk7"]
 [ext_resource type="Script" uid="uid://wjgn5xolvttt" path="res://Scenes/UI/start_button.gd" id="9_mrkg2"]

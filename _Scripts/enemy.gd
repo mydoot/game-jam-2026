@@ -3,7 +3,7 @@ class_name Enemy extends CharacterBody2D
 ## Enemy controller linked to its Detection_Area, Timer, and ShootingComponent.
 ## It tracks Player line of sight, triggers laser attacks, and receives player
 ## bullet damage from the level controller.
-@export var health = 5
+@export var health = 1
 @export var stop_distance = 10
 @export var contact_damage = 1
 @export var invincibility_duration: float = 0.3
