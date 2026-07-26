@@ -1,46 +1,68 @@
 class_name ShootingComponent extends Node
 
-@export_group("For Bullets")
-@export var bullet_resource : Resource
+## Ranged attack component owned by Enemy. Enemy's Timer calls shoot; this script
+## raycasts from its marker, calls Player.take_damage, and draws laser feedback.
+@export_group("For Laser")
 @export var marker_container : Node2D
+@export var laser_damage: int = 1
+@export var laser_range: float = 800.0
+@export var laser_width: float = 5.0
+@export var laser_duration: float = 0.12
+@export_flags_2d_physics var laser_collision_mask: int = 5
+@export var laser_color: Color = Color(1.0, 1.0, 1.0, 0.9)
 
-var bullet_data : DirectionalBulletsData2D
-var enemy_damage_data: DamageData
-
-#signal attack_finished
-#signal dealt_damage
+@onready var enemy_gun_shot_sfx: AudioStreamPlayer2D = $"../EnemyGunShotSFX"
 
 var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
+## Caches the parent Enemy body so attack rays can exclude their owner.
 func _ready() -> void:
-	enemy_damage_data = DamageData.new()
-	enemy_damage_data.damage = 1
-	enemy_damage_data.is_from_player = false
-	enemy_damage_data.is_ricoshot = false
-	enemy_damage_data.is_piercing = false
-	
-	
-	if bullet_resource:
-		bullet_data = bullet_resource.set_up_bullet_data()
-		bullet_data.bullets_custom_data = enemy_damage_data
+	wielder = get_parent() as CharacterBody2D
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-	
-	
+
+## Fires one laser from every Marker2D configured by the owning Enemy.
 func shoot() -> void:
-	if bullet_data:
-		bullet_data.transforms = grab_marker_transforms()
-		if bullet_data.transforms:
-			BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
-		else:
-			push_warning("bullet_data has no DirectionalBulletsData2D object.")
+	enemy_gun_shot_sfx.play()
+	for marker: Marker2D in marker_container.get_children():
+		_fire_laser(marker)
 
-func grab_marker_transforms() -> Array[Transform2D]:
-	var all_markers : Array[Transform2D]
+
+## Raycasts against Player and terrain, damaging Player only when it is the first
+## collision.
+func _fire_laser(marker: Marker2D) -> void:
+	var start_position := marker.global_position
+	var end_position := start_position + marker.global_transform.x.normalized() * laser_range
+	var query := PhysicsRayQueryParameters2D.create(start_position, end_position)
+	query.collision_mask = laser_collision_mask
+	query.collide_with_areas = true
+	query.collide_with_bodies = true
 	
-	for marker : Marker2D in marker_container.get_children():
-		all_markers.push_back(marker.global_transform)
-		
-	return all_markers	
+	if wielder:
+		query.exclude = [wielder.get_rid()]
+	
+	var result := marker.get_world_2d().direct_space_state.intersect_ray(query)
+	
+	if result:
+		end_position = result["position"]
+		var player := result["collider"] as Player
+		if player:
+			player.take_damage(laser_damage)
+	
+	_draw_laser(marker, end_position)
+
+
+## Adds a temporary Line2D under the firing marker for the laser flash.
+func _draw_laser(marker: Marker2D, end_position: Vector2) -> void:
+	var laser := Line2D.new()
+	laser.width = laser_width
+	laser.default_color = laser_color
+	laser.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	laser.end_cap_mode = Line2D.LINE_CAP_ROUND
+	laser.points = PackedVector2Array([Vector2.ZERO, marker.to_local(end_position)])
+	marker.add_child(laser)
+	
+	var tween := laser.create_tween()
+	tween.tween_property(laser, "modulate:a", 0.0, laser_duration)
+	tween.finished.connect(laser.queue_free)

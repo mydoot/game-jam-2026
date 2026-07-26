@@ -1,19 +1,16 @@
 class_name Weapon
 extends Node2D
 
+## Player weapon controller. It turns chambered BasicBullet resources into
+## native Godot projectile nodes and signals Player so HUD can advance.
 @export var damage: int = 1
 @export var cooldown: float = 0.5
 
-@onready var anim_player = $AnimationPlayer
-@onready var hitbox = $Hitbox
-@onready var vfx = $VFX
-
 @export_group("For Bullets")
-@export var bullet_resource : Resource
-@export var marker_container : Node2D
+@export var bullet_scene: PackedScene = preload("res://Scenes/Weapons/Bullet.tscn")
+@export var marker_container: Node2D
 
-var bullet_data : DirectionalBulletsData2D
-var player_damage_data: DamageData
+var bullet_resource: BasicBullet
 
 signal attack_finished
 signal dealt_damage
@@ -22,39 +19,52 @@ var is_attacking: bool = false
 
 var wielder: CharacterBody2D
 
+## Prepares the first chambered bullet.
 func _ready() -> void:
-	player_damage_data = DamageData.new()
-	player_damage_data.damage = 1
-	player_damage_data.is_from_player = true
-	player_damage_data.is_ricoshot = false
-	player_damage_data.is_piercing = false
-	
-	
-	if GlobalVariables.bullet_loadout:
-		bullet_resource = GlobalVariables.bullet_loadout.pop_front()
-		bullet_data = bullet_resource.set_up_bullet_data()
-		bullet_data.bullets_custom_data = player_damage_data
-	
-	
-func shoot() -> void:
-	if bullet_data:
-		bullet_data.transforms = grab_marker_transforms()
-		if bullet_data.transforms:
-			
-			BulletFactory.bullet_factory.spawn_directional_bullets(bullet_data)
-			bullet_resource = GlobalVariables.bullet_loadout.pop_front()
-			
-			if bullet_resource:
-				bullet_data = bullet_resource.set_up_bullet_data()
-			else:
-				push_warning("Missing bullet_data. Ignore if the player just fired their last bullet.")
-		else:
-			push_warning("bullet_data has no DirectionalBulletsData2D object.")
+	_prepare_current_bullet()
 
-func grab_marker_transforms() -> Array[Transform2D]:
-	var all_markers : Array[Transform2D]
-	
-	for marker : Marker2D in marker_container.get_children():
-		all_markers.push_back(marker.global_transform)
-		
-	return all_markers	
+
+## Spawns native projectiles, advances GlobalVariables, and notifies Player.
+func shoot() -> void:
+	if bullet_resource == null:
+		push_warning("Cannot shoot without a prepared bullet resource.")
+		return
+
+	if marker_container == null or marker_container.get_child_count() == 0:
+		push_warning("Weapon has no firing markers configured.")
+		return
+	if bullet_scene == null:
+		push_warning("Weapon has no native bullet scene configured.")
+		return
+
+	var projectile_parent := get_tree().current_scene
+	if projectile_parent == null:
+		projectile_parent = get_parent()
+
+	for marker: Marker2D in marker_container.get_children():
+		for _bullet_index in range(maxi(bullet_resource.amount_of_bullets, 1)):
+			var projectile := bullet_scene.instantiate() as PlayerBullet
+			if projectile == null:
+				push_warning("Configured bullet scene does not use PlayerBullet.")
+				continue
+
+			projectile_parent.add_child(projectile)
+			# Copying the full marker transform also copies Player's 0.35 scale
+			# and mirrored aim scale, which shortens ShapeCast2D's sweep.
+			projectile.global_position = marker.global_position
+			projectile.global_scale = Vector2.ONE
+			projectile.configure(
+				bullet_resource,
+				damage,
+				marker.global_transform.x.normalized(),
+				wielder
+			)
+
+	GlobalVariables.advance_to_next_bullet()
+	_prepare_current_bullet()
+	attack_finished.emit()
+
+
+## Reads the resource shared by the planning loadout and HUD.
+func _prepare_current_bullet() -> void:
+	bullet_resource = GlobalVariables.get_current_bullet() as BasicBullet

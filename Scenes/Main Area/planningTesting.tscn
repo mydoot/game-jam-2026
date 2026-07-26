@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_2kkx6"]
 [ext_resource type="PackedScene" uid="uid://djpkmrsukexg4" path="res://Scenes/UI/planning.tscn" id="5_1rbsc"]
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_2kkx6"]
+[ext_resource type="Resource" uid="uid://bgojx76eouqoa" path="res://_Scripts/Resources/piercing_bullet.tres" id="5_vyeik"]
+[ext_resource type="Resource" uid="uid://b16rd5wk1n3j3" path="res://_Scripts/Resources/ricochet_bullet.tres" id="6_vyeik"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1rbsc"]
 radius = 17.029387
@@ -14,24 +16,22 @@ script = ExtResource("1_b3pmb")
 next_level = &"uid://cnk41h3bbdcms"
 
 [node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_1rbsc")]
-position = Vector2(127, 309)
+position = Vector2(-2, 60)
 rotation = -3.0138295e-05
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_2kkx6")]
 visible = false
-position = Vector2(289, 63)
-zoom = Vector2(2, 2)
-
-[node name="BulletFactory2D" type="BulletFactory2D" parent="." unique_id=991822669]
-position = Vector2(139, 247)
+zoom = Vector2(0.5, 0.5)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("5_1rbsc")]
-avail_bullets = Array[Resource]([ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6"), ExtResource("5_2kkx6")])
+level_name = "Level 1: First Shots"
+avail_bullets = Array[Resource]([ExtResource("5_vyeik"), ExtResource("6_vyeik"), ExtResource("5_vyeik"), ExtResource("5_2kkx6"), ExtResource("5_vyeik"), ExtResource("5_2kkx6")])
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1629841680]
-position = Vector2(-193, 309)
+position = Vector2(-323, 59)
 
 [node name="FinishPoint" type="Area2D" parent="." unique_id=742919471]
+position = Vector2(-126, -248)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1467175358]
 position = Vector2(128, 25)

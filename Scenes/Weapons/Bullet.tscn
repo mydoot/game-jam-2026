@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://brpfeumv5y0ic"]
+
+[ext_resource type="Script" uid="uid://bx77w6t7rov0o" path="res://_Scripts/bullet.gd" id="1_bullet"]
+
+[node name="Bullet" type="Node2D" unique_id=363267560]
+script = ExtResource("1_bullet")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1887106811]
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=2136274294]
+margin = 0.01
+collide_with_areas = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=731966387]
+rotation = 0.00065790437
+amount = 500
+emission_shape = 2
+emission_sphere_radius = 1.8
+angle_min = 90.0
+angle_max = 90.0
+scale_amount_max = 1.2
+color = Color(0.039215688, 0.68235296, 0.80784315, 1)

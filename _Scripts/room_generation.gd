@@ -1,6 +1,9 @@
 class_name RoomGeneration
 extends Node
 
+## Prototype procedural room generator. It loads Room scenes, builds a connected
+## occupancy grid, opens their RoomEntrance links, and positions an assigned
+## Player. Current authored level scenes do not instantiate this prototype.
 @export var map_size : int = 7
 @export var rooms_to_generate : int = 12
 
@@ -17,11 +20,14 @@ var room_dictionary : Dictionary = {}
 # Drag your Player node here in the Inspector!
 @export var player : CharacterBody2D 
 
-func _ready():
+## Loads room templates and builds the first procedural layout.
+func _ready() -> void:
 	_load_room_scenes()
 	_generate()
 	
-func _load_room_scenes():
+
+## Loads every Room scene in rooms_folder into a name-to-PackedScene dictionary.
+func _load_room_scenes() -> void:
 	var dir = DirAccess.open(rooms_folder)
 	
 	if dir:
@@ -37,27 +43,27 @@ func _load_room_scenes():
 	else:
 		push_error("Could not open rooms directory: " + rooms_folder)
 
-func _generate():
-	# 1. Cleanup
-	for r in rooms: r.queue_free()
+
+## Regenerates the map, instantiates Room nodes, opens doors, and moves Player.
+func _generate() -> void:
+	for r in rooms:
+		r.queue_free()
 	rooms.clear()
 	map.clear()
 	map.resize(map_size * map_size)
 	map.fill(false)
 	
-	# 2. Logic Generation
 	var start_x : int = map_size / 2
 	var start_y : int = map_size / 2
 	
 	_check_room(start_x, start_y, Vector2.ZERO)
 	_instantiate_rooms()
-	
-	# 3. NEW: Open Doors & Spawn Player
 	_open_connecting_doors()
 	_spawn_player_in_center(start_x, start_y)
 
-func _check_room(x : int, y : int, incoming_direction : Vector2):
-	# ... (Your existing check_room logic goes here, unchanged) ...
+
+## Recursively marks connected cells until rooms_to_generate is reached.
+func _check_room(x : int, y : int, incoming_direction : Vector2) -> void:
 	if room_count >= rooms_to_generate: return
 	if x < 0 or x >= map_size or y < 0 or y >= map_size: return
 	if _get_map(x, y): return
@@ -77,7 +83,9 @@ func _check_room(x : int, y : int, incoming_direction : Vector2):
 		if randf() > threshold:
 			_check_room(new_x, new_y, move)
 
-func _instantiate_rooms():
+
+## Instantiates a Room PackedScene for each occupied map cell.
+func _instantiate_rooms() -> void:
 	for x in range(map_size):
 		for y in range(map_size):
 			if not _get_map(x, y):
@@ -92,9 +100,6 @@ func _instantiate_rooms():
 			call_deferred("add_child", room)
 			rooms.append(room)
 			
-			# Store the grid coordinates ON the room so we can use them later
-			# You can add "var grid_pos : Vector2" to room.gd if you want, 
-			# but strictly speaking we can calculate positions without it.
 			if random_float <= 10:
 				room.global_position = Vector2(x, y) * bigger_room_pos_offset
 			else:
@@ -104,65 +109,57 @@ func _instantiate_rooms():
 			# Give the room a name so we can find it easily if debugging
 			room.name = "Room_%d_%d" % [x, y]
 
-# --- NEW FUNCTIONS ---
 
-func _open_connecting_doors():
-	# Wait one frame for rooms to fully enter tree (optional but safer)
+## Calls Room.open_entrance wherever the map contains an adjacent room.
+func _open_connecting_doors() -> void:
 	await get_tree().process_frame
 	
-	# We loop through x/y again to find neighbors
 	for x in range(map_size):
 		for y in range(map_size):
-			# If there is no room at this generic grid spot, skip
 			if not _get_map(x, y):
 				continue
 				
-			# Find the actual room instance at this location
 			var current_room = _find_room_at(x, y)
 			if current_room == null: continue
 			
-			# Check Neighbors. If a neighbor exists, open the door facing it.
-			
-			# North Neighbor? (y-1)
 			if _get_map(x, y - 1):
 				current_room.open_entrance(Vector2.UP)
 			
-			# South Neighbor? (y+1)
 			if _get_map(x, y + 1):
 				current_room.open_entrance(Vector2.DOWN)
 				
-			# West Neighbor? (x-1)
 			if _get_map(x - 1, y):
 				current_room.open_entrance(Vector2.LEFT)
 				
-			# East Neighbor? (x+1)
 			if _get_map(x + 1, y):
 				current_room.open_entrance(Vector2.RIGHT)
 
-func _spawn_player_in_center(start_x, start_y):
-	# Calculate the global position of the center room
+
+## Places the assigned Player in the map's starting Room.
+func _spawn_player_in_center(start_x: int, start_y: int) -> void:
 	var center_pos = Vector2(start_x, start_y) * room_pos_offset
 	
-	# Move the player there
 	if player:
 		player.global_position = center_pos
 	else:
-		print("WARNING: Player node not assigned in RoomGeneration Inspector!")
+		push_warning("Player node not assigned in RoomGeneration Inspector.")
 
-# Helper to find the instantiated room node based on grid coordinates
-func _find_room_at(x, y) -> Room:
+
+## Finds the instantiated room positioned at a map coordinate.
+func _find_room_at(x: int, y: int) -> Room:
 	var target_pos = Vector2(x, y) * room_pos_offset
-	# This is a bit slow (searching array), but fine for 12 rooms.
-	# For huge maps, we would store rooms in a Dictionary {Vector2: Room}
 	for r in rooms:
-		# Use is_equal_approx to handle float point errors
 		if r.global_position.is_equal_approx(target_pos):
 			return r
 	return null
 
+
+## Reads a map cell while treating out-of-bounds coordinates as empty.
 func _get_map(x : int, y : int) -> bool:
 	if x < 0 or x >= map_size or y < 0 or y >= map_size: return false
 	return map[x + y * map_size]
 
-func _set_map(x : int, y : int, value: bool):
+
+## Writes a map cell after callers have validated coordinates.
+func _set_map(x : int, y : int, value: bool) -> void:
 	map[x + y * map_size] = value

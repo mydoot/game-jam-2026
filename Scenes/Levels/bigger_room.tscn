@@ -30,30 +30,37 @@ tile_set = ExtResource("2_1lkfe")
 [node name="Enemy2" parent="." unique_id=1004533800 groups=["enemy"] instance=ExtResource("4_0igsr")]
 position = Vector2(204, -216)
 rotation = 0.933354
+flip_sprite_horizontally = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=386402481]
 position = Vector2(-0.25, -309.75)
-collision_layer = 4
+collision_layer = 5
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1842103869]
 position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_xtq3a")
 
 [node name="Area2D3" type="Area2D" parent="." unique_id=1678153858]
-collision_layer = 4
+collision_layer = 5
+collision_mask = 3
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D3" unique_id=2069670178]
 position = Vector2(0, 230)
 shape = SubResource("RectangleShape2D_xtq3a")
 
-[node name="TestingWall" type="Area2D" parent="." unique_id=993670868]
-position = Vector2(39, -80)
+[node name="Area2D2" type="Area2D" parent="." unique_id=617829413]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestingWall" unique_id=748404224]
+[node name="TestingWall" type="StaticBody2D" parent="Area2D2" unique_id=1260712634]
+position = Vector2(39, -80)
+collision_layer = 5
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2/TestingWall" unique_id=748404224]
 rotation = 0.9075902
 shape = SubResource("RectangleShape2D_47ehs")
 
-[node name="Label" type="Label" parent="TestingWall" unique_id=1041640468]
+[node name="Label" type="Label" parent="Area2D2/TestingWall" unique_id=1041640468]
 offset_left = -66.33253
 offset_top = -120.18659
 offset_right = 202.43741
@@ -66,6 +73,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=599738233]
+position = Vector2(39, -80)
+rotation = 0.9075902
+shape = SubResource("RectangleShape2D_47ehs")
+
 [node name="Enemy3" parent="." unique_id=1557205180 groups=["enemy"] instance=ExtResource("4_0igsr")]
 position = Vector2(316, 2)
 rotation = 1.5863148
+flip_sprite_horizontally = true
