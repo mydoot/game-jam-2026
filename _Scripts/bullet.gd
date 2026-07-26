@@ -184,6 +184,8 @@ func _update_texture(delta: float) -> void:
 func _add_vfx() -> void:
 	var effect = bullet_collision_vfx.instantiate()
 	
-	get_tree().current_scene.add_child(effect)
 	effect.global_position = global_position
 	
+	get_tree().current_scene.add_child(effect)
+	
+	effect.emitting = true

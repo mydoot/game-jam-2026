@@ -10,6 +10,7 @@ signal loading_screen_ready
 ## Waits for the autoplay entrance transition to cover the current scene, then
 ## tells SceneLoader that threaded loading can safely begin.
 func _ready() -> void:
+	GlobalVariables.stop_timer()
 	await animation_player.animation_finished
 	loading_screen_ready.emit()
 
@@ -22,6 +23,7 @@ func _on_progress_changed(_prog_val: float) -> void:
 
 ## Reveals the newly installed scene, then frees this temporary overlay.
 func _on_load_finished() -> void:
+	GlobalVariables.start_timer()
 	animation_player.play_backwards("transition")
 	await animation_player.animation_finished
 	queue_free()

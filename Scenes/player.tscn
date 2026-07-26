@@ -29,8 +29,8 @@
 [ext_resource type="AudioStream" uid="uid://ccdxgurga1m" path="res://Assets/SFX/foley_creak_1.wav" id="27_vfarp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
-radius = 8.0
-height = 24.0
+radius = 19.999998
+height = 91.428566
 
 [sub_resource type="Animation" id="Animation_tx1dd"]
 length = 0.001
@@ -289,6 +289,7 @@ friction = 3000.0
 texture = ExtResource("2_3smsa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=161442825]
+position = Vector2(0, 34.285713)
 shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="WeaponSocket" type="Marker2D" parent="." unique_id=668079680]
@@ -303,7 +304,7 @@ tree_root = ExtResource("5_p1odr")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(0.21440542, -0.55212355)
-parameters/Run/blend_position = Vector2(0, 0)
+parameters/Run/blend_position = Vector2(-0.9983193, 0.0047392845)
 parameters/Shoot/blend_position = Vector2(0.07202685, -0.6911197)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=946654852]

@@ -20,9 +20,11 @@ position = Vector2(270, 35)
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_f0sgv")]
 visible = false
+zoom = Vector2(1.3, 1.3)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_hjo4v")]
 position = Vector2(-471.78357, -436.25247)
+level_name = "Level 1: First Shots"
 avail_bullets = Array[Resource]([ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr"), ExtResource("5_btfrr")])
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=28835670]
@@ -54,7 +56,7 @@ vertical_alignment = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=926915871]
 stream = ExtResource("6_bu7vv")
-volume_db = -15.0
+volume_db = -10.0
 autoplay = true
 
 [connection signal="body_entered" from="FinishPoint" to="." method="_on_finish_point_body_entered"]

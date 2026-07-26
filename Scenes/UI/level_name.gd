@@ -9,11 +9,11 @@ func _ready() -> void:
 	
 	var tween = create_tween()
 	
-	tween.tween_interval(0.5)
+	tween.tween_interval(0.75)
 	
 	tween.tween_property(self, "visible_ratio", 1.0, 1)
 	
-	tween.tween_interval(1.5)
+	tween.tween_interval(3)
 	
 	tween.tween_property(self, "modulate:a", 0, 0.75)
 	

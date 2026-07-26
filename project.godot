@@ -20,6 +20,11 @@ config/icon="res://Assets/icon.svg"
 GlobalVariables="*uid://dtpx1ho5hrvro"
 SceneLoader="*uid://bw3yjevui0mqo"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
 [dotnet]
 
 project/assembly_name="game jam 2026"

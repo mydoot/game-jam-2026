@@ -10,6 +10,26 @@ var spawn_point: Marker2D
 
 var finish_point: Marker2D
 
+var time_elapsed: float = 0
+
+var timer_running: bool = true
+
+func _process(delta: float) -> void:
+	if timer_running:
+		time_elapsed += delta
+
+func stop_timer() -> void:
+	timer_running = false
+	
+func start_timer() -> void:
+	timer_running = true
+
+func reset_timer() -> void:
+	time_elapsed = 0
+
+func get_time() -> float:
+	return time_elapsed
+	
 ## Receives the six ordered BasicBullet resources from Loadout.
 func set_bullet_loadout(bullets: Array[Resource]) -> void:
 	bullet_loadout.assign(bullets)

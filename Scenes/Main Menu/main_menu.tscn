@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="2_armea"]
 [ext_resource type="Script" uid="uid://dby306ujcyyv" path="res://Scenes/Main Menu/soultext.gd" id="3_y0aff"]
 [ext_resource type="Script" uid="uid://bca16qfv6lxu5" path="res://Scenes/Main Menu/button.gd" id="5_fr3p2"]
+[ext_resource type="Script" uid="uid://balpfqlr0i53" path="res://Scenes/Main Menu/hints.gd" id="5_r7gth"]
 [ext_resource type="AudioStream" uid="uid://rjof766iiadn" path="res://Assets/Music/gamejam2-level1.ogg" id="6_r7gth"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0aff"]
@@ -17,10 +18,10 @@ start_button = NodePath("CanvasLayer/Button")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2126473668]
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1985337465]
-offset_left = -100.0
-offset_top = -48.0
-offset_right = 1234.0
-offset_bottom = 702.0
+offset_left = -97.0
+offset_top = -46.0
+offset_right = 1379.0
+offset_bottom = 789.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y0aff")
 
 [node name="SOUL2" type="RichTextLabel" parent="CanvasLayer" unique_id=1894596260]
@@ -29,10 +30,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -326.0
-offset_top = -268.0
-offset_right = 93.0
-offset_bottom = -96.0
+offset_left = -323.0
+offset_top = -266.0
+offset_right = 96.0
+offset_bottom = -94.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0.627451, 0.78431374, 1)
@@ -49,10 +50,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -262.0
-offset_right = 99.0
-offset_bottom = -90.0
+offset_left = -317.0
+offset_top = -260.0
+offset_right = 102.0
+offset_bottom = -88.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("2_armea")
@@ -68,10 +69,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -104.125
-offset_top = 37.0
-offset_right = 104.125
-offset_bottom = 103.0
+offset_left = -101.125
+offset_top = 24.0
+offset_right = 107.125
+offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 10
@@ -86,10 +87,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -185.0
-offset_top = -154.0
-offset_right = 295.0
-offset_bottom = 18.0
+offset_left = -182.0
+offset_top = -152.0
+offset_right = 298.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("2_armea")
@@ -104,10 +105,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -179.0
-offset_top = -148.0
-offset_right = 301.0
-offset_bottom = 24.0
+offset_left = -176.0
+offset_top = -146.0
+offset_right = 304.0
+offset_bottom = 26.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0.627451, 0.78431374, 1)
@@ -116,6 +117,33 @@ theme_override_font_sizes/normal_font_size = 150
 bbcode_enabled = true
 text = "SHOTS"
 horizontal_alignment = 1
+
+[node name="hints" type="RichTextLabel" parent="CanvasLayer" unique_id=1188428527]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.5
+offset_top = 114.0
+offset_right = 181.5
+offset_bottom = 349.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[color=#21E1FF]WASD[/color] to move
+
+[color=#FF4D6A]LEFT CLICK[/color] to shoot your gun
+
+press [color=yellow]E[/color] to hide the loadout menu 
+
+drag bullets into the slots to load them
+
+bullets are fired in the [color=#45FFF9]same order[/color] they are loaded in
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_r7gth")
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=547051486]
 stream = ExtResource("6_r7gth")

@@ -14,14 +14,14 @@ radius = 17.029387
 
 [node name="World" type="Node2D" unique_id=837482538]
 script = ExtResource("1_ldowg")
-next_level = &"uid://m2g6nqjs6hv5"
+next_level = &"uid://bwrkajiubs3kk"
 
 [node name="Room_Template" parent="." unique_id=836460663 instance=ExtResource("2_ldowg")]
 position = Vector2(-59, 29)
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_qm3o1")]
 visible = false
-zoom = Vector2(0.7, 0.7)
+zoom = Vector2(0.8, 0.8)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_1his1")]
 position = Vector2(-471.78357, -436.25247)
@@ -60,3 +60,27 @@ theme_override_font_sizes/font_size = 10
 text = "finish"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StartIndicator" type="Node2D" parent="." unique_id=499685477]
+position = Vector2(-57, -388)
+rotation = -4.712389
+
+[node name="Line2D" type="Line2D" parent="StartIndicator" unique_id=2011996704]
+position = Vector2(133, -217)
+points = PackedVector2Array(-181, 211, -166, 219, -181, 227)
+width = 2.0
+default_color = Color(0, 0.7779678, 0.5508274, 1)
+
+[node name="Label" type="Label" parent="StartIndicator" unique_id=1331188960]
+offset_left = -70.0
+offset_top = 29.0
+offset_right = -13.0
+offset_bottom = 52.0
+rotation = -1.5707964
+theme_override_fonts/font = ExtResource("8_1his1")
+theme_override_font_sizes/font_size = 10
+text = "start here"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="FinishPoint" to="." method="_on_finish_point_body_entered"]

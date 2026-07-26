@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://bwrkajiubs3kk"]
+
+[ext_resource type="Script" uid="uid://bh31i6yngwc20" path="res://Scenes/Main Menu/end_screen.gd" id="1_4l8s3"]
+[ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="2_4l8s3"]
+[ext_resource type="Script" uid="uid://dtwigfhx5gbsu" path="res://Scenes/Main Menu/end_text.gd" id="3_4liql"]
+[ext_resource type="Script" uid="uid://dp3lvs2sg0p46" path="res://Scenes/Main Menu/button_end.gd" id="4_8epm5"]
+[ext_resource type="FontFile" uid="uid://bw1umjjxiu1g5" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_RZ.otf" id="5_4l8s3"]
+[ext_resource type="Script" uid="uid://chduirknb7sx6" path="res://Scenes/Main Menu/credits_1.gd" id="5_8epm5"]
+[ext_resource type="AudioStream" uid="uid://rjof766iiadn" path="res://Assets/Music/gamejam2-level1.ogg" id="5_p80oj"]
+[ext_resource type="Script" uid="uid://d24t4m0dllmwm" path="res://Scenes/Main Menu/time.gd" id="7_e3kln"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0aff"]
+bg_color = Color(0.121876836, 0.121876836, 0.121876836, 1)
+
+[node name="EndScreen" type="Node2D" unique_id=115760627]
+script = ExtResource("1_4l8s3")
+initial_scene = &"uid://m2g6nqjs6hv5"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2126473668]
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1985337465]
+offset_left = -100.0
+offset_top = -48.0
+offset_right = 1332.0
+offset_bottom = 758.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y0aff")
+
+[node name="SOUL2" type="RichTextLabel" parent="CanvasLayer" unique_id=1894596260]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -349.0
+offset_top = -376.0
+offset_right = 186.0
+offset_bottom = -204.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0.627451, 0.78431374, 1)
+theme_override_fonts/normal_font = ExtResource("2_4l8s3")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "THANK"
+horizontal_alignment = 1
+script = ExtResource("3_4liql")
+
+[node name="SOUL" type="RichTextLabel" parent="CanvasLayer" unique_id=1125225257]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -370.0
+offset_right = 191.0
+offset_bottom = -198.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_4l8s3")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "THANK"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=468973097]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.125
+offset_top = 279.0
+offset_right = 108.125
+offset_bottom = 345.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+theme_override_fonts/font = ExtResource("2_4l8s3")
+theme_override_font_sizes/font_size = 50
+text = "RETURN TO MAIN MENU"
+script = ExtResource("4_8epm5")
+
+[node name="SHOTS" type="RichTextLabel" parent="CanvasLayer" unique_id=281398365]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -262.0
+offset_right = 388.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_4l8s3")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "YOU!!"
+horizontal_alignment = 1
+
+[node name="SHOTS2" type="RichTextLabel" parent="CanvasLayer" unique_id=1313259985]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -258.0
+offset_right = 393.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0.627451, 0.78431374, 1)
+theme_override_fonts/normal_font = ExtResource("2_4l8s3")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "YOU!!"
+horizontal_alignment = 1
+
+[node name="Credits1" type="RichTextLabel" parent="CanvasLayer" unique_id=14208104]
+offset_left = 435.0
+offset_top = 291.0
+offset_right = 850.0
+offset_bottom = 622.0
+text = "Programming:
+- Joseph Yi
+- Ryle Buaquina
+- Carmelo Sanchez
+
+Level Design: 
+- Nathan Charters
+"
+vertical_alignment = 1
+script = ExtResource("5_8epm5")
+
+[node name="Credits1" type="RichTextLabel" parent="CanvasLayer/Credits1" unique_id=1830129906]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 29.0
+offset_right = 412.0
+offset_bottom = 360.0
+text = "Music: 
+Jeffery Zheng- 
+Angie DeAlmeida -
+Character Designer:
+Jacob Mallobo -
+
+Game Design:
+Everyone + including -
+Joel Bhattarai -
+Ian Henke - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Credits1" unique_id=1460106164]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 28.0
+offset_right = 293.0
+offset_bottom = 85.0
+theme_override_font_sizes/normal_font_size = 40
+text = "CREDITS"
+
+[node name="time" type="RichTextLabel" parent="CanvasLayer" unique_id=1019655762]
+offset_left = 519.0
+offset_top = 262.0
+offset_right = 783.0
+offset_bottom = 297.0
+theme_override_colors/default_color = Color(1, 0.4627451, 1, 1)
+theme_override_fonts/normal_font = ExtResource("5_4l8s3")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[pulse]Completed In: time[/pulse]"
+script = ExtResource("7_e3kln")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=547051486]
+stream = ExtResource("5_p80oj")
+volume_db = -30.0
+autoplay = true
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

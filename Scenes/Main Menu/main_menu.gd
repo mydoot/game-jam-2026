@@ -10,12 +10,17 @@ extends Node2D
 
 var tween := create_tween()
 
+func _ready() -> void:
+	GlobalVariables.stop_timer()
+
 ## Starts loading the configured first playable scene.
 func _on_button_pressed() -> void:
 	if initial_scene == &"":
 		push_warning("No initial_scene configured on the main menu.")
 		return
 
+	GlobalVariables.start_timer()
+	
 	tween.tween_property(music, "volume_db", -80, 0.15)
 	
 	tween.tween_callback(music.stop)

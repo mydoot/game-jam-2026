@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c0yq54kfq17s3"]
+
+[ext_resource type="AudioStream" uid="uid://oioqbuk4a0bt" path="res://Assets/SFX/JDSherbert - Ultimate UI SFX Pack - Cancel - 2.wav" id="1_ah6qx"]
+
+[node name="EnemyDeathSFX" type="AudioStreamPlayer2D" unique_id=1755464160]
+stream = ExtResource("1_ah6qx")
+volume_db = 4.0
+pitch_scale = 1.6
+autoplay = true

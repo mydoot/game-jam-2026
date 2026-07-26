@@ -5,7 +5,7 @@ extends Camera2D
 var target: Node2D
 
 @export_category("Smoothing")
-@export var smooth_speed: float = 10.0
+@export var smooth_speed: float = 4
 @export var mouse_lead: float = 0.5
 
 ## Follows target with frame-rate-safe smoothing and a small mouse-direction lead.

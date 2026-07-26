@@ -4,7 +4,7 @@ class_name Player extends CharacterBody2D
 ## consumes the loadout held by GlobalVariables, and creates GameOver on death.
 
 @export_category("Movement Stats")
-@export var speed: float = 150.0
+@export var speed: float = 130.0
 @export var acceleration: float = 1000.0
 @export var friction: float = 1000.0
 
@@ -149,12 +149,12 @@ func _update_aim() -> void:
 	var mouse_position := get_global_mouse_position()
 	weapon_socket.look_at(mouse_position)
 
-	if mouse_position.x < global_position.x:
-		weapon_socket.scale.y = -1
-		sprite.scale.x = -1
-	else:
-		weapon_socket.scale.y = 1
-		sprite.scale.x = 1
+	#if mouse_position.x < global_position.x:
+		#weapon_socket.scale.y = -1
+		#sprite.scale.x = -1
+	#else:
+		#weapon_socket.scale.y = 1
+		#sprite.scale.x = 1
 
 
 ## Moves toward input direction or applies friction when no input is held.

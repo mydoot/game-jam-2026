@@ -28,18 +28,19 @@ script = ExtResource("1_n6qg7")
 [node name="Canvas" type="CanvasLayer" parent="." unique_id=1277842487]
 
 [node name="BG" type="Panel" parent="Canvas" unique_id=1341884671]
-self_modulate = Color(1, 1, 1, 0.3372549)
+self_modulate = Color(1, 1, 1, 0.8117647)
 offset_left = -15.0
 offset_top = -11.0
-offset_right = 1167.0
-offset_bottom = 653.0
+offset_right = 1340.0
+offset_bottom = 751.0
 
 [node name="LoadoutMenu" type="Control" parent="Canvas" unique_id=767138845]
 layout_mode = 3
 anchors_preset = 0
-offset_top = -79.0
-offset_right = 40.0
-offset_bottom = -39.0
+offset_left = 72.0
+offset_top = -19.000008
+offset_right = 112.0
+offset_bottom = 20.999992
 rotation = 0.00018800508
 pivot_offset = Vector2(600, 800)
 
@@ -50,10 +51,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 262.9365
-offset_top = 422.0596
-offset_right = 810.4365
-offset_bottom = 518.05963
+offset_left = 250.93631
+offset_top = 421.06186
+offset_right = 798.4363
+offset_bottom = 517.0619
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(290, 300)
@@ -333,10 +334,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 354.0
-offset_top = 627.0
-offset_right = 901.5
-offset_bottom = 723.0
+offset_left = 324.9784
+offset_top = 645.048
+offset_right = 872.4784
+offset_bottom = 741.048
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
@@ -536,25 +537,22 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 254.982
-offset_top = 664.06494
-offset_right = 926.982
-offset_bottom = 687.06494
+offset_left = 352.98196
+offset_top = 664.04645
+offset_right = 1024.9819
+offset_bottom = 687.04645
 grow_vertical = 0
 theme_override_fonts/normal_font = ExtResource("6_i378m")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "[color=yellow]YELLOW[/color] = good ol' bullet                [color=blue]BLUE[/color] = Ricochet shot                 [color=green]GREEN[/color] = Piercing shot
-"
+text = "[color=yellow]YELLOW[/color] = good ol' bullet                [color=blue]BLUE[/color] = Ricochet shot       "
 
 [node name="Label" type="Label" parent="Canvas" unique_id=1167355404]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -28.0
-offset_right = 187.0
-offset_bottom = -5.0
+offset_top = -23.0
+offset_right = 182.0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_i378m")
 theme_override_font_sizes/font_size = 20
@@ -565,9 +563,8 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -105.0
-offset_top = 4.0
 offset_right = 105.0
-offset_bottom = 123.0
+offset_bottom = 119.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("6_i378m")
 theme_override_font_sizes/font_size = 50
@@ -576,7 +573,6 @@ First Shots"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("10_8rbjn")
-metadata/_edit_use_anchors_ = true
 
 [node name="HoverSFX" type="AudioStreamPlayer2D" parent="." unique_id=862265047]
 stream = ExtResource("9_cbdk7")

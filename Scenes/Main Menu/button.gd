@@ -14,8 +14,8 @@ func _ready() -> void:
 	
 	modulate.a = 0
 
-	tween.set_parallel(true)
-	tween.tween_property(self, "modulate:a", 1, 2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+
+	tween.tween_property(self, "modulate:a", 1, 4).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	
 	tween.tween_callback(func(): disabled = false)
 

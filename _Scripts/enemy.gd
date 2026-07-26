@@ -25,6 +25,10 @@ class_name Enemy extends CharacterBody2D
 
 @export var flip_sprite_horizontally: bool
 
+const enemy_death_sfx = preload("res://Assets/SFX/enemy_death_sfx.tscn")
+
+const bullet_collision_vfx = preload("res://Assets/VFX/bullet_collision_vfx.tscn")
+
 var speed = 25
 var chase_player = false
 var player = null
@@ -111,6 +115,8 @@ func take_damage(damage: int) -> void:
 	
 	health -= damage
 	if health <= 0:
+		_play_sfx()
+		#_add_vfx()
 		queue_free()
 		return
 	
@@ -142,4 +148,19 @@ func _play_warning() -> void:
 	warning.show()
 	warning_sfx.play()
 	animation_player.play("attack")
+
+func _play_sfx() -> void:
+	var effect = enemy_death_sfx.instantiate()
 	
+	get_tree().current_scene.add_child(effect)
+	
+	await effect.finished
+	
+	effect.queue_free()
+	#effect.global_position = global_position
+	
+func _add_vfx() -> void:
+	var effect = bullet_collision_vfx.instantiate()
+	
+	get_tree().current_scene.add_child(effect)
+	effect.global_position = global_position

@@ -20,6 +20,8 @@ position = Vector2(-201, -59)
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("2_f235i")]
 visible = false
+position = Vector2(0, 20)
+zoom = Vector2(1.2, 1.2)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_wie8u")]
 position = Vector2(-471.78357, -436.25247)
@@ -55,6 +57,26 @@ offset_bottom = 239.0
 theme_override_fonts/font = ExtResource("7_nnsvn")
 theme_override_font_sizes/font_size = 10
 text = "finish"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartIndicator" type="Node2D" parent="." unique_id=1804577070]
+position = Vector2(-329, -125)
+
+[node name="Line2D" type="Line2D" parent="StartIndicator" unique_id=1373920678]
+position = Vector2(133, -217)
+points = PackedVector2Array(-181, 211, -166, 219, -181, 227)
+width = 2.0
+default_color = Color(0, 0.7779678, 0.5508274, 1)
+
+[node name="Label" type="Label" parent="StartIndicator" unique_id=1766548072]
+offset_left = -95.0
+offset_top = -9.0
+offset_right = -38.0
+offset_bottom = 14.0
+theme_override_fonts/font = ExtResource("7_nnsvn")
+theme_override_font_sizes/font_size = 10
+text = "start here"
 horizontal_alignment = 1
 vertical_alignment = 1
 
