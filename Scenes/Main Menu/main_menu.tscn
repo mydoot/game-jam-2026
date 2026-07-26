@@ -11,7 +11,7 @@ bg_color = Color(0.121876836, 0.121876836, 0.121876836, 1)
 
 [node name="MainMenu" type="Node2D" unique_id=115760627 node_paths=PackedStringArray("start_button")]
 script = ExtResource("1_7xkbd")
-initial_scene = &"uid://cnk41h3bbdcms"
+initial_scene = &"uid://b4yhr276qtn8r"
 start_button = NodePath("CanvasLayer/Button")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2126473668]

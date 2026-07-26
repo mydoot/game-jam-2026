@@ -15,8 +15,8 @@ func _ready() -> void:
 func _on_finish_point_body_entered(body: Node2D) -> void:
 	if not (body is Player):
 		return
-	#if not get_tree().get_nodes_in_group("enemy").is_empty():
-		#return
+		
+	print('hello!')
 
 	if next_level != &"":
 		SceneLoader.load_scene(String(next_level))

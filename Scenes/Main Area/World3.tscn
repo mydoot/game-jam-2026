@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://dtntdmlw5qt3b"]
+
+[ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_pdfw0"]
+[ext_resource type="PackedScene" uid="uid://cqk1vf5vk3c2u" path="res://Scenes/Levels/Level3.tscn" id="2_pdfw0"]
+[ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_juox6"]
+[ext_resource type="PackedScene" uid="uid://bdqk8xu5cwxh2" path="res://Scenes/UI/planning.tscn" id="4_fvxyy"]
+[ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_h47ay"]
+[ext_resource type="Resource" uid="uid://b16rd5wk1n3j3" path="res://_Scripts/Resources/ricochet_bullet.tres" id="6_j43i3"]
+[ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="7_juox6"]
+[ext_resource type="AudioStream" uid="uid://dx7nlt4upa30c" path="res://Assets/Music/gamejamsong2.ogg" id="8_fvxyy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fvxyy"]
+radius = 17.029387
+
+[node name="World" type="Node2D" unique_id=837482538]
+script = ExtResource("1_pdfw0")
+next_level = &"uid://6vwolf5kkili"
+
+[node name="Room_Template" parent="." unique_id=836460663 instance=ExtResource("2_pdfw0")]
+position = Vector2(-182, -189)
+
+[node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_juox6")]
+visible = false
+
+[node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_fvxyy")]
+position = Vector2(-471.78357, -436.25247)
+level_name = "Level 3: Bouncing Bullet"
+avail_bullets = Array[Resource]([ExtResource("5_h47ay"), ExtResource("6_j43i3"), ExtResource("6_j43i3"), ExtResource("6_j43i3"), ExtResource("5_h47ay"), ExtResource("5_h47ay")])
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=28835670]
+position = Vector2(-183, -215)
+
+[node name="FinishPoint" type="Area2D" parent="." unique_id=458356861]
+position = Vector2(267, 342)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1744979584]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_fvxyy")
+
+[node name="Line2D" type="Line2D" parent="FinishPoint" unique_id=1323769692]
+position = Vector2(134, -217)
+points = PackedVector2Array(-181, 211, -153, 220, -181, 227)
+width = 2.0
+default_color = Color(0.12941177, 0.7058824, 1, 1)
+
+[node name="Label" type="Label" parent="FinishPoint" unique_id=1154591909]
+offset_left = -69.0
+offset_top = -9.0
+offset_right = -29.0
+offset_bottom = 14.0
+theme_override_fonts/font = ExtResource("7_juox6")
+theme_override_font_sizes/font_size = 10
+text = "finish"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=157589348]
+stream = ExtResource("8_fvxyy")
+volume_db = -30.0
+autoplay = true
+
+[connection signal="body_entered" from="FinishPoint" to="." method="_on_finish_point_body_entered"]

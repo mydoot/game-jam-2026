@@ -42,6 +42,7 @@ rotation = -1.5666555
 [node name="Enemy6" parent="." unique_id=553905896 instance=ExtResource("3_gpvrs")]
 position = Vector2(367, -255)
 rotation = 1.5689579
+flip_sprite_horizontally = true
 
 [node name="Enemy7" parent="." unique_id=834239487 instance=ExtResource("3_gpvrs")]
 position = Vector2(204, -36)
@@ -50,10 +51,12 @@ rotation = -1.5635247
 [node name="Enemy8" parent="." unique_id=331853949 instance=ExtResource("3_gpvrs")]
 position = Vector2(435, -127.99999)
 rotation = 1.5789447
+flip_sprite_horizontally = true
 
 [node name="Enemy9" parent="." unique_id=1639229376 instance=ExtResource("3_gpvrs")]
 position = Vector2(234, 59)
 rotation = 1.5783116
+flip_sprite_horizontally = true
 
 [node name="Enemy10" parent="." unique_id=657002161 instance=ExtResource("3_gpvrs")]
 position = Vector2(323.00003, 38)

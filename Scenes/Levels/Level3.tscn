@@ -22,49 +22,42 @@ tile_map_data = PackedByteArray("AAD8/wcAAQADAAAAAAD7/wcAAQAFAAAAAAD7/wYAAQADAAE
 tile_set = ExtResource("2_c01y6")
 
 [node name="Enemy" parent="." unique_id=1557205180 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(254, 44)
 
 [node name="Enemy2" parent="." unique_id=106278396 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(321, 45)
 
 [node name="Enemy3" parent="." unique_id=580281470 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(-82.99999, 28)
 rotation = -1.569177
 
 [node name="Enemy4" parent="." unique_id=1132901086 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(112.99997, 31.00003)
 rotation = 1.5718846
+flip_sprite_horizontally = true
 
 [node name="Enemy5" parent="." unique_id=181128490 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(-82.000015, 187.00002)
 rotation = -1.5671834
 
 [node name="Enemy6" parent="." unique_id=640905181 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(-50.999996, 285.99994)
 rotation = -1.5723641
 
 [node name="Enemy7" parent="." unique_id=1954382664 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(114, 384.99997)
 rotation = 1.573027
+flip_sprite_horizontally = true
 
 [node name="Enemy8" parent="." unique_id=1060900317 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(429.99997, 192)
 rotation = 1.5728292
+flip_sprite_horizontally = true
 
 [node name="Enemy9" parent="." unique_id=292620314 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(319, 435)
 rotation = 3.1408687
 
 [node name="Enemy10" parent="." unique_id=455418469 instance=ExtResource("3_3gtua")]
-visible = false
 position = Vector2(385.00003, 334.00003)
 rotation = 3.1411843
