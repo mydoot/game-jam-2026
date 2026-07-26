@@ -24,6 +24,9 @@ func _on_bullet_hit(hit_object: Object, multimesh_bullets_instance: MultiMeshBul
 			
 		if player != null && !bullet_data.is_from_player:
 			player.take_damage(bullet_data.damage)
+			
+		if hit_object is TileMapLayer && bullet_data.is_from_player:
+			print("wall hit")
 
 
 func _on_finish_point_body_entered(body: Node2D) -> void:

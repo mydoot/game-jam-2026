@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://c4wpeeafls1bv"]
+[gd_scene format=4 uid="uid://f6jh04r2o1x0"]
 
 [ext_resource type="Script" uid="uid://cve10rbxqr47x" path="res://_Scripts/room.gd" id="1_svn12"]
 [ext_resource type="TileSet" uid="uid://b370qooc4uvmc" path="res://Sprites/tile_set.tres" id="2_smuj1"]
@@ -22,40 +22,32 @@ tile_map_data = PackedByteArray("AAD7//z/AQACAAMAAAD7//v/AQACAAIAAAD8//v/AQADAAI
 tile_set = ExtResource("2_smuj1")
 
 [node name="Enemy" parent="." unique_id=1557205180 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(179, -129)
 rotation = 1.5748976
 
 [node name="Enemy2" parent="." unique_id=1962299745 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(322, -52)
 
 [node name="Enemy3" parent="." unique_id=2081511537 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(-51.999985, 6)
 rotation = -1.5722163
 
 [node name="Enemy4" parent="." unique_id=1772624217 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(16.00003, 259.00003)
 rotation = -1.5657679
 
 [node name="Enemy5" parent="." unique_id=765316190 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(82, 132)
 rotation = -1.5725098
 
 [node name="Enemy6" parent="." unique_id=1192164195 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(110.99999, 4.999998)
 rotation = 1.5750331
 
 [node name="Enemy7" parent="." unique_id=904267014 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(192, 306)
 rotation = -3.1399968
 
 [node name="Enemy8" parent="." unique_id=1313692396 instance=ExtResource("3_5iseo")]
-visible = false
 position = Vector2(430, 256)
 rotation = 1.5647657
