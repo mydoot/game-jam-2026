@@ -21,13 +21,15 @@ layout_mode = 2
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+offset_left = -176.0
+offset_top = 23.0
+offset_right = 178.0
+offset_bottom = 81.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_jo1ms")
 theme_override_font_sizes/font_size = 50
 text = "6 BULLETS LEFT"
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="." unique_id=1000135010]
 anchors_preset = 3

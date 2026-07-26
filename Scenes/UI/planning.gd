@@ -92,4 +92,4 @@ func _move_menu(target_position: Vector2, duration: float) -> void:
 	if menu_tween and menu_tween.is_valid():
 		menu_tween.kill()
 	menu_tween = create_tween()
-	menu_tween.tween_property(loadout_menu, "position", target_position, duration).set_ease(Tween.EASE_IN_OUT)
+	menu_tween.tween_property(loadout_menu, "position", target_position, duration).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
