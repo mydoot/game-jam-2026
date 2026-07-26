@@ -14,7 +14,7 @@ radius = 17.029387
 
 [node name="World" type="Node2D" unique_id=837482538]
 script = ExtResource("1_b3pmb")
-next_level = &"uid://birvxciwqfi4r"
+next_level = &"uid://cnk41h3bbdcms"
 
 [node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_1rbsc")]
 position = Vector2(-2, 60)

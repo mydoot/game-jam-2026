@@ -1,27 +1,43 @@
-[gd_scene format=3 uid="uid://birvxciwqfi4r"]
+[gd_scene format=3 uid="uid://cnk41h3bbdcms"]
 
 [ext_resource type="Script" uid="uid://d0r4qkpdiynh5" path="res://_Scripts/Level Scripts/main.gd" id="1_8utni"]
-[ext_resource type="PackedScene" uid="uid://44g8jo31buf7" path="res://Scenes/Levels/bigger_room.tscn" id="2_3hajc"]
 [ext_resource type="PackedScene" uid="uid://d3cqtcfm7fccn" path="res://Scenes/MainCamera.tscn" id="3_5o32j"]
-[ext_resource type="PackedScene" uid="uid://djpkmrsukexg4" path="res://Scenes/UI/planning.tscn" id="4_3hajc"]
+[ext_resource type="PackedScene" uid="uid://c8kv8t1yuk13j" path="res://Scenes/Levels/Level1.tscn" id="3_8utni"]
+[ext_resource type="PackedScene" uid="uid://bdqk8xu5cwxh2" path="res://Scenes/UI/planning.tscn" id="4_3hajc"]
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_5o32j"]
+<<<<<<< HEAD
 [ext_resource type="Resource" uid="uid://b16rd5wk1n3j3" path="res://_Scripts/Resources/ricochet_bullet.tres" id="5_pdwq7"]
+=======
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3hajc"]
+radius = 17.029387
+>>>>>>> 33dddb4cfd212fb9cf5e96721715a775ce856bff
 
 [node name="World" type="Node2D" unique_id=837482538]
 script = ExtResource("1_8utni")
+next_level = &"uid://m2g6nqjs6hv5uid://m2g6nqjs6hv5"
 
-[node name="Main Area" parent="." unique_id=836460663 instance=ExtResource("2_3hajc")]
-position = Vector2(127, 309)
-rotation = -3.0138295e-05
+[node name="Room_Template" parent="." unique_id=836460663 instance=ExtResource("3_8utni")]
+position = Vector2(330, 53)
 
 [node name="MainCamera" parent="." unique_id=118585489 groups=["camera"] instance=ExtResource("3_5o32j")]
 visible = false
-position = Vector2(289, 63)
-zoom = Vector2(2, 2)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("4_3hajc")]
+<<<<<<< HEAD
 level_name = "Level 2: Firing Lane"
 avail_bullets = Array[Resource]([ExtResource("5_pdwq7"), ExtResource("5_pdwq7"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
+=======
+position = Vector2(-471.78357, -436.25247)
+avail_bullets = Array[Resource]([ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j"), ExtResource("5_5o32j")])
+>>>>>>> 33dddb4cfd212fb9cf5e96721715a775ce856bff
 
-[node name="SpawnPoint" type="Marker2D" parent="." unique_id=865719459]
-position = Vector2(128, 465)
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=28835670]
+position = Vector2(304, 83)
+
+[node name="FinishPoint" type="Area2D" parent="." unique_id=417706929]
+position = Vector2(-19, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishPoint" unique_id=1420691859]
+position = Vector2(-142, 227)
+shape = SubResource("CircleShape2D_3hajc")
