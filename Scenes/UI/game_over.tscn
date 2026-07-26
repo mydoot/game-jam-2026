@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://cipmgcabl7hus"]
 
 [ext_resource type="Script" uid="uid://oa0wg05b85w3" path="res://_Scripts/game_over.gd" id="1_jxkuk"]
+[ext_resource type="FontFile" uid="uid://ni0tfkyce1tg" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_DR.otf" id="2_w88jv"]
+[ext_resource type="PackedScene" uid="uid://djmv5sll7a5wd" path="res://Assets/SFX/enemy_gun_shot_sfx.tscn" id="2_wpaxx"]
+[ext_resource type="Script" uid="uid://bkxbi8qrv1vr7" path="res://Scenes/UI/gameoverlabel.gd" id="3_ckxb7"]
 
 [node name="GameOver" type="CanvasLayer" unique_id=1412723919]
 script = ExtResource("1_jxkuk")
@@ -25,6 +28,19 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.5)
 metadata/_edit_use_anchors_ = true
 
+[node name="Label" type="RichTextLabel" parent="Control" unique_id=537804849]
+layout_mode = 0
+offset_top = 89.0
+offset_right = 1152.0
+offset_bottom = 224.0
+theme_override_colors/default_color = Color(0.86194634, 0.091310345, 0.2414658, 1)
+theme_override_fonts/normal_font = ExtResource("2_w88jv")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "GAME OVER"
+horizontal_alignment = 1
+script = ExtResource("3_ckxb7")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1455952268]
 layout_mode = 1
 anchors_preset = 14
@@ -36,11 +52,6 @@ offset_bottom = 46.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=1548966503]
-layout_mode = 2
-text = "Game Over"
-horizontal_alignment = 1
-
 [node name="Restart" type="Button" parent="Control/VBoxContainer" unique_id=99475385]
 layout_mode = 2
 text = "Restart"
@@ -48,6 +59,21 @@ text = "Restart"
 [node name="Quit" type="Button" parent="Control/VBoxContainer" unique_id=867994254]
 layout_mode = 2
 text = "Quit"
+
+[node name="Label2" type="RichTextLabel" parent="Control" unique_id=981133744]
+layout_mode = 0
+offset_top = 221.0
+offset_right = 1152.0
+offset_bottom = 244.0
+theme_override_colors/default_color = Color(0.2901961, 0.7294118, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_w88jv")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "take care of your soul"
+horizontal_alignment = 1
+
+[node name="EnemyGunShotSFX" parent="." unique_id=1605415974 instance=ExtResource("2_wpaxx")]
+autoplay = true
 
 [connection signal="pressed" from="Control/VBoxContainer/Restart" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_button_pressed"]

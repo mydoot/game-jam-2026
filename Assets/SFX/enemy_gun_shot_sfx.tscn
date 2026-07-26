@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://djmv5sll7a5wd"]
+
+[ext_resource type="AudioStream" uid="uid://cyuelglcx8d6m" path="res://Assets/SFX/shot_muffled.wav" id="1_g23dg"]
+
+[node name="EnemyGunShotSFX" type="AudioStreamPlayer2D" unique_id=1605415974]
+stream = ExtResource("1_g23dg")
+volume_db = 5.0
+pitch_scale = 0.8

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://djpkmrsukexg4" path="res://Scenes/UI/planning.tscn" id="5_1rbsc"]
 [ext_resource type="Resource" uid="uid://cl7wj0we808eh" path="res://_Scripts/Resources/basic_bullet.tres" id="5_2kkx6"]
 [ext_resource type="Resource" uid="uid://bgojx76eouqoa" path="res://_Scripts/Resources/piercing_bullet.tres" id="5_vyeik"]
-[ext_resource type="Resource" path="res://_Scripts/Resources/ricochet_bullet.tres" id="6_vyeik"]
+[ext_resource type="Resource" uid="uid://b16rd5wk1n3j3" path="res://_Scripts/Resources/ricochet_bullet.tres" id="6_vyeik"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1rbsc"]
 radius = 17.029387
@@ -24,6 +24,7 @@ visible = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="Planning" parent="." unique_id=950038523 instance=ExtResource("5_1rbsc")]
+level_name = "Level 1: First Shots"
 avail_bullets = Array[Resource]([ExtResource("5_vyeik"), ExtResource("6_vyeik"), ExtResource("5_vyeik"), ExtResource("5_2kkx6"), ExtResource("5_vyeik"), ExtResource("5_2kkx6")])
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1629841680]

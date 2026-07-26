@@ -5,6 +5,8 @@ var tween := create_tween()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	disabled = true
+	
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	
@@ -15,10 +17,15 @@ func _ready() -> void:
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 1, 2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	
+	tween.tween_callback(func(): disabled = false)
 
 
 func _on_mouse_entered() -> void:
-	reset_tween()
+	if tween:
+		tween.pause()
+		tween.custom_step(10)
+		tween.kill()
+		tween = create_tween()
 
 	tween.tween_property(self, "scale", Vector2(1.3, 1.3), 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 
